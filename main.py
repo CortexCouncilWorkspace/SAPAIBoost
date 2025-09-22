@@ -124,7 +124,7 @@ def send_message():
       if 'documents' in data:
         documents = data['documents']
 
-      model = GenerativeModel(model_name="gemini-1.5-pro-002", system_instruction=[systemPrompt])
+      model = GenerativeModel(model_name="gemini-2.5-pro", system_instruction=[systemPrompt])
 
       chatResponse = generate_chat_response(model, sessionId, message, documents)
 
