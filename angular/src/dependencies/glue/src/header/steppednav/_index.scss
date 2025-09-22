@@ -1,0 +1,216 @@
+// Glue header: stepped nav subcomponent
+
+@use "sass:math";
+
+@use '../../accessibility/mixins' as accessibility-mixins;
+@use '../../accessibility/variables' as accessibility-variables;
+@use '../../links/variables' as links;
+@use '../mixins';
+@use '../variables';
+
+%sliding-menu {
+  inset-inline-start: 8px;
+  position: absolute;
+  transform: translate3d(100%, 0, 0);
+  transition: transform variables.$stepped-nav-animation-duration ease-in-out
+      10ms,
+    left 0ms linear variables.$stepped-nav-animation-duration;
+  width: 100%;
+
+  [dir='rtl'] &,
+  :host([dir='rtl']) & {
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  &.glue-header__stepped-nav-parent-position {
+    inset-inline-start: -8px;
+    transform: translate3d(-100%, 0, 0);
+
+    [dir='rtl'] &,
+    :host([dir='rtl']) & {
+      transform: translate3d(100%, 0, 0);
+    }
+  }
+
+  &.glue-is-shown {
+    inset-inline-start: 0;
+    transform: translate3d(0, 0, 0);
+    z-index: 10;
+
+    [dir='rtl'] &,
+    :host([dir='rtl']) & {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+}
+
+.glue-header {
+  // Styles that apply only when in the drawer.
+  &.glue-header-stepped-nav-enabled {
+    &.glue-is-showing-drawer {
+      .glue-header__link-bar {
+        display: none;
+      }
+
+      .glue-header__stepped-nav {
+        display: flex;
+      }
+    }
+  }
+}
+
+.glue-header__stepped-nav {
+  display: none;
+  flex: 1 1 auto;
+  flex-direction: column;
+  margin-bottom: 5px;
+  width: 100%;
+
+  .glue-icon {
+    transform: rotate(0deg);
+
+    [dir='rtl'] &,
+    :host([dir='rtl']) & {
+      transform: rotate(180deg);
+    }
+
+    @include accessibility-mixins.hcm-mq {
+      fill: accessibility-variables.$hcm-color-text;
+    }
+  }
+
+  .glue-header__stepped-nav-menus {
+    height: 100%;
+    margin-top: variables.$stepped-nav-menus-top-margin;
+    overflow: hidden;
+    width: 100%;
+
+    .glue-header__list {
+      @extend %sliding-menu;
+
+      display: block;
+      height: auto;
+      margin: 0;
+      outline: none;
+
+      // Move the first menu vertically as much as the height of the
+      // controls since the controls are hidden.
+      &:first-child {
+        margin-top: -(variables.$stepped-nav-controls-height);
+      }
+
+      .glue-header__item {
+        justify-content: center;
+
+        .glue-header__link {
+          border: none;
+          border-end-end-radius: variables.$border-radius-active-mobile;
+          border-start-end-radius: variables.$border-radius-active-mobile;
+          justify-content: space-between;
+          max-height: none;
+          padding-inline: variables.$stepped-nav-menus-left-padding
+            variables.$stepped-nav-menus-right-padding;
+          white-space: normal;
+
+          .glue-header__stepped-nav-subnav-icon {
+            display: block;
+          }
+        }
+      }
+
+      &:first-child {
+        .glue-header__link {
+          padding-inline-start: math.div(
+            variables.$stepped-nav-menus-left-padding,
+            2
+          );
+        }
+      }
+    }
+  }
+
+  .glue-header__stepped-nav-controls-container {
+    display: flex;
+    flex: 0 0 variables.$stepped-nav-controls-height;
+    flex-direction: row;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+
+    // In this rule, there is a left and a translate transition. This is
+    // to get around a browser issue where highlight states aren't
+    // recomputes after the end of the menu transition with translate, but
+    // they are when left transition is.
+    .glue-header__stepped-nav-controls {
+      @extend %sliding-menu;
+
+      align-items: center;
+      border: none;
+      border-end-end-radius: variables.$border-radius-active-mobile;
+      border-start-end-radius: variables.$border-radius-active-mobile;
+      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+      height: auto;
+      margin-block: math.div(variables.$stepped-nav-controls-height - 48px, 2);
+      max-height: 48px;
+      outline: none;
+      overflow: visible;
+      padding: 0;
+      width: calc(100% - variables.$drawer-link-active-padding);
+
+      // Hide the first menu item since it's the root.
+      &:first-child {
+        visibility: hidden;
+      }
+
+      &:hover {
+        background-color: variables.$link-bar-bg-focus;
+      }
+
+      &:focus {
+        box-shadow: 0 0 0 2px links.$shadow-color-focus;
+
+        &:active {
+          box-shadow: none;
+          background-color: variables.$link-bar-bg-active;
+        }
+      }
+
+      .glue-header__stepped-nav-controls-arrow {
+        align-items: center;
+        color: variables.$link-bar-hover;
+        cursor: pointer;
+        display: flex;
+        flex: 0 0 #{variables.$stepped-nav-menus-left-padding};
+        justify-content: center;
+
+        .glue-icon {
+          margin-top: -2px;
+
+          &.glue-header__stepped-nav-subnav-icon {
+            display: none;
+          }
+        }
+      }
+
+      .glue-header__stepped-nav-controls-title {
+        border-bottom: 1px solid variables.$stepped-nav-controls-border-color;
+        border-radius: 0;
+        color: variables.$link-bar-hover;
+        display: flex;
+        flex: 1 0 calc(100% - variables.$stepped-nav-controls-text-width);
+        height: 64px;
+        max-height: 64px;
+        padding: 0 1px;
+        text-decoration: none;
+        white-space: nowrap;
+        width: auto;
+
+        &:hover {
+          background-color: transparent;
+        }
+      }
+    }
+  }
+}

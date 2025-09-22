@@ -1,0 +1,32 @@
+// Glue header component
+// Universal header for all sites.
+// Header styles are broken out by subcomponent.
+
+// User-customized variable for breakpoint
+$breakpoint: 'lg' !default;
+
+@use 'main' with (
+  $breakpoint-nav: $breakpoint
+);
+@use 'drawer/index' as drawer with (
+  $breakpoint-nav: $breakpoint
+);
+@use 'linkbar' with (
+  $breakpoint-nav: $breakpoint
+);
+@use 'cta' with (
+  $breakpoint-nav: $breakpoint
+);
+@use 'lockup' with (
+  $breakpoint-nav: $breakpoint
+);
+@use 'supplemental' with (
+  $breakpoint-nav: $breakpoint
+);
+@use 'deepnav/index' as deepnav with (
+  $breakpoint-nav: $breakpoint
+);
+@use 'siteswitcher/index' as siteswitcher with (
+  $breakpoint-nav: $breakpoint
+);
+@use 'steppednav/index';

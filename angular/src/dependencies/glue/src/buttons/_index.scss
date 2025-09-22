@@ -1,0 +1,433 @@
+// Glue buttons component
+// CTA styles. For general link styles, use glue-links.
+
+@use "sass:math";
+@use '../accessibility/mixins' as accessibility-mixins;
+@use '../accessibility/variables' as accessibility-variables;
+@use '../elevation/mixins' as elevation;
+@use 'mixins';
+@use 'partials';
+@use 'variables';
+
+// Base button used for buttons/ctas.
+.glue-button {
+  @extend %glue-button;
+
+  svg {
+    display: none;
+    fill: currentColor;
+    height: variables.$icon-dimension;
+    min-width: variables.$icon-dimension;
+    width: variables.$icon-dimension;
+  }
+
+  // To discourage non-svg icons in the button.
+  img {
+    display: none;
+  }
+
+  &[disabled] {
+    @include mixins.disable;
+  }
+
+  // Icon Buttons
+  &.glue-button--icon {
+    padding-left: variables.$icon-padding-left;
+    padding-right: variables.$icon-padding-right;
+
+    [dir='rtl'] & {
+      padding-left: variables.$icon-padding-right;
+      padding-right: variables.$icon-padding-left;
+    }
+
+    svg {
+      display: block;
+      margin: 0 8px 0 0;
+
+      [dir='rtl'] & {
+        margin: 0 0 0 8px;
+      }
+    }
+  }
+
+  &.glue-button--icon-right {
+    padding-left: variables.$icon-padding-right;
+    padding-right: variables.$icon-padding-left;
+
+    [dir='rtl'] & {
+      padding-left: variables.$icon-padding-left;
+      padding-right: variables.$icon-padding-right;
+    }
+
+    svg {
+      display: block;
+      margin: 0 0 0 8px;
+
+      [dir='rtl'] & {
+        margin: 0 8px 0 0;
+      }
+    }
+  }
+
+  //
+  // HEB BUTTON
+  //
+  &.glue-button--high-emphasis {
+    @extend %glue-button--high-emphasis;
+
+    &[disabled] {
+      @include mixins.disable;
+    }
+  }
+
+  //
+  // BUTTON MEB
+  //
+  &.glue-button--medium-emphasis {
+    @include mixins.hcm-adjust(
+      accessibility-variables.$hcm-color-button-background,
+      accessibility-variables.$hcm-color-button-text,
+      accessibility-variables.$hcm-color-button-text
+    );
+    background-color: variables.$meb-bg-color;
+    border-color: variables.$meb-border-color;
+    box-shadow: none;
+    color: variables.$meb-color;
+
+    &[disabled] {
+      @include mixins.disable;
+    }
+
+    &:visited {
+      @include mixins.hcm-adjust(
+        accessibility-variables.$hcm-color-button-background,
+        accessibility-variables.$hcm-color-button-text,
+        accessibility-variables.$hcm-color-button-text
+      );
+      background-color: variables.$meb-bg-color;
+      color: variables.$meb-color;
+    }
+
+    &:hover {
+      @include mixins.hcm-adjust(
+        accessibility-variables.$hcm-color-button-text,
+        accessibility-variables.$hcm-color-button-background,
+        accessibility-variables.$hcm-color-button-background
+      );
+      background-color: variables.$meb-bg-color-hover;
+      border-color: variables.$meb-border-color-active;
+      color: variables.$meb-color-hover;
+    }
+
+    &:focus {
+      @include mixins.hcm-adjust(
+        accessibility-variables.$hcm-color-button-text,
+        accessibility-variables.$hcm-color-button-background,
+        accessibility-variables.$hcm-color-button-background,
+        true
+      );
+      background-color: variables.$meb-bg-color-focus;
+      border-color: variables.$meb-border-color-active;
+      box-shadow: 0 0 0 2px variables.$meb-border-color-active;
+      color: variables.$meb-color-hover;
+    }
+
+    &:active {
+      @include mixins.hcm-adjust(
+        accessibility-variables.$hcm-color-button-text,
+        accessibility-variables.$hcm-color-button-background,
+        accessibility-variables.$hcm-color-button-background
+      );
+      background-color: variables.$meb-bg-color-active;
+      border-color: variables.$meb-border-color-active;
+      box-shadow: none;
+      color: variables.$meb-color-hover;
+    }
+
+    // REVERSED
+    &.glue-button--reversed {
+      @include mixins.hcm-adjust(
+        accessibility-variables.$hcm-color-button-background,
+        accessibility-variables.$hcm-color-button-text,
+        accessibility-variables.$hcm-color-button-text
+      );
+      background-color: transparent;
+      border: solid 1px variables.$reversed-color-alternate;
+      color: variables.$reversed-color-alternate;
+
+      &[disabled] {
+        @include mixins.disable;
+      }
+
+      &:visited {
+        @include mixins.hcm-adjust(
+          accessibility-variables.$hcm-color-button-background,
+          accessibility-variables.$hcm-color-button-text,
+          accessibility-variables.$hcm-color-button-text
+        );
+        background-color: transparent;
+        color: variables.$reversed-color-alternate;
+      }
+
+      &:hover {
+        @include mixins.hcm-adjust(
+          accessibility-variables.$hcm-color-button-text,
+          accessibility-variables.$hcm-color-button-background,
+          accessibility-variables.$hcm-color-button-background
+        );
+        background-color: variables.$reversed-bg-color-hover;
+        border-color: variables.$meb-border-color-active;
+        color: variables.$reversed-color-hover;
+      }
+
+      &:focus {
+        @include mixins.hcm-adjust(
+          accessibility-variables.$hcm-color-button-text,
+          accessibility-variables.$hcm-color-button-background,
+          accessibility-variables.$hcm-color-button-background
+        );
+        background-color: variables.$meb-bg-color-focus;
+        border-color: variables.$meb-border-color-active;
+        box-shadow: 0 0 0 2px variables.$meb-border-color-active;
+        color: variables.$reversed-color-hover;
+      }
+
+      &:active {
+        @include mixins.hcm-adjust(
+          accessibility-variables.$hcm-color-button-text,
+          accessibility-variables.$hcm-color-button-background,
+          accessibility-variables.$hcm-color-button-background
+        );
+        background-color: variables.$meb-bg-color-active;
+        border-color: transparent;
+        box-shadow: none;
+        color: variables.$reversed-color-hover;
+      }
+    }
+  }
+
+  //
+  // BUTTON LEB
+  //
+  &.glue-button--low-emphasis {
+    @include mixins.hcm-adjust(
+      accessibility-variables.$hcm-color-button-background,
+      accessibility-variables.$hcm-color-button-text,
+      accessibility-variables.$hcm-color-button-background
+    );
+    background-color: variables.$leb-bg-color;
+    color: variables.$leb-color;
+    min-width: auto;
+    padding-left: variables.$leb-padding-left;
+    padding-right: variables.$leb-padding-right;
+
+    &[disabled] {
+      @include mixins.disable;
+    }
+
+    &:visited {
+      @include mixins.hcm-adjust(
+        accessibility-variables.$hcm-color-button-background,
+        accessibility-variables.$hcm-color-button-text,
+        accessibility-variables.$hcm-color-button-background
+      );
+      background-color: variables.$leb-bg-color;
+      color: variables.$leb-color;
+    }
+
+    &:hover {
+      @include mixins.hcm-adjust(
+        accessibility-variables.$hcm-color-button-text,
+        accessibility-variables.$hcm-color-button-background,
+        accessibility-variables.$hcm-color-button-background
+      );
+      background-color: variables.$leb-bg-color-hover;
+      box-shadow: none;
+      color: variables.$leb-color-hover;
+    }
+
+    &:focus {
+      // TODO(b/143221606): Revisit focus states with focus-visible styles
+      @include mixins.hcm-adjust(
+        accessibility-variables.$hcm-color-button-text,
+        accessibility-variables.$hcm-color-button-background,
+        accessibility-variables.$hcm-color-button-background,
+        true
+      );
+      background-color: variables.$leb-bg-color-focus;
+      box-shadow: 0 0 0 2px variables.$leb-border-color-active;
+      color: variables.$leb-color-hover;
+    }
+
+    &:active {
+      @include mixins.hcm-adjust(
+        accessibility-variables.$hcm-color-button-text,
+        accessibility-variables.$hcm-color-button-background,
+        accessibility-variables.$hcm-color-button-background
+      );
+      background-color: variables.$leb-bg-color-active;
+      border-color: transparent;
+      box-shadow: none;
+      color: variables.$leb-color-hover;
+    }
+
+    // REVERSED
+    &.glue-button--reversed {
+      color: variables.$reversed-color;
+
+      &:visited {
+        @include mixins.hcm-adjust(
+          accessibility-variables.$hcm-color-button-background,
+          accessibility-variables.$hcm-color-button-text,
+          accessibility-variables.$hcm-color-button-background
+        );
+        background-color: transparent;
+        color: variables.$reversed-color;
+      }
+    }
+
+    &.glue-button--reversed-alternate {
+      color: variables.$reversed-color-alternate;
+
+      &:visited {
+        @include mixins.hcm-adjust(
+          accessibility-variables.$hcm-color-button-background,
+          accessibility-variables.$hcm-color-button-text,
+          accessibility-variables.$hcm-color-button-background
+        );
+        background-color: transparent;
+        color: variables.$reversed-color-alternate;
+      }
+    }
+
+    &.glue-button--reversed,
+    &.glue-button--reversed-alternate {
+      @include mixins.hcm-adjust(
+        accessibility-variables.$hcm-color-button-background,
+        accessibility-variables.$hcm-color-button-text,
+        accessibility-variables.$hcm-color-button-background
+      );
+      background-color: transparent;
+
+      &[disabled] {
+        @include mixins.disable;
+      }
+
+      &:hover {
+        @include mixins.hcm-adjust(
+          accessibility-variables.$hcm-color-button-text,
+          accessibility-variables.$hcm-color-button-background,
+          accessibility-variables.$hcm-color-button-background
+        );
+        background-color: variables.$reversed-leb-bg-color-hover;
+        color: variables.$reversed-color-hover;
+      }
+
+      &:focus {
+        @include mixins.hcm-adjust(
+          accessibility-variables.$hcm-color-button-text,
+          accessibility-variables.$hcm-color-button-background,
+          accessibility-variables.$hcm-color-button-background,
+          true
+        );
+        background-color: variables.$reversed-leb-bg-color-focus;
+        color: variables.$reversed-color-hover;
+      }
+
+      &:active {
+        @include mixins.hcm-adjust(
+          accessibility-variables.$hcm-color-button-text,
+          accessibility-variables.$hcm-color-button-background,
+          accessibility-variables.$hcm-color-button-background
+        );
+        background-color: variables.$reversed-leb-bg-color-active;
+        color: variables.$reversed-color-hover;
+        border-color: transparent;
+        box-shadow: none;
+      }
+    }
+
+    &.glue-button--icon {
+      padding-left: variables.$icon-leb-padding-left;
+      padding-right: variables.$icon-leb-padding-right;
+
+      [dir='rtl'] & {
+        padding-left: variables.$icon-leb-padding-right;
+        padding-right: variables.$icon-leb-padding-left;
+      }
+    }
+
+    &.glue-button--icon-right {
+      padding-left: variables.$icon-leb-padding-right;
+      padding-right: variables.$icon-leb-padding-left;
+
+      [dir='rtl'] & {
+        padding-left: variables.$icon-leb-padding-left;
+        padding-right: variables.$icon-leb-padding-right;
+      }
+    }
+  }
+
+  //
+  // BUTTON TONAL
+  //
+  &.glue-button--tonal {
+    @include mixins.hcm-adjust(
+      accessibility-variables.$hcm-color-button-background,
+      accessibility-variables.$hcm-color-button-text,
+      accessibility-variables.$hcm-color-button-text
+    );
+    background-color: variables.$tonal-bg-color;
+    border: 1px solid variables.$tonal-border-color;
+    color: variables.$tonal-color;
+
+    &[disabled] {
+      @include mixins.disable;
+    }
+
+    &:visited {
+      @include mixins.hcm-adjust(
+        accessibility-variables.$hcm-color-button-background,
+        accessibility-variables.$hcm-color-button-text,
+        accessibility-variables.$hcm-color-button-text
+      );
+      background-color: variables.$tonal-bg-color;
+      color: variables.$tonal-color;
+    }
+
+    &:hover {
+      @include elevation.set-level(1);
+      @include mixins.hcm-adjust(
+        accessibility-variables.$hcm-color-button-text,
+        accessibility-variables.$hcm-color-button-background,
+        accessibility-variables.$hcm-color-button-background
+      );
+      background-color: variables.$tonal-bg-color-hover;
+      color: variables.$tonal-color-hover;
+    }
+
+    &:focus {
+      @include mixins.hcm-adjust(
+        accessibility-variables.$hcm-color-button-text,
+        accessibility-variables.$hcm-color-button-background,
+        accessibility-variables.$hcm-color-button-background,
+        true
+      );
+      background-color: variables.$tonal-bg-color-hover;
+      box-shadow: 0 0 0 2px variables.$tonal-shadow-color-focus;
+      color: variables.$tonal-color-hover;
+    }
+
+    &:active {
+      @include mixins.hcm-adjust(
+        accessibility-variables.$hcm-color-button-text,
+        accessibility-variables.$hcm-color-button-background,
+        accessibility-variables.$hcm-color-button-background
+      );
+      @include elevation.set-level(2);
+      background-color: variables.$tonal-bg-color-active;
+      border-color: transparent;
+      color: variables.$tonal-color-hover;
+    }
+  }
+}

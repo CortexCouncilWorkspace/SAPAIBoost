@@ -1,0 +1,77 @@
+<form class="glue-form glue-mwc3" method="post" [formGroup]="editForm" (ngSubmit)="submit()">
+
+  <h2 mat-dialog-title class="dialog-heading">
+    <ng-container *ngIf="data">Edit</ng-container>
+    <ng-container *ngIf="!data">New</ng-container>
+    Custom Card
+  </h2>
+
+  <mat-dialog-content>
+
+    <div class="glue-page">
+
+        <div class="glue-grid">
+
+          <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-2-top">
+            <mat-form-field appearance="outline" class="form-field glue-grid__col--span-8">
+              <mat-label>Name</mat-label>
+              <input matInput #name [formControl]="editForm.controls.name" [errorStateMatcher]="matcher" maxlength="48" placeholder="Name of the card.">
+              <mat-hint align="end">{{name.value.length}} / 48</mat-hint>
+              <ng-container *ngIf="editForm.controls.name.hasError('required') && isSubmitted">
+                <mat-error>Please enter a name.</mat-error>
+              </ng-container>
+            </mat-form-field>
+          </div>
+
+          <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-2-top">
+            <mat-form-field appearance="outline" class="form-field glue-grid__col--span-8">
+              <mat-label>Description</mat-label>
+              <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="5" 
+                #description [formControl]="editForm.controls.description" [errorStateMatcher]="matcher" maxlength="200" placeholder="Description of the card action."></textarea>
+              <mat-hint align="end">{{description.value.length}} / 200</mat-hint>
+              <ng-container *ngIf="editForm.controls.description.hasError('required') && isSubmitted">
+                <mat-error>Please enter a description.</mat-error>
+              </ng-container>
+            </mat-form-field>
+          </div>
+
+          <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-2-top">
+            <mat-form-field appearance="outline" class="form-field glue-grid__col--span-8">
+              <mat-label>Prompt</mat-label>
+              <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4" cdkAutosizeMaxRows="10" 
+                #systemPrompt [formControl]="editForm.controls.systemPrompt" [errorStateMatcher]="matcher" maxlength="50000" placeholder="Prompt to send to Gemini to jump-start the conversation."></textarea>
+              <mat-hint align="end">{{systemPrompt.value.length}} / 50,000</mat-hint>
+              <ng-container *ngIf="editForm.controls.systemPrompt.hasError('required') && isSubmitted">
+                <mat-error>Please enter a prompt.</mat-error>
+              </ng-container>
+            </mat-form-field>
+            <p class="tips">
+              <b><a href="http://go/geminipmmprompts" target="_blank">Prompt-writing Tips</a>:</b>
+            </p>
+            <ul class="tips-list">
+              <li><b>Provide a persona</b> (optional). e.g. "Act like an expert copywriter" or "Act like a Chief Marketing Officer".</li>
+              <li><b>Define the goal</b> (essential). e.g. "Help me write a blog article" or "Help me brainstorm a marketing idea".</li>
+              <li><b>Specify an intended audience or instruct the model to ask the user</b> (optional). e.g. "The target audience are CIOs" or "Ask me about the target audience".</li>
+              <li><b>Set any restrictions</b> (optional). e.g. "The video script should be less than 30 seconds." or "No emojis".<br><i>Note: Brand style & tone isn't necessary in custom prompts, which are automatically included based on user-selectable options in the interface.</i></li>
+              <li><b>Format the result</b> (optional). e.g. "Answer in bullet points" or "Format your answer as a 30 second video script with timing and voice-over."</li>
+            </ul>
+          </div>
+
+          <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-1-top">
+            <mat-checkbox #shareCard [formControl]="editForm.controls.shareCard"><b>Share this prompt with the AI Boost for SAP RISE team</b>. We'll consider releasing it to all users.</mat-checkbox>
+          </div>
+
+      </div>
+    </div>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <div class="button-container">
+      <button class="glue-button glue-button--medium-emphasis delete" mat-dialog-close (click)="delete()" *ngIf="data">Delete</button>
+      <button class="glue-button glue-button--medium-emphasis" mat-dialog-close>Close</button>
+      <button class="glue-button glue-button--high-emphasis" type="submit">Save</button>
+    </div>
+  </mat-dialog-actions>
+
+</form>

@@ -1,0 +1,25 @@
+// Glue spacers mixins
+
+@use 'sass:map';
+@use '../breakpoints/mixins' as breakpoints;
+@use 'variables';
+
+// Adds spacer as either margin or padding
+// @param {number} $spacer: Which spacer (1-8) to use
+// @param {string} $property: Which property to use (margin or padding)
+// @param {string} $location: Where spacing is set (top, bottom, left, right)
+@mixin spacer($spacer, $property, $location) {
+  #{$property}-#{$location}: map.get(
+    variables.$height-small-map,
+    'spacer-#{$spacer}'
+  );
+
+  @if ($spacer > 4) {
+    @include breakpoints.bp(lg) {
+      #{$property}-#{$location}: map.get(
+        variables.$height-large-map,
+        'spacer-#{$spacer}'
+      );
+    }
+  }
+}

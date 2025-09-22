@@ -1,0 +1,219 @@
+<div id="site">
+
+  <!-- glue header -->
+  <header id="site-header" class="glue-header glue-header--single" >
+    <a href="#content" class="glue-header__link glue-header__skip-content">Jump to Content</a>
+
+    <!-- mobile -->
+    <div class="glue-header__bar glue-header__bar--mobile">
+      <div class="glue-header__tier">
+        <div class="glue-header__container">
+          <div class="glue-header__lock-up">
+
+            <div class="glue-header__hamburger">
+              <button class="glue-header__drawer-toggle-btn" aria-label="Open the navigation drawer">
+                <svg class="glue-icon glue-icon--24px" role="presentation" aria-hidden="true">
+                  <use href="/assets/glue-icons.svg#menu"></use>
+                </svg>
+              </button>
+            </div>
+            
+            <div class="glue-header__logo">
+              <a class="glue-header__logo-link" routerLink="/" title="Google">
+                <div class="glue-header__logo-container">
+                  <img class="glue-header__logo-svg" src="/assets/gemini_sparkle.svg?v=2"/>
+                </div>
+                <span class="glue-header__logo--product">AI <span class="header-marketing glue-font-weight-medium">Boost Toolbox for SAP RISE</span></span>
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- desktop -->
+    <div class="glue-header__bar glue-header__bar--desktop glue-header__drawer">
+      <div class="glue-header__tier">
+
+        <!-- desktop lockup component -->
+        <div class="glue-header__container">
+          <div class="glue-header__lock-up">
+            <div class="glue-header__logo">
+              <a class="glue-header__logo-link" routerLink="/" title="Google">
+                <div class="glue-header__logo-container">
+                  <img class="glue-header__logo-svg" src="/assets/gemini_sparkle.svg?v=2"/>
+                </div>
+                <span class="glue-header__logo--product">AI <span class="header-marketing glue-font-weight-medium">Boost Toolbox for SAP RISE</span></span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="glue-header__container glue-header__container--linkbar">
+				  <nav class="glue-header__link-bar">
+				    <ul class="glue-header__list">
+				      <li class="glue-header__item" [ngClass]="navHomeSelected ? 'glue-header__item--active' : ''">
+				        <a class="glue-header__link" routerLink="/">Home</a>
+				      </li>
+				      <li class="glue-header__item" [ngClass]="navFeedbackSelected ? 'glue-header__item--active' : ''">
+				        <a class="glue-header__link" routerLink="/feedback">Feedback</a>
+				      </li>
+				      <li class="glue-header__item" [ngClass]="navAboutSelected ? 'glue-header__item--active' : ''">
+				        <a class="glue-header__link" routerLink="/about">About</a>
+				      </li>
+              <ng-container *ngIf="authService.signedIn && authService.user.isAdmin">
+                <li class="glue-header__item" [ngClass]="navAdminSelected ? 'glue-header__item--active' : ''">
+                  <a class="glue-header__link" routerLink="/admin">Admin</a>
+                </li>
+              </ng-container>
+				    </ul>
+				  </nav>
+				</div>
+
+        <div id="signedin-photo" class="glue-tooltip glue-tooltip--rich" [ngClass]="!authService.signedIn ? 'hide' : ''">
+          <img id="user-photo" class="glue-tooltip__trigger" src="{{authService.signedIn ? authService.user.photoURL : ''}}">
+          <span id="tooltip-content" class="glue-tooltip__content" role="dialog">
+            <span class="glue-tooltip__header">{{authService.signedIn ? authService.user.displayName : ''}}</span>
+            <span class="glue-tooltip__body">{{authService.signedIn ? authService.user.email : ''}}</span>
+            <ng-container *ngIf="authService.signedIn && authService.user.isAdmin">
+              <span class="glue-tooltip__body"><b>&bull; Administrator</b></span>
+            </ng-container>
+            <ng-container *ngIf="authService.signedIn && authService.user.isBeta">
+              <span class="glue-tooltip__body"><b>&bull; Beta Tester</b></span>
+            </ng-container>
+            <a class="glue-tooltip__link" (click)="authService.signOut()">Sign Out</a>
+          </span>
+        </div>
+
+        <div id="google-button" [ngClass]="authService.signedIn ? 'hide' : ''"></div>
+
+      </div>
+
+    </div>
+
+    <div class="glue-header__drawer-backdrop"></div>
+
+  </header>
+  <!-- end glue header -->
+
+  <div class="glue-banner glue-banner--high-emphasis" *ngIf="router.url !== '/admin' && configService.hasChanged">
+    <p style="text-align:center !important; margin: 0 auto;"><b>You are currently previewing a configuration change</b>. After validation, save the configuration in the <a routerLink="/admin">Admin Dashboard</a>.</p>
+  </div>
+
+  <!--<div class="glue-banner glue-banner--high-emphasis" *ngIf="authService.signedIn && authService.user.isBeta">
+    <p style="text-align:center !important; margin: 0 auto;">You are registered in the <b>AI Boost Toolbox for SAP RISE Beta Testing program</b>. Features labeled "Beta" are only visible to beta testers.</p>
+  </div>-->
+
+  <!--<div class="glue-banner glue-banner--medium-emphasis" *ngIf="router.url !== '/admin'">
+    <p style="text-align:center !important; margin: 0 auto;">AI Boost for SAP RISE is currently under development and <a routerLink="/about">new features</a> are added each week. Your <a routerLink="/feedback">ideas, insights and feedback</a> are critical to the future direction of the product.</p>
+  </div>-->
+
+  <div id="site-main">
+    <router-outlet></router-outlet>
+  </div>
+  
+</div>
+
+<div id="consent-modal" class="consent-modal" [ngStyle]="{'display': showConsent ? 'block' : 'none'}">
+  <div class="glue-elevation-level-5 consent-modal-content">
+    <h1 class="glue-headline glue-headline--headline-5">Before we get started...</h1>
+    <div class="consent-error" [ngStyle]="{'display': showConsentError ? 'block' : 'none'}">Please certify using the checkboxes below to continue.</div>
+    <div>
+      <div class="mdc-touch-target-wrapper">
+        <div class="mdc-form-field">
+          <div class="mdc-checkbox mdc-checkbox--touch glue-checkbox">
+            <input type="checkbox" class="mdc-checkbox__native-control"
+                id="consent-1" name="consent-1" [(ngModel)]="consent1">
+            <div class="mdc-checkbox__background">
+              <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
+              </svg>
+              <div class="mdc-checkbox__mixedmark"></div>
+            </div>
+            <div class="mdc-checkbox__ripple"></div>
+          </div>
+          <label for="consent-1">I certify that I have read the <a href="http://go/aitopten" target="_blank">go/AITopTen</a>, <a href="http://go/aichecklist" target="_blank">go/AIChecklist</a>, and the <a href="https://policies.google.com/terms/generative-ai/use-policy" target="_blank">Gen AI Prohibited Use</a> policy.</label>
+        </div>
+      </div>
+
+      <div class="mdc-touch-target-wrapper">
+        <div class="mdc-form-field">
+          <div class="mdc-checkbox mdc-checkbox--touch glue-checkbox">
+            <input type="checkbox" class="mdc-checkbox__native-control"
+                id="consent-2" name="consent-2" [(ngModel)]="consent2">
+            <div class="mdc-checkbox__background">
+              <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
+              </svg>
+              <div class="mdc-checkbox__mixedmark"></div>
+            </div>
+            <div class="mdc-checkbox__ripple"></div>
+          </div>
+          <label for="consent-2">AI Boost Toolbox for SAP RISE may deliver inaccurate information. I understand that I am responsible for verifying information before using responses either internally or externally.</label>
+        </div>
+      </div>
+
+      <div class="mdc-touch-target-wrapper">
+        <div class="mdc-form-field">
+          <div class="mdc-checkbox mdc-checkbox--touch glue-checkbox">
+            <input type="checkbox" class="mdc-checkbox__native-control"
+                id="consent-3" name="consent-3" [(ngModel)]="consent3">
+            <div class="mdc-checkbox__background">
+              <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
+              </svg>
+              <div class="mdc-checkbox__mixedmark"></div>
+            </div>
+            <div class="mdc-checkbox__ripple"></div>
+          </div>
+          <label for="consent-3">I acknowledge I can enter Confidential, Need to Know, and Public information, but not Legally Privileged information.</label>
+        </div>
+      </div>
+
+      <div class="mdc-touch-target-wrapper">
+        <div class="mdc-form-field">
+          <div class="mdc-checkbox mdc-checkbox--touch glue-checkbox">
+            <input type="checkbox" class="mdc-checkbox__native-control"
+                id="consent-4" name="consent-4" [(ngModel)]="consent4">
+            <div class="mdc-checkbox__background">
+              <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
+              </svg>
+              <div class="mdc-checkbox__mixedmark"></div>
+            </div>
+            <div class="mdc-checkbox__ripple"></div>
+          </div>
+          <label for="consent-4">I understand that AI Boost Toolbox for SAP RISE does not aim to collect personal data and is not designed to. I will not enter any personal data (of my own or others).</label>
+        </div>
+      </div>
+
+      <div class="mdc-touch-target-wrapper">
+        <div class="mdc-form-field">
+          <div class="mdc-checkbox mdc-checkbox--touch glue-checkbox">
+            <input type="checkbox" class="mdc-checkbox__native-control"
+                id="consent-5" name="consent-5" [(ngModel)]="consent5">
+            <div class="mdc-checkbox__background">
+              <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
+              </svg>
+              <div class="mdc-checkbox__mixedmark"></div>
+            </div>
+            <div class="mdc-checkbox__ripple"></div>
+          </div>
+          <label for="consent-5">AI Boost Toolbox for SAP RISE complies with the <a href="https://policies.google.com/privacy" target="_blank">Google Privacy Policy</a>. Data entered into AI Boost Toolbox for SAP RISE is not tied to individual users and data is destroyed after 24 hours.</label>
+        </div>
+      </div>
+
+      <div class="consent-button">
+        <button class="glue-button glue-button--high-emphasis glue-button--icon-right" (click)="consent()">
+          Confirm
+          <svg role="presentation" aria-hidden="true" class="glue-icon glue-icon--arrow-forward">
+            <use href="/assets/glue-icons.svg#chevron-right"></use>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

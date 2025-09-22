@@ -1,0 +1,74 @@
+// Glue color variables
+
+$grey-0: #fff;
+$grey-25: #f1f1f1;
+$grey-50: #f8f9fa;
+$grey-100: #f1f3f4;
+$grey-200: #e8eaed;
+$grey-300: #dadce0;
+$grey-400: #bdc1c6;
+$grey-500: #9aa0a6;
+$grey-600: #80868b;
+$grey-700: #5f6368;
+$grey-800: #3c4043;
+$grey-900: #202124;
+
+$blue-50: #e8f0fe;
+$blue-100: #d2e3fc;
+$blue-200: #aecbfa;
+$blue-300: #8ab4f8;
+$blue-400: #669df6;
+$blue-500: #4285f4;
+$blue-600: #1a73e8;
+$blue-700: #1967d2;
+$blue-800: #185abc;
+$blue-900: #174ea6;
+
+$green-50: #e6f4ea;
+$green-100: #ceead6;
+$green-200: #a8dab5;
+$green-300: #81c995;
+$green-400: #5bb974;
+$green-500: #34a853;
+$green-600: #1e8e3e;
+$green-700: #188038;
+$green-800: #137333;
+$green-900: #0d652d;
+
+$red-50: #fce8e6;
+$red-100: #fad2cf;
+$red-200: #f6aea9;
+$red-300: #f28b82;
+$red-400: #ee675c;
+$red-500: #ea4335;
+$red-600: #d93025;
+$red-700: #c5221f;
+$red-800: #b31412;
+$red-900: #a50e0e;
+
+$yellow-50: #fef7e0;
+$yellow-100: #feefc3;
+$yellow-200: #fde293;
+$yellow-300: #fdd663;
+$yellow-400: #fcc934;
+$yellow-500: #fbbc04;
+$yellow-600: #f9ab00;
+$yellow-700: #f29900;
+$yellow-800: #ea8600;
+$yellow-900: #e37400;
+
+$purple-100: #ea80fc;
+$purple-900: #681da8;
+
+// Generic color variables - common colors for components.
+$primary-black: $grey-900;
+$border: $grey-300;
+$focus-background: $grey-100;
+$link-resting: $blue-600;
+$link-active: $blue-900;
+$link-visited: $purple-900;
+$link-tonal: $blue-700;
+$focus-background-rgba: rgba($grey-900, 0.06);
+
+$white: $grey-0;
+$black: #000;

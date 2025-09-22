@@ -1,0 +1,34 @@
+// Glue elevation mixins
+
+@use '../colors/variables' as colors;
+
+// Sets a box-shadow based on multiple settings
+@mixin draw-shadow(
+  $key-offset-y,
+  $key-spread,
+  $ambient-offset-y,
+  $ambient-spread,
+  $ambient-blur
+) {
+  box-shadow: 0 $key-offset-y $key-spread 0 rgba(colors.$grey-800, 0.3),
+    0 $ambient-offset-y $ambient-spread $ambient-blur
+      rgba(colors.$grey-800, 0.15);
+}
+
+// Sets styles for a specific level of elevation (between 0-5)
+@mixin set-level($level) {
+  @if ($level == 1) {
+    @include draw-shadow(1px, 2px, 1px, 3px, 1px);
+  } @else if ($level == 2) {
+    @include draw-shadow(1px, 2px, 2px, 6px, 2px);
+  } @else if ($level == 3) {
+    @include draw-shadow(1px, 3px, 4px, 8px, 3px);
+  } @else if ($level == 4) {
+    @include draw-shadow(2px, 3px, 6px, 10px, 4px);
+  } @else if ($level == 5) {
+    @include draw-shadow(4px, 4px, 8px, 12px, 6px);
+  } @else {
+    // Elevation level 0 is just a border
+    border: 1px solid colors.$border;
+  }
+}

@@ -1,0 +1,856 @@
+// Glue typography variables
+
+@use 'sass:map';
+@use '../breakpoints/mixins' as breakpoints;
+@use '../colors/variables' as colors;
+
+// This is the default html font-size for the base rem value.
+$rem-base: 1em;
+$em-base: $rem-base;
+
+// Full font stacks for various languages
+$font-family-sans-serif: Arial, Helvetica, sans-serif;
+$font-family-product-sans: 'Product Sans', 'Google Sans', Arial, Helvetica,
+  sans-serif;
+$font-family-google-sans: 'Google Sans', Arial, Helvetica, sans-serif;
+$font-family-google-sans-display: 'Google Sans Display', 'Google Sans', Arial,
+  Helvetica, sans-serif;
+$font-family-google-sans-text: 'Google Sans Text', Arial, Helvetica, sans-serif;
+$font-family-monospace: 'Consolas', 'Monaco', 'Bitstream Vera Sans Mono',
+  'Courier New', Courier, monospace;
+$font-family-ja: 'Google Sans Text', 'Google Sans Japanese', 'Noto Sans JP',
+  Arial, Helvetica, sans-serif;
+$font-family-ko: 'Google Sans Text', 'Google Sans Korean', 'Noto Sans KR',
+  Arial, Helvetica, sans-serif;
+$font-family-zhcn: 'Google Sans Text', 'Google Sans Simplified Chinese',
+  'Noto Sans SC', Arial, Helvetica, sans-serif;
+$font-family-zhtw: 'Google Sans Text', 'Google Sans Traditional Chinese',
+  'Noto Sans TC', Arial, Helvetica, sans-serif;
+$font-family-ar: 'Google Sans Text', 'Google Sans Arabic', Arial, Helvetica,
+  sans-serif;
+
+// Individual fonts and partial font stacks that can be combined into a full font stack
+$font-face-roboto: 'Roboto';
+$font-face-productsans: 'Product Sans';
+$font-face-googlesans: 'Google Sans';
+$font-face-googlesansdisplay: 'Google Sans Display';
+$font-face-googlesanstext: 'Google Sans Text';
+
+$font-stack-ar: 'Google Sans Arabic';
+$font-stack-ja: 'Google Sans Japanese', 'Noto Sans JP';
+$font-stack-ko: 'Google Sans Korean', 'Noto Sans KR';
+$font-stack-zhcn: 'Google Sans Simplified Chinese', 'Noto Sans SC';
+$font-stack-zhtw: 'Google Sans Traditional Chinese', 'Noto Sans TC';
+
+$font-stack-latinfallback: Arial, Helvetica, sans-serif;
+
+// font smoothing variables
+$font-smoothing-moz: grayscale;
+$font-smoothing-webkit: antialiased;
+$font-smoothing-rendering: optimizeLegibility;
+
+// Font weight names translated to their numerical values
+$font-weight-thin: 100;
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+
+// Standard colors for typography
+$font-color-light: colors.$grey-0;
+$font-color-dark: colors.$grey-700;
+$font-color-darker: colors.$grey-800;
+$font-color-darkest: colors.$grey-900;
+
+// Base header variables
+$header-font-size: 18px;
+$header-font-weight: $font-weight-light;
+$header-margin: 16px;
+
+// Base paragraph variables
+$paragraph-spacing: 12px;
+$paragraph-print-indent: 24px;
+$paragraph-lead-font-size: 16px;
+$paragraph-lead-line-height: 24px;
+$paragraph-spacing-desktop: 16px;
+
+// Base copy variables
+$copy-one-mobile-font-size: 16px;
+$copy-one-mobile-line-height: 24px;
+$copy-one-mobile-letter-spacing: 0.25px;
+$copy-one-tablet-font-size: $copy-one-mobile-font-size;
+$copy-one-tablet-line-height: $copy-one-mobile-line-height;
+$copy-one-tablet-letter-spacing: $copy-one-mobile-letter-spacing;
+$copy-one-desktop-font-size: $copy-one-mobile-font-size;
+$copy-one-desktop-line-height: $copy-one-mobile-line-height;
+$copy-one-desktop-letter-spacing: 0;
+
+// Base horizontal rule variables
+$hr-border-width: 1px;
+$hr-border-style: solid;
+$hr-border-color: colors.$border;
+$hr-margin-top: 20px;
+$hr-margin-bottom: ($hr-margin-top - $hr-border-width);
+
+// Base pre variables
+$pre-margin-bottom: 20px;
+
+// Base code variables
+$code-color: colors.$grey-800;
+$code-font-family: $font-family-monospace;
+$code-font-weight: $font-weight-light;
+$code-background-color: colors.$grey-100;
+$code-border-size: 1px;
+$code-border-style: solid;
+$code-border-color: colors.$grey-300;
+$code-padding: 3px 6px;
+
+// blockquote variables
+$blockquote-font-color: $font-color-darkest;
+
+$blockquote-mobile-font-size: 24px;
+$blockquote-mobile-line-height: 32px;
+$blockquote-desktop-font-size: 48px;
+$blockquote-desktop-line-height: 58px;
+
+// list variables
+$list-margin-bottom: 20px;
+$list-style-position: outside;
+$list-side-margin: 20px;
+$list-nested-margin: 20px;
+
+// definition list variables
+$definition-list-header-weight: $font-weight-bold;
+$definition-list-margin-bottom: 12px;
+
+// font specs match glue body copy
+$list-mobile-font-size: $copy-one-mobile-font-size;
+$list-mobile-letter-spacing: $copy-one-mobile-letter-spacing;
+$list-mobile-line-height: $copy-one-mobile-line-height;
+
+$list-tablet-font-size: $copy-one-tablet-font-size;
+$list-tablet-letter-spacing: $copy-one-tablet-letter-spacing;
+$list-tablet-line-height: $copy-one-tablet-line-height;
+
+$list-desktop-font-size: $copy-one-desktop-font-size;
+$list-desktop-letter-spacing: $copy-one-desktop-letter-spacing;
+$list-desktop-line-height: $copy-one-desktop-line-height;
+
+// Base body type settings
+$body-font-size: 1em;
+$body-line-height: 1.444; // 26px body line-height
+$body-bg: colors.$white;
+$body-font-color: $font-color-darkest;
+$body-font-family: $font-family-sans-serif;
+$body-font-weight: $font-weight-light;
+$body-font-style: normal;
+
+// Base headline settings
+$headline-font-color: $font-color-darkest;
+$headline-font-family: $font-face-googlesans;
+$headline-font-weight: $font-weight-regular;
+$headline-display-font-weight: $font-weight-regular;
+$header-link-border-radius: 4px;
+
+// KEYS
+$mws-font-size: 'font-size';
+$mws-line-height: 'line-height';
+$mws-letter-spacing: 'letter-spacing';
+$mws-font-weight: 'font-weight';
+$mws-font-family: 'font-family';
+$mws-text-transform: 'text-transform';
+$mws-text-color: 'color';
+
+// FLUID-1
+$mws-fluid-1-sm: (
+  $mws-font-family: $font-face-googlesansdisplay,
+  $mws-font-size: 10vw,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: -0.25px,
+  $mws-line-height: 1.2em,
+);
+
+$mws-fluid-1-md: (
+  $mws-font-family: $font-face-googlesansdisplay,
+  $mws-font-size: 6vw,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: -0.5px,
+  $mws-line-height: 1.2em,
+);
+
+$mws-fluid-1-lg: (
+  $mws-font-family: $font-face-googlesansdisplay,
+  $mws-font-size: 5vw,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: -0.5px,
+  $mws-line-height: 1.2em,
+);
+
+$mws-fluid-1-xl: (
+  $mws-font-family: $font-face-googlesansdisplay,
+  $mws-font-size: 5vw,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: -0.5px,
+  $mws-line-height: 1.2em,
+);
+
+// FLUID-2
+$mws-fluid-2-sm: (
+  $mws-font-family: $font-face-googlesansdisplay,
+  $mws-font-size: 8vw,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: 0,
+  $mws-line-height: 1.2em,
+);
+
+$mws-fluid-2-md: (
+  $mws-font-family: $font-face-googlesansdisplay,
+  $mws-font-size: 5vw,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: -0.5px,
+  $mws-line-height: 1.2em,
+);
+
+$mws-fluid-2-lg: (
+  $mws-font-family: $font-face-googlesansdisplay,
+  $mws-font-size: 4vw,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: -0.5px,
+  $mws-line-height: 1.2em,
+);
+
+$mws-fluid-2-xl: (
+  $mws-font-family: $font-face-googlesansdisplay,
+  $mws-font-size: 4vw,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: -0.5px,
+  $mws-line-height: 1.2em,
+);
+
+// HEADLINE-1
+$mws-headline-1-sm: (
+  $mws-font-family: $font-face-googlesansdisplay,
+  $mws-font-size: 36px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: -0.25px,
+  $mws-line-height: 44px,
+);
+
+$mws-headline-1-md: (
+  $mws-font-family: $font-face-googlesansdisplay,
+  $mws-font-size: 48px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: -0.5px,
+  $mws-line-height: 56px,
+);
+
+$mws-headline-1-lg: (
+  $mws-font-family: $font-face-googlesansdisplay,
+  $mws-font-size: 60px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: -0.5px,
+  $mws-line-height: 72px,
+);
+
+$mws-headline-1-xl: (
+  $mws-font-family: $font-face-googlesansdisplay,
+  $mws-font-size: 60px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: -0.5px,
+  $mws-line-height: 72px,
+);
+
+// HEADLINE-2
+$mws-headline-2-sm: (
+  $mws-font-family: $font-face-googlesansdisplay,
+  $mws-font-size: 28px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: initial,
+  $mws-line-height: 36px,
+);
+
+$mws-headline-2-md: (
+  $mws-font-family: $font-face-googlesansdisplay,
+  $mws-font-size: 40px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: -0.5px,
+  $mws-line-height: 48px,
+);
+
+$mws-headline-2-lg: (
+  $mws-font-family: $font-face-googlesansdisplay,
+  $mws-font-size: 48px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: -0.5px,
+  $mws-line-height: 56px,
+);
+
+$mws-headline-2-xl: (
+  $mws-font-family: $font-face-googlesansdisplay,
+  $mws-font-size: 48px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: -0.5px,
+  $mws-line-height: 56px,
+);
+
+// HEADLINE-3
+$mws-headline-3-sm: (
+  $mws-font-family: $font-face-googlesans,
+  $mws-font-size: 24px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: initial,
+  $mws-line-height: 32px,
+);
+
+$mws-headline-3-md: (
+  $mws-font-family: $font-face-googlesans,
+  $mws-font-size: 32px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: -0.25px,
+  $mws-line-height: 40px,
+);
+
+$mws-headline-3-lg: (
+  $mws-font-family: $font-face-googlesans,
+  $mws-font-size: 36px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: -0.25px,
+  $mws-line-height: 44px,
+);
+
+$mws-headline-3-xl: (
+  $mws-font-family: $font-face-googlesans,
+  $mws-font-size: 36px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: -0.25px,
+  $mws-line-height: 44px,
+);
+
+// HEADLINE-4
+$mws-headline-4-sm: (
+  $mws-font-family: $font-face-googlesans,
+  $mws-font-size: 20px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: initial,
+  $mws-line-height: 28px,
+);
+
+$mws-headline-4-md: (
+  $mws-font-family: $font-face-googlesans,
+  $mws-font-size: 24px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: initial,
+  $mws-line-height: 32px,
+);
+
+$mws-headline-4-lg: (
+  $mws-font-family: $font-face-googlesans,
+  $mws-font-size: 28px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: initial,
+  $mws-line-height: 36px,
+);
+
+$mws-headline-4-xl: (
+  $mws-font-family: $font-face-googlesans,
+  $mws-font-size: 28px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: initial,
+  $mws-line-height: 36px,
+);
+
+// HEADLINE-5
+$mws-headline-5-sm: (
+  $mws-font-family: $font-face-googlesans,
+  $mws-font-size: 20px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: initial,
+  $mws-line-height: 28px,
+);
+
+$mws-headline-5-md: (
+  $mws-font-family: $font-face-googlesans,
+  $mws-font-size: 20px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: initial,
+  $mws-line-height: 28px,
+);
+
+$mws-headline-5-lg: (
+  $mws-font-family: $font-face-googlesans,
+  $mws-font-size: 20px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: initial,
+  $mws-line-height: 28px,
+);
+
+$mws-headline-5-xl: (
+  $mws-font-family: $font-face-googlesans,
+  $mws-font-size: 20px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: initial,
+  $mws-line-height: 28px,
+);
+
+// HEADLINE-6
+$mws-headline-6-sm: (
+  $mws-font-family: $font-face-googlesanstext,
+  $mws-font-size: 16px,
+  $mws-font-weight: $font-weight-medium,
+  $mws-letter-spacing: initial,
+  $mws-line-height: 24px,
+);
+
+$mws-headline-6-md: (
+  $mws-font-family: $font-face-googlesanstext,
+  $mws-font-size: 16px,
+  $mws-font-weight: $font-weight-medium,
+  $mws-letter-spacing: initial,
+  $mws-line-height: 24px,
+);
+
+$mws-headline-6-lg: (
+  $mws-font-family: $font-face-googlesanstext,
+  $mws-font-size: 16px,
+  $mws-font-weight: $font-weight-medium,
+  $mws-letter-spacing: initial,
+  $mws-line-height: 24px,
+);
+
+$mws-headline-6-xl: (
+  $mws-font-family: $font-face-googlesanstext,
+  $mws-font-size: 16px,
+  $mws-font-weight: $font-weight-medium,
+  $mws-letter-spacing: initial,
+  $mws-line-height: 24px,
+);
+
+// BODY
+$mws-body-sm: (
+  $mws-font-family: $font-face-googlesanstext,
+  $mws-font-size: 16px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: 0.1px,
+  $mws-line-height: 24px,
+);
+
+$mws-body-md: (
+  $mws-font-family: $font-face-googlesanstext,
+  $mws-font-size: 16px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: 0.1px,
+  $mws-line-height: 24px,
+);
+
+$mws-body-lg: (
+  $mws-font-family: $font-face-googlesanstext,
+  $mws-font-size: 16px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: 0.1px,
+  $mws-line-height: 24px,
+);
+
+$mws-body-xl: (
+  $mws-font-family: $font-face-googlesanstext,
+  $mws-font-size: 16px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: 0.1px,
+  $mws-line-height: 24px,
+);
+
+// BODY-LARGE
+$mws-body-large-sm: (
+  $mws-font-family: $font-face-googlesanstext,
+  $mws-font-size: 18px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: initial,
+  $mws-line-height: 28px,
+);
+
+$mws-body-large-md: (
+  $mws-font-family: $font-face-googlesanstext,
+  $mws-font-size: 18px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: initial,
+  $mws-line-height: 28px,
+);
+
+$mws-body-large-lg: (
+  $mws-font-family: $font-face-googlesanstext,
+  $mws-font-size: 18px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: initial,
+  $mws-line-height: 28px,
+);
+
+$mws-body-large-xl: (
+  $mws-font-family: $font-face-googlesanstext,
+  $mws-font-size: 18px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: initial,
+  $mws-line-height: 28px,
+);
+
+// CAPTION
+$mws-caption-sm: (
+  $mws-font-family: $font-face-googlesanstext,
+  $mws-font-size: 14px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: 0.15px,
+  $mws-line-height: 24px,
+);
+
+$mws-caption-md: (
+  $mws-font-family: $font-face-googlesanstext,
+  $mws-font-size: 14px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: 0.15px,
+  $mws-line-height: 24px,
+);
+
+$mws-caption-lg: (
+  $mws-font-family: $font-face-googlesanstext,
+  $mws-font-size: 14px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: 0.15px,
+  $mws-line-height: 24px,
+);
+
+$mws-caption-xl: (
+  $mws-font-family: $font-face-googlesanstext,
+  $mws-font-size: 14px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: 0.15px,
+  $mws-line-height: 24px,
+);
+
+// SMALL-TEXT
+$mws-small-text-sm: (
+  $mws-font-family: $font-face-googlesanstext,
+  $mws-font-size: 12px,
+  $mws-font-weight: $font-weight-medium,
+  $mws-letter-spacing: 0.2px,
+  $mws-line-height: 20px,
+);
+
+$mws-small-text-md: (
+  $mws-font-family: $font-face-googlesanstext,
+  $mws-font-size: 12px,
+  $mws-font-weight: $font-weight-medium,
+  $mws-letter-spacing: 0.2px,
+  $mws-line-height: 20px,
+);
+
+$mws-small-text-lg: (
+  $mws-font-family: $font-face-googlesanstext,
+  $mws-font-size: 12px,
+  $mws-font-weight: $font-weight-medium,
+  $mws-letter-spacing: 0.2px,
+  $mws-line-height: 20px,
+);
+
+$mws-small-text-xl: (
+  $mws-font-family: $font-face-googlesanstext,
+  $mws-font-size: 12px,
+  $mws-font-weight: $font-weight-medium,
+  $mws-letter-spacing: 0.2px,
+  $mws-line-height: 20px,
+);
+
+// CTA
+$mws-cta-sm: (
+  $mws-font-family: $font-face-googlesans,
+  $mws-font-size: 16px,
+  $mws-font-weight: $font-weight-medium,
+  $mws-letter-spacing: initial,
+  $mws-line-height: 24px,
+);
+
+$mws-cta-md: (
+  $mws-font-family: $font-face-googlesans,
+  $mws-font-size: 16px,
+  $mws-font-weight: $font-weight-medium,
+  $mws-letter-spacing: initial,
+  $mws-line-height: 24px,
+);
+
+$mws-cta-lg: (
+  $mws-font-family: $font-face-googlesans,
+  $mws-font-size: 16px,
+  $mws-font-weight: $font-weight-medium,
+  $mws-letter-spacing: initial,
+  $mws-line-height: 24px,
+);
+
+$mws-cta-xl: (
+  $mws-font-family: $font-face-googlesans,
+  $mws-font-size: 16px,
+  $mws-font-weight: $font-weight-medium,
+  $mws-letter-spacing: initial,
+  $mws-line-height: 24px,
+);
+
+// EYEBROW
+$mws-eyebrow-sm: (
+  $mws-font-family: $font-face-googlesanstext,
+  $mws-font-size: 14px,
+  $mws-font-weight: $font-weight-medium,
+  $mws-letter-spacing: 0.5px,
+  $mws-line-height: 24px,
+  $mws-text-transform: uppercase,
+);
+
+$mws-eyebrow-md: (
+  $mws-font-family: $font-face-googlesanstext,
+  $mws-font-size: 14px,
+  $mws-font-weight: $font-weight-medium,
+  $mws-letter-spacing: 0.5px,
+  $mws-line-height: 24px,
+  $mws-text-transform: uppercase,
+);
+
+$mws-eyebrow-lg: (
+  $mws-font-family: $font-face-googlesanstext,
+  $mws-font-size: 14px,
+  $mws-font-weight: $font-weight-medium,
+  $mws-letter-spacing: 0.5px,
+  $mws-line-height: 24px,
+  $mws-text-transform: uppercase,
+);
+
+$mws-eyebrow-xl: (
+  $mws-font-family: $font-face-googlesanstext,
+  $mws-font-size: 14px,
+  $mws-font-weight: $font-weight-medium,
+  $mws-letter-spacing: 0.5px,
+  $mws-line-height: 24px,
+  $mws-text-transform: uppercase,
+);
+
+// LABEL
+$mws-label-sm: (
+  $mws-font-family: $font-face-googlesanstext,
+  $mws-font-size: 11px,
+  $mws-font-weight: $font-weight-medium,
+  $mws-letter-spacing: 0.5px,
+  $mws-line-height: 16px,
+  $mws-text-transform: uppercase,
+);
+
+$mws-label-md: (
+  $mws-font-family: $font-face-googlesanstext,
+  $mws-font-size: 11px,
+  $mws-font-weight: $font-weight-medium,
+  $mws-letter-spacing: 0.5px,
+  $mws-line-height: 16px,
+  $mws-text-transform: uppercase,
+);
+
+$mws-label-lg: (
+  $mws-font-family: $font-face-googlesanstext,
+  $mws-font-size: 11px,
+  $mws-font-weight: $font-weight-medium,
+  $mws-letter-spacing: 0.5px,
+  $mws-line-height: 16px,
+  $mws-text-transform: uppercase,
+);
+
+$mws-label-xl: (
+  $mws-font-family: $font-face-googlesanstext,
+  $mws-font-size: 11px,
+  $mws-font-weight: $font-weight-medium,
+  $mws-letter-spacing: 0.5px,
+  $mws-line-height: 16px,
+  $mws-text-transform: uppercase,
+);
+
+// Header brand
+$mws-header-brand-22: (
+  $mws-font-family: $font-family-product-sans,
+  $mws-font-size: 22px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: 0,
+  $mws-line-height: 28px,
+);
+
+$mws-header-brand-20: (
+  $mws-font-family: $font-family-product-sans,
+  $mws-font-size: 20px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: 0,
+  $mws-line-height: 24px,
+);
+
+$mws-header-brand-18: (
+  $mws-font-family: $font-family-product-sans,
+  $mws-font-size: 18px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: 0,
+  $mws-line-height: 20px,
+);
+
+$mws-header-brand-16: (
+  $mws-font-family: $font-family-product-sans,
+  $mws-font-size: 16px,
+  $mws-font-weight: $font-weight-regular,
+  $mws-letter-spacing: 0,
+  $mws-line-height: 20px,
+);
+
+// Header Link
+$mws-header-link: (
+  $mws-font-family: $font-face-googlesans,
+  $mws-font-size: 16px,
+  $mws-font-weight: $font-weight-medium,
+  $mws-letter-spacing: 0,
+  $mws-line-height: 24px,
+  $mws-text-color: colors.$grey-700,
+);
+
+// Headline
+$fluid-1-bp: (
+  'sm': $mws-fluid-1-sm,
+  'md': $mws-fluid-1-md,
+  'lg': $mws-fluid-1-lg,
+  'xl': $mws-fluid-1-xl,
+);
+
+$fluid-2-bp: (
+  'sm': $mws-fluid-2-sm,
+  'md': $mws-fluid-2-md,
+  'lg': $mws-fluid-2-lg,
+  'xl': $mws-fluid-2-xl,
+);
+
+$headline-1-bp: (
+  'sm': $mws-headline-1-sm,
+  'md': $mws-headline-1-md,
+  'lg': $mws-headline-1-lg,
+  'xl': $mws-headline-1-xl,
+);
+
+$headline-2-bp: (
+  'sm': $mws-headline-2-sm,
+  'md': $mws-headline-2-md,
+  'lg': $mws-headline-2-lg,
+  'xl': $mws-headline-2-xl,
+);
+
+$headline-3-bp: (
+  'sm': $mws-headline-3-sm,
+  'md': $mws-headline-3-md,
+  'lg': $mws-headline-3-lg,
+  'xl': $mws-headline-3-xl,
+);
+
+$headline-4-bp: (
+  'sm': $mws-headline-4-sm,
+  'md': $mws-headline-4-md,
+  'lg': $mws-headline-4-lg,
+  'xl': $mws-headline-4-xl,
+);
+
+$headline-5-bp: (
+  'sm': $mws-headline-5-sm,
+  'md': $mws-headline-5-md,
+  'lg': $mws-headline-5-lg,
+  'xl': $mws-headline-5-xl,
+);
+
+$headline-6-bp: (
+  'sm': $mws-headline-6-sm,
+  'md': $mws-headline-6-md,
+  'lg': $mws-headline-6-lg,
+  'xl': $mws-headline-6-xl,
+);
+
+// body
+$body-bp: (
+  'sm': $mws-body-sm,
+  'md': $mws-body-md,
+  'lg': $mws-body-lg,
+  'xl': $mws-body-xl,
+);
+
+// body large
+$body-large-bp: (
+  'sm': $mws-body-large-sm,
+  'md': $mws-body-large-md,
+  'lg': $mws-body-large-lg,
+  'xl': $mws-body-large-xl,
+);
+
+// CTA
+$cta-bp: (
+  'sm': $mws-cta-sm,
+  'md': $mws-cta-md,
+  'lg': $mws-cta-lg,
+  'xl': $mws-cta-xl,
+);
+
+// Small Talk
+$small-text-bp: (
+  'sm': $mws-small-text-sm,
+  'md': $mws-small-text-md,
+  'lg': $mws-small-text-lg,
+  'xl': $mws-small-text-xl,
+);
+
+// Caption
+$caption-bp: (
+  'sm': $mws-caption-sm,
+  'md': $mws-caption-md,
+  'lg': $mws-caption-lg,
+  'xl': $mws-caption-xl,
+);
+
+// Eyebrow
+$eyebrow-bp: (
+  'sm': $mws-eyebrow-sm,
+  'md': $mws-eyebrow-md,
+  'lg': $mws-eyebrow-lg,
+  'xl': $mws-eyebrow-xl,
+);
+
+// label
+$label-bp: (
+  'sm': $mws-label-sm,
+  'md': $mws-label-md,
+  'lg': $mws-label-lg,
+  'xl': $mws-label-xl,
+);
+
+// agnostic
+$bp-agnostic: (
+  'header-brand-22': $mws-header-brand-22,
+  'header-brand-20': $mws-header-brand-20,
+  'header-brand-18': $mws-header-brand-18,
+  'header-brand-16': $mws-header-brand-16,
+  'header-link': $mws-header-link,
+);
+
+// Collections
+$headlines-type-collection-fluid: (
+  'fluid-1': $fluid-1-bp,
+  'fluid-2': $fluid-2-bp,
+);
+
+$headlines-type-collection: (
+  'headline-1': $headline-1-bp,
+  'headline-2': $headline-2-bp,
+  'headline-3': $headline-3-bp,
+  'headline-4': $headline-4-bp,
+  'headline-5': $headline-5-bp,
+  'headline-6': $headline-6-bp,
+);
+
+$all-type-collection: (
+  'body': $body-bp,
+  'large': $body-large-bp,
+  'cta': $cta-bp,
+  'caption': $caption-bp,
+  'small-text': $small-text-bp,
+  'eyebrow': $eyebrow-bp,
+  'label': $label-bp,
+  'bp-agnostic': $bp-agnostic,
+);

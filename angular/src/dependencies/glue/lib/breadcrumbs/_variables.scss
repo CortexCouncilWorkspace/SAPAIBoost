@@ -1,0 +1,7 @@
+// Glue breadcrumbs variables
+
+@use '../colors/variables' as colors-variables;
+@use '../typography/variables' as typography-variables;
+
+$font-color: colors-variables.$grey-700;
+$font-weight: typography-variables.$font-weight-regular;

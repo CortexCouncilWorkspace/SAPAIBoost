@@ -1,0 +1,44 @@
+@use '@angular/material' as mat;
+
+#feedback-list {
+	direction: ltr;
+}
+
+#feedback-list th, #feedback-list td {
+	text-align: left;
+}
+
+.glue-button {
+	margin-left: 20px;
+}
+
+.glue-button.abandon {
+  color: red;
+  border: 1px red solid;
+}
+.glue-button.abandon:hover {
+  background-color: rgb(255, 240, 240);
+  border: 1px red solid;
+}
+
+.glue-button.disabled {
+  background-color: #EEEEEE !important;
+  color: #999999;
+  border: 0px;
+}
+.glue-button.disabled:hover {
+  cursor: default;
+  @include mat.elevation(0);
+  border: 0px;
+}
+
+.glue-button--medium-emphasis {
+  border: 1px #CCCCCC solid;
+}
+.glue-button--medium-emphasis:hover {
+  border: 1px gray solid;
+}
+
+.button-container {
+	text-align: right;
+}

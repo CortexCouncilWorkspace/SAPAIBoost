@@ -1,0 +1,20 @@
+// Glue spacers variables
+
+$height-small-map: (
+  'spacer-1': 8px,
+  'spacer-2': 16px,
+  'spacer-3': 24px,
+  'spacer-4': 36px,
+  'spacer-5': 48px,
+  'spacer-6': 60px,
+  'spacer-7': 92px,
+  'spacer-8': 136px,
+);
+
+// Only spacers 5-8 include adjustments for larger breakpoints
+$height-large-map: (
+  'spacer-5': 60px,
+  'spacer-6': 80px,
+  'spacer-7': 120px,
+  'spacer-8': 180px,
+);

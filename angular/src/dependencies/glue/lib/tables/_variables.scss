@@ -1,0 +1,38 @@
+// Glue table variables
+
+@use '../colors/variables' as colors;
+
+// Base table settings.
+$border-color: colors.$grey-300;
+$row-background: rgba(colors.$white, 0.25);
+$row-background-flat: colors.$white;
+$row-background-alt: rgba(colors.$grey-900, 0.03);
+$row-background-alt-flat: colors.$grey-50;
+$padding-x: 24px;
+
+$header-fontcolor: colors.$grey-900;
+$header-iconcolor-inactive: colors.$grey-700;
+$header-iconcolor-active: colors.$grey-900;
+$header-padding: 12px;
+
+$cell-padding-x: 24px;
+$cell-padding-y: 18px;
+$cell-padding-x--sm: 10px;
+$cell-padding-vertical: 18px;
+$altrow-edge-padding: 10px;
+$altrow-edge-padding-desktop: 24px;
+
+// Comparison table settings
+$comparisontable-cell-padding-y: 18px;
+$comparisontable-bordered-cell-padding: 10px;
+$comparisontable-bordered-cell-padding-desktop: 24px;
+
+// Overflow table settings
+$overflow-gradient-color: colors.$grey-700;
+$overflow-gradient-size: 15px 100%;
+$overflow-gradient-cover-size: 15px 100%;
+
+// Stacked table settings
+$stacked-cell-padding-x: 0;
+$stacked-cell-padding-x-altrows--sm: 10px;
+$stacked-cell-padding-x-altrows: 24px;

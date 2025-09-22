@@ -1,0 +1,32 @@
+// Glue alignment modifiers
+// Classes to easily set horizontal or vertical alignment
+
+.glue-text-left,
+.glue-text-start {
+  text-align: start;
+}
+
+.glue-text-right,
+.glue-text-end {
+  text-align: end;
+}
+
+.glue-text-center {
+  text-align: center;
+}
+
+.glue-text-justify {
+  text-align: justify;
+}
+
+.glue-valign-bottom {
+  vertical-align: bottom;
+}
+
+.glue-valign-middle {
+  vertical-align: middle;
+}
+
+.glue-valign-top {
+  vertical-align: top;
+}

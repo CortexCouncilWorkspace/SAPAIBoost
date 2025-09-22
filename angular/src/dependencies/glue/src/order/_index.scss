@@ -1,0 +1,63 @@
+// Glue order component
+// Allows responsive reordering of content in flex or grid layouts
+
+@use '../breakpoints/mixins' as breakpoints;
+@use 'variables';
+
+@for $i from 1 through (variables.$max-order-count) {
+  .glue-order-#{$i} {
+    order: $i;
+  }
+}
+
+// Ordering for small breakpoint
+@for $i from 1 through (variables.$max-order-count) {
+  .glue-order-#{$i}-sm {
+    order: $i;
+  }
+}
+
+// Ordering for medium breakpoint
+@include breakpoints.bp(md) {
+  @for $i from 1 through (variables.$max-order-count) {
+    .glue-order-#{$i} {
+      order: $i;
+    }
+  }
+
+  @for $i from 1 through (variables.$max-order-count) {
+    .glue-order-#{$i}-md {
+      order: $i;
+    }
+  }
+}
+
+// Ordering for large breakpoint
+@include breakpoints.bp(lg) {
+  @for $i from 1 through (variables.$max-order-count) {
+    .glue-order-#{$i} {
+      order: $i;
+    }
+  }
+
+  @for $i from 1 through (variables.$max-order-count) {
+    .glue-order-#{$i}-lg {
+      order: $i;
+    }
+  }
+}
+
+// Ordering for extra-large breakpoint
+@include breakpoints.bp(xl) {
+  @for $i from 1 through (variables.$max-order-count) {
+    .glue-order-#{$i} {
+      order: $i;
+    }
+  }
+
+  @for $i from 1 through (variables.$max-order-count) {
+    .glue-order-#{$i}-xl {
+      order: $i;
+    }
+  }
+}

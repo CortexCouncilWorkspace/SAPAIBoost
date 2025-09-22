@@ -1,0 +1,14 @@
+// Glue accessibility component
+// Classes for adding accessibility features to elements
+
+@use 'mixins';
+
+// Visually hide an element but keep accessible to screen readers
+.glue-visually-hidden {
+  @include mixins.element-invisible;
+}
+
+// Turn off element invisibility
+.glue-visually-show {
+  @include mixins.element-invisible-off;
+}

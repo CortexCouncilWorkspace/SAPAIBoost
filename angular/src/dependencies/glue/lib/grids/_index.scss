@@ -1,0 +1,166 @@
+// Glue grids component
+// A 12-column layout grid for arranging content horizontally.
+// Use glue-spacers for vertical spacing between elements.
+
+@use '../breakpoints/mixins' as breakpoints;
+@use 'variables';
+
+.glue-grid {
+  // Only use if CSS support is detected
+  @supports (display: grid) {
+    display: grid;
+    grid-column-gap: variables.$gutter-sm;
+
+    // For mobile, base grid is 4 columns
+    grid-template-columns: repeat(
+      variables.$col-count-mobile,
+      minmax(5px, 1fr)
+    );
+
+    // Base column spans. By default, a column spans 4 base columns
+    // (100% width on mobile; 33% width on desktop)
+    @for $i from 1 through variables.$col-count {
+      .glue-grid__col--span-#{$i} {
+        grid-column-end: span variables.$col-count-mobile;
+
+        .glue-grid {
+          // adjust column count for a nested grid
+          grid-template-columns: repeat(
+            variables.$col-count-mobile,
+            minmax(5px, 1fr)
+          );
+        }
+      }
+    }
+
+    // Vertical alignment
+    .glue-grid__col--align-top {
+      align-self: start;
+    }
+
+    .glue-grid__col--align-middle {
+      align-self: center;
+    }
+
+    .glue-grid__col--align-bottom {
+      align-self: end;
+    }
+
+    // Hides a column (0-column span)
+    .glue-grid__col--span-0 {
+      display: none;
+    }
+
+    // Column span adjustments based on breakpoint modifier
+    .glue-grid__col--span-0-sm {
+      display: none;
+    }
+
+    @for $i from 1 through variables.$col-count-mobile {
+      .glue-grid__col--span-#{$i}-sm {
+        display: block;
+        grid-column-end: span $i;
+
+        .glue-grid {
+          grid-template-columns: repeat($i, minmax(5px, 1fr));
+        }
+      }
+    }
+
+    @include breakpoints.bp(md) {
+      grid-column-gap: variables.$gutter-md;
+
+      // From medium and upwards, base grid is 12 columns
+      grid-template-columns: repeat(variables.$col-count, minmax(5px, 1fr));
+
+      @for $i from 1 through variables.$col-count {
+        .glue-grid__col--span-#{$i} {
+          display: block;
+          grid-column-end: span $i;
+
+          .glue-grid {
+            grid-template-columns: repeat($i, minmax(5px, 1fr));
+          }
+        }
+      }
+
+      // Column span adjustments based on breakpoint modifier
+      .glue-grid__col--span-0-md {
+        display: none;
+      }
+
+      @for $i from 1 through variables.$col-count {
+        .glue-grid__col--span-#{$i}-md {
+          display: block;
+          grid-column-end: span $i;
+
+          .glue-grid {
+            grid-template-columns: repeat($i, minmax(5px, 1fr));
+          }
+        }
+      }
+    }
+
+    @include breakpoints.bp(lg) {
+      grid-column-gap: variables.$gutter-lg;
+
+      @for $i from 1 through variables.$col-count {
+        .glue-grid__col--span-#{$i} {
+          display: block;
+          grid-column-end: span $i;
+
+          .glue-grid {
+            grid-template-columns: repeat($i, minmax(5px, 1fr));
+          }
+        }
+      }
+
+      // Column span adjustments based on breakpoint modifier
+      .glue-grid__col--span-0-lg {
+        display: none;
+      }
+
+      @for $i from 1 through variables.$col-count {
+        .glue-grid__col--span-#{$i}-lg {
+          display: block;
+          grid-column-end: span $i;
+
+          .glue-grid {
+            grid-template-columns: repeat($i, minmax(5px, 1fr));
+          }
+        }
+      }
+    }
+
+    @include breakpoints.bp(xl) {
+      grid-column-gap: variables.$gutter-xl;
+
+      @for $i from 1 through variables.$col-count {
+        .glue-grid__col--span-#{$i} {
+          display: block;
+          grid-column-end: span $i;
+
+          .glue-grid {
+            grid-template-columns: repeat($i, minmax(5px, 1fr));
+          }
+        }
+      }
+
+      // Column span adjustments based on breakpoint modifier
+      .glue-grid__col--span-0-xl {
+        display: none;
+      }
+
+      @for $i from 1 through variables.$col-count {
+        .glue-grid__col--span-#{$i}-xl {
+          display: block;
+          grid-column-end: span $i;
+
+          .glue-grid {
+            grid-template-columns: repeat($i, minmax(5px, 1fr));
+          }
+        }
+      }
+    }
+  }
+}

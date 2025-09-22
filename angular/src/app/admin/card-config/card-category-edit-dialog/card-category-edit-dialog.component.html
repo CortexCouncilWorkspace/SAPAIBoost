@@ -1,0 +1,59 @@
+<form class="glue-form glue-mwc3" method="post" [formGroup]="editForm" (ngSubmit)="submit()">
+
+  <h2 mat-dialog-title class="dialog-heading">
+    <ng-container *ngIf="data">Edit</ng-container>
+    <ng-container *ngIf="!data">New</ng-container>
+    Action Card Category
+  </h2>
+
+  <mat-dialog-content>
+
+    <div class="glue-page">
+
+        <div class="glue-grid">
+          <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-1-top">
+            <mat-form-field appearance="outline" class="form-field glue-grid__col--span-8">
+              <mat-label>Name</mat-label>
+              <input matInput #message [formControl]="editForm.controls.name" [errorStateMatcher]="matcher" maxlength="24">
+              <mat-hint align="end">{{message.value.length}} / 24</mat-hint>
+              <ng-container *ngIf="editForm.controls.name.hasError('required') && isSubmitted">
+                <mat-error>Please enter a name.</mat-error>
+              </ng-container>
+            </mat-form-field>
+          </div>
+        
+          <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-2-top">
+            <mat-form-field appearance="outline" class="form-field glue-grid__col--span-8">
+              <mat-label>Icon</mat-label>
+              <input matInput #icon [formControl]="editForm.controls.iconSymbolName" [errorStateMatcher]="matcher" maxlength="60" style="text-transform: lowercase">
+              <mat-icon matSuffix>{{icon.value.toLowerCase()}}</mat-icon>
+              <mat-hint>Tip: Use a icon name from <a href="https://fonts.google.com/icons" target="_blank">Material Design icons</a></mat-hint>
+              <ng-container *ngIf="editForm.controls.iconSymbolName.invalid && isSubmitted">
+                <mat-error>Please enter a valid icon name from <a href="https://fonts.google.com/icons" target="_blank">Material Design icons</a>.</mat-error>
+              </ng-container>
+            </mat-form-field>
+          </div>
+          
+          <p class="glue-grid__col glue-grid__col--span-12 glue-spacer-4-top">
+            &nbsp;Will this Card Category levearge Text Generation (e.g. Gemini), Image Generation (e.g. Imagen), or Audio (e.g. Text-to-Speech)?
+          </p>
+          <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-1-top">
+            <mat-radio-group [formControl]="editForm.controls.type">
+              <mat-radio-button value="0">Text Generation</mat-radio-button>&nbsp;&nbsp;
+              <mat-radio-button value="1">Image Generation</mat-radio-button>&nbsp;&nbsp;
+              <mat-radio-button value="2">Audio Generation</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <div class="button-container">
+      <button class="glue-button glue-button--medium-emphasis delete" mat-dialog-close (click)="delete()" *ngIf="data">Delete</button>
+      <button class="glue-button glue-button--medium-emphasis" mat-dialog-close>Close</button>
+      <button class="glue-button glue-button--high-emphasis" type="submit">Save</button>
+    </div>
+  </mat-dialog-actions>
+
+</form>

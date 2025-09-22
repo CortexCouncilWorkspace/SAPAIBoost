@@ -1,0 +1,25 @@
+// Glue breakpoint component
+// Responsive design based on viewport width.
+
+@use 'mixins';
+
+// Sets up named breakpoints for use by responsive monitor component
+
+body {
+  &::after {
+    content: 'sm';
+    display: none;
+
+    @include mixins.bp(md) {
+      content: 'md';
+    }
+
+    @include mixins.bp(lg) {
+      content: 'lg';
+    }
+
+    @include mixins.bp(xl) {
+      content: 'xl';
+    }
+  }
+}

@@ -1,0 +1,118 @@
+// Placeholder selectors for Glue button styles.
+// @see https://sass-lang.com/documentation/style-rules/placeholder-selectors
+
+@use "sass:math";
+@use '../accessibility/mixins' as accessibility-mixins;
+@use '../accessibility/variables' as accessibility-variables;
+@use '../elevation/mixins' as elevation;
+@use '../typography/mixins' as typography-mixins;
+@use '../typography/variables' as typography-variables;
+@use 'mixins';
+@use 'variables';
+
+/// The base button style for all buttons/ctas to extend.
+/// @see .glue-button
+%glue-button {
+  @include typography-mixins.calculate-font-size-rem(variables.$font-size);
+  @include typography-mixins.calculate-unitless-line-height(
+    24px,
+    variables.$font-size
+  );
+  @include typography-mixins.language-font-stacks(
+    typography-variables.$font-face-googlesans
+  );
+
+  @include typography-mixins.font-smoothing(
+    typography-variables.$font-smoothing-moz,
+    typography-variables.$font-smoothing-webkit,
+    typography-variables.$font-smoothing-rendering
+  );
+
+  align-content: center;
+  align-items: center;
+  align-self: flex-start;
+  border: variables.$border-width solid transparent;
+  border-radius: 48px;
+  display: inline-flex;
+  flex-flow: row nowrap;
+  font-family: typography-variables.$font-face-googlesans,
+    typography-variables.$font-stack-latinfallback;
+  font-weight: typography-variables.$font-weight-medium;
+  justify-content: space-around;
+  letter-spacing: 0.5px;
+  margin: 8px 0;
+  max-width: 380px;
+  min-height: variables.$min-height;
+  min-width: 96px;
+  overflow: hidden;
+  padding: variables.$padding-top variables.$padding-right
+    variables.$padding-bottom variables.$padding-left;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.2s, box-shadow 0.2s, color 0.2s;
+  vertical-align: middle;
+
+  @include accessibility-mixins.hcm-mq {
+    transition: none; // turn off transitions in HCM
+  }
+
+  &:focus {
+    @include accessibility-mixins.hcm-focus;
+    transition: none;
+  }
+}
+
+/// The high emphasis button style.
+/// @see .glue-button--high-emphasis
+%glue-button--high-emphasis {
+  @include mixins.hcm-adjust(
+    accessibility-variables.$hcm-color-button-text,
+    accessibility-variables.$hcm-color-button-background,
+    accessibility-variables.$hcm-color-button-background
+  );
+  background-color: variables.$heb-bg-color;
+  color: variables.$heb-color;
+
+  &:visited {
+    @include mixins.hcm-adjust(
+      accessibility-variables.$hcm-color-button-text,
+      accessibility-variables.$hcm-color-button-background,
+      accessibility-variables.$hcm-color-button-background
+    );
+    background-color: variables.$heb-bg-color;
+    color: variables.$heb-color;
+  }
+
+  &:hover {
+    @include elevation.set-level(1);
+    @include mixins.hcm-adjust(
+      accessibility-variables.$hcm-color-button-background,
+      accessibility-variables.$hcm-color-button-text,
+      accessibility-variables.$hcm-color-button-text
+    );
+    background-color: variables.$heb-bg-color-hover;
+  }
+
+  &:focus {
+    @include mixins.hcm-adjust(
+      accessibility-variables.$hcm-color-button-background,
+      accessibility-variables.$hcm-color-button-text,
+      accessibility-variables.$hcm-color-button-text,
+      true
+    );
+    background-color: variables.$heb-bg-color-hover;
+    border-color: variables.$heb-border-color-focus-inner;
+    box-shadow: 0 0 0 2px variables.$heb-border-color-focus-center;
+  }
+
+  &:active {
+    @include mixins.hcm-adjust(
+      accessibility-variables.$hcm-color-button-background,
+      accessibility-variables.$hcm-color-button-text,
+      accessibility-variables.$hcm-color-button-text
+    );
+    @include elevation.set-level(2);
+    background-color: variables.$heb-bg-color-active;
+    border: 1px solid transparent;
+  }
+}

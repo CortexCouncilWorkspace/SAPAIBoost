@@ -1,0 +1,91 @@
+// Glue forms component
+// Layouting for forms as a whole. See individual form elements for specific
+// styling.
+
+@use 'sass:map';
+@use '../breakpoints/mixins' as breakpoints;
+@use '../colors/variables' as colors;
+@use '../spacers/mixins' as spacers;
+@use '../typography/variables' as typography-variables;
+@use '../typography';
+
+.glue-form {
+  @include spacers.spacer(6, margin, top);
+  @include spacers.spacer(7, margin, bottom);
+}
+
+.glue-form__required-note {
+  @extend %glue-small-text;
+  color: colors.$grey-700;
+  font-weight: typography-variables.$font-weight-regular;
+  line-height: map.get(
+    typography-variables.$mws-body-sm,
+    typography-variables.$mws-line-height
+  );
+  text-align: end;
+
+  @include breakpoints.bp(md) {
+    text-align: start;
+  }
+}
+
+.glue-form__fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.glue-form__group {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.glue-form__element {
+  @include spacers.spacer(2, margin, bottom);
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 48px; // min touch target size for a11y
+
+  & > label {
+    align-self: center;
+  }
+
+  // Ensure inputs fill the width
+  .glue-mwc3-select,
+  .glue-mwc3-textfield {
+    width: 100%;
+  }
+
+  // TODO(mlouie): Remove floating label once Material 2 is removed
+  &.glue-form__element--label-float {
+    @include spacers.spacer(3, padding, top);
+    position: relative;
+
+    .glue-form__floating-label {
+      @extend %glue-small-text;
+
+      font-weight: typography-variables.$font-weight-regular;
+      inset-inline-start: 0;
+      position: absolute;
+      top: -24px;
+    }
+  }
+
+  &.glue-form__element--stacked {
+    margin-bottom: 0;
+  }
+
+  &.glue-form__element--sidebyside {
+    display: inline-flex;
+
+    & + .glue-form__element--sidebyside {
+      margin-inline-start: 40px;
+    }
+  }
+}
+
+.glue-form__submission {
+  @include spacers.spacer(5, margin, top);
+  text-align: end;
+}

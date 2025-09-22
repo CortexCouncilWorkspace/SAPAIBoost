@@ -1,0 +1,50 @@
+// Glue links component
+// Styles for general links.
+// For CTA styles, use glue-buttons
+
+@use '../accessibility/mixins' as accessibility-mixins;
+@use 'mixins';
+@use 'partials';
+@use 'variables';
+
+a,
+.glue-link,
+.glue-inline-link {
+  @extend %glue-link;
+
+  .glue-font-reversed & {
+    @include mixins.base-styles(
+      variables.$reversed-color,
+      variables.$reversed-color-hover,
+      variables.$reversed-color-visited
+    );
+
+    &:hover {
+      background-color: variables.$reversed-color-bg-hover-background;
+    }
+
+    &:focus {
+      background-color: variables.$reversed-color-bg-focus-background;
+      box-shadow: 0 0 0 2px variables.$reversed-color-hover;
+    }
+
+    &:active {
+      background-color: variables.$reversed-color-bg-active-background;
+      box-shadow: none;
+    }
+
+    &:hover {
+      &:visited {
+        color: variables.$reversed-color-visited;
+      }
+    }
+  }
+}
+
+.glue-inline-tonal-link {
+  @include mixins.base-styles(
+    variables.$color-tonal,
+    variables.$color-hover,
+    variables.$color-visited
+  );
+}

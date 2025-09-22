@@ -1,0 +1,28 @@
+// Glue elevation component
+// Creates a visual indicator of what elevation level an element is on.
+
+@use 'mixins';
+
+.glue-elevation-level-0 {
+  @include mixins.set-level(0);
+}
+
+.glue-elevation-level-1 {
+  @include mixins.set-level(1);
+}
+
+.glue-elevation-level-2 {
+  @include mixins.set-level(2);
+}
+
+.glue-elevation-level-3 {
+  @include mixins.set-level(3);
+}
+
+.glue-elevation-level-4 {
+  @include mixins.set-level(4);
+}
+
+.glue-elevation-level-5 {
+  @include mixins.set-level(5);
+}

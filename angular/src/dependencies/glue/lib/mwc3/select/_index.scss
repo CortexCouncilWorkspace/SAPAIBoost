@@ -1,0 +1,38 @@
+// Design tokens for Glue theme of MWC3 select
+
+@use '../../colors/variables' as colors-variables;
+
+.glue-mwc3-select {
+  --md-filled-select-text-field-container-color: #{colors-variables.$grey-50};
+  --md-filled-select-text-field-input-text-color: #{colors-variables.$grey-800};
+  --md-filled-select-text-field-focus-label-text-color: #{colors-variables.$blue-900};
+  --md-filled-select-text-field-error-focus-label-text-color: #{colors-variables.$red-700};
+  --md-filled-select-text-field-supporting-text-color: #{colors-variables.$grey-700};
+  --md-outlined-select-text-field-outline-color: #{colors-variables.$grey-300};
+  --md-outlined-select-text-field-input-text-color: #{colors-variables.$grey-800};
+  --md-outlined-select-text-field-supporting-text-color: #{colors-variables.$grey-700};
+
+  md-filled-select,
+  md-outlined-select {
+    // Set boundaries on the width of the component
+    max-width: 320px;
+    min-width: 80px;
+    width: 100%;
+
+    // Adjust divider color
+    md-divider {
+      --md-divider-color: #{colors-variables.$grey-300};
+    }
+  }
+
+  md-filled-select::part(menu),
+  md-outlined-select::part(menu) {
+    --md-menu-container-color: #{colors-variables.$grey-0};
+    --md-menu-item-selected-container-color: #{colors-variables.$blue-100};
+
+    // Make sure this matches width of the parent.
+    // This requires menu-positioning="absolute" set on the parent.
+    // Details in http://yaqs/4900190172974415872
+    min-width: 100%;
+  }
+}

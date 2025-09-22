@@ -1,0 +1,125 @@
+<form class="glue-form glue-mwc3" method="post" [formGroup]="editForm">
+
+  <h2 mat-dialog-title class="dialog-heading">
+    <ng-container *ngIf="data">Edit</ng-container>
+    <ng-container *ngIf="!data">New</ng-container>
+    Brand Style & Tone Configuration
+  </h2>
+
+  <mat-dialog-content>
+
+    <div class="glue-page">
+
+      <div class="glue-grid">
+
+        <hr class="glue-grid__col glue-grid__col--span-12 glue-spacer-4-top">
+
+        <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-1-top">
+          <div class="button-container-left">
+            <h2 class="glue-grid__col glue-grid__col--span-12 glue-headline glue-headline--headline-5">Brand Style & Tone</h2>
+            <p class="glue-grid__col glue-grid__col--span-12 glue-spacer-1-top">
+              {{ (data && data.name) ? data.name : 'Brand' }} Style & Tone prompts are combined with the Global prompts to ground Gemini.
+            </p>
+          </div>
+        </div>
+
+        <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-4-top">
+          <mat-form-field appearance="outline" class="form-field glue-grid__col--span-8">
+            <mat-label>Name</mat-label>
+            <input matInput #name [formControl]="editForm.controls.name" [errorStateMatcher]="matcher" maxlength="32">
+            <mat-hint align="end">{{name.value.length}} / 32</mat-hint>
+            <ng-container *ngIf="editForm.controls.name.hasError('required') && isSubmitted">
+              <mat-error>Please enter a name.</mat-error>
+            </ng-container>
+          </mat-form-field>
+        </div>
+
+        <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-2-top">
+          <mat-form-field appearance="outline" class="form-field glue-grid__col--span-8">
+            <mat-label>Logo Image URL</mat-label>
+            <input matInput #logoUrl [formControl]="editForm.controls.logoUrl" [errorStateMatcher]="matcher" maxlength="1000" placeholder="e.g. https://www.gstatic.com/images/branding/productlogos/googleg/v6/24px.svg">
+            <img *ngIf="logoUrl.value.length > 0" class="logo-preview" matSuffix src="{{logoUrl.value}}" width="24" height="24"/>
+            <mat-hint>Tip: Use an icon from <a href="http://go/product-icons" target="_blank">go/product-icons</a> and served from gstatic.com.</mat-hint>
+            <ng-container *ngIf="(editForm.controls.logoUrl.hasError('pattern') || editForm.controls.logoUrl.hasError('required')) && isSubmitted">
+              <mat-error>Please enter a valid URL.</mat-error>
+            </ng-container>
+          </mat-form-field>
+        </div>
+
+        <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-3-top">
+          <mat-form-field appearance="outline" class="form-field glue-grid__col--span-8">
+            <mat-label>Prompt</mat-label>
+            <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4" cdkAutosizeMaxRows="10" 
+              #systemPrompt [formControl]="editForm.controls.systemPrompt" [errorStateMatcher]="matcher" maxlength="50000" placeholder="Enter the brand style & tone prompt to send to Gemini when this brand is selected."></textarea>
+            <mat-hint align="end">{{systemPrompt.value.length}} / 50,000</mat-hint>
+            <ng-container *ngIf="editForm.controls.systemPrompt.hasError('required') && isSubmitted">
+              <mat-error>Please enter a prompt.</mat-error>
+            </ng-container>
+          </mat-form-field>
+        </div>
+
+        <ng-container *ngIf="!isSubBrand">
+        
+          <hr class="glue-grid__col glue-grid__col--span-12 glue-spacer-4-top">
+
+          <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-1-top">
+            <div class="button-container-left">
+              <h2 class="glue-grid__col glue-grid__col--span-12 glue-headline glue-headline--headline-5">Sub-Brand Style & Tone</h2>
+              <p class="glue-grid__col glue-grid__col--span-12 glue-spacer-1-top">
+                Sub-Brand Style & Tone prompts are combined with the {{ (data && data.name) ? data.name : 'Parent' }} and Global prompts to ground Gemini.
+              </p>
+            </div>
+            <div class="button-container-right">
+              <button class="glue-button glue-button--medium-emphasis" (click)="editSubBrandConfig()">New Sub-Brand Style & Tone</button>
+            </div>
+          </div>
+
+          <ng-container *ngIf="!data || !data.subBrandConfig">
+            <p class="glue-grid__col glue-grid__col--span-12 glue-spacer-4-top">
+              <i>No Sub-brand Style & Tone prompts have been configured.</i>
+            </p>
+          </ng-container>
+
+          <ng-container *ngIf="data && data.subBrandConfig">
+            <div class="glue-grid__col glue-grid__col--span-12 glue-table__overflowcontainer glue-spacer-2-top">
+              <table class="glue-table glue-table--datatable glue-table--datatable-altrows">
+                <thead>
+                  <tr>
+                    <th scope="col">Logo</th>
+                    <th scope="col" width="140">Name</th>
+                    <th scope="col">Prompt</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <ng-container *ngFor="let brand of data.subBrandConfig">
+                  <tr>
+                    <td><img src="{{brand.logoUrl}}" width="24" height="24"/></td>
+                    <td>{{brand.name}}</td>
+                    <td>{{brand.systemPrompt ? brand.systemPrompt : '-'}}</td>
+                    <td>
+                      <button mat-icon-button class="small-icon-button" (click)="editSubBrandConfig(brand)">
+                        <mat-icon aria-hidden="false" aria-label="Edit" fontIcon="edit"></mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                </ng-container>
+              </table>
+            </div>
+          </ng-container>
+
+        </ng-container>
+
+      </div>
+
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <div class="button-container glue-spacer-4-top">
+      <button class="glue-button glue-button--medium-emphasis delete" mat-dialog-close (click)="delete()" *ngIf="data">Delete</button>
+      <button class="glue-button glue-button--medium-emphasis" mat-dialog-close>Close</button>
+      <button class="glue-button glue-button--high-emphasis" (click)="submit()">Save</button>
+    </div>
+  </mat-dialog-actions>
+
+</form>

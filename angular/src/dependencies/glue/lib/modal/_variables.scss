@@ -1,0 +1,26 @@
+// Glue modal variables
+
+@use '../colors/variables' as colors;
+
+$glue-modal-padding: 20px;
+$glue-modal-close-font-size: 44px;
+$glue-modal-close-box-size: 48px;
+$glue-modal-text-color: colors.$grey-900;
+$glue-modal-background-color: colors.$white;
+$glue-modal-background-close-color: colors.$grey-100;
+$glue-modal-background-hover-close-color: colors.$grey-200;
+$glue-modal-background-focus-close-color: colors.$grey-400;
+$glue-modal-focus-shadow-close-color: colors.$blue-600;
+$glue-modal-animation-duration: 200ms;
+$glue-modal-text-yt-color: colors.$white;
+$glue-modal-background-yt-color: colors.$black;
+$glue-modal-background-yt-close-color: rgba(colors.$white, 0.2);
+
+$glue-video-player-icon-width: 80px;
+$glue-video-player-icon-height: 56px;
+$glue-modal-dark-background-color: rgba(colors.$grey-900, 0.8);
+$glue-modal-dark-background-close-color: colors.$grey-800;
+$glue-modal-dark-background-hover-close-color: colors.$grey-100;
+$glue-modal-dark-text-color: colors.$white;
+
+$glue-z-index-modal-overlay: 900;

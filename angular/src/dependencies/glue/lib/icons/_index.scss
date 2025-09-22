@@ -1,0 +1,123 @@
+// GLue icons component
+// Styles for SVG icons
+
+@use 'sass:map';
+@use '../accessibility/mixins' as accessibility-mixins;
+@use '../accessibility/variables' as accessibility-variables;
+@use '../colors/variables' as colors;
+@use 'variables';
+
+.glue-icon {
+  @extend %glue-icon;
+}
+
+@each $size in variables.$size-map {
+  .glue-icon--#{$size} {
+    height: #{$size};
+    width: #{$size};
+  }
+}
+
+.glue-icon--arrow-forward {
+  transform: rotate(0deg);
+
+  [dir='rtl'] &,
+  :host([dir='rtl']) & {
+    transform: rotate(180deg);
+  }
+}
+
+.glue-icon--arrow-external {
+  transform: rotate(-45deg);
+
+  [dir='rtl'] &,
+  :host([dir='rtl']) & {
+    transform: rotate(-135deg);
+  }
+}
+
+.glue-icon--breadcrumb {
+  cursor: default;
+  fill: currentColor;
+  height: 16px;
+  margin: -4px 2px; //border of link is 4px
+  padding: 2px;
+  transform: rotate(0deg);
+  width: 16px;
+
+  @include accessibility-mixins.hcm-mq {
+    // Force color to match HCM text color
+    fill: accessibility-variables.$hcm-color-text;
+  }
+
+  [dir='rtl'] &,
+  :host([dir='rtl']) & {
+    transform: rotate(180deg);
+  }
+}
+
+.glue-icon--no-padding {
+  padding: 0;
+}
+
+// Sets a specific color on an icon
+
+// Basic colors
+.glue-icon--color-white {
+  fill: colors.$white;
+}
+
+.glue-icon--color-grey {
+  fill: colors.$grey-900;
+}
+
+.glue-icon--color-black {
+  fill: colors.$black;
+}
+
+.glue-icon--color-link {
+  fill: colors.$link-resting;
+}
+
+.glue-icon--color-text {
+  fill: colors.$primary-black;
+}
+
+// Colors for generic social/sharing
+.glue-icon--color-sharemail,
+.glue-icon--color-email {
+  fill: variables.$sharemail-color;
+}
+
+.glue-icon--color-sharelink {
+  fill: variables.$sharelink-color;
+}
+
+// Product specific colors. Should only be applied to that product icon.
+.glue-icon--color-facebook {
+  fill: variables.$facebook-color;
+}
+
+.glue-icon--color-twitter {
+  fill: variables.$twitter-color;
+}
+
+.glue-icon--color-x {
+  fill: variables.$x-color;
+}
+
+.glue-icon--color-youtube {
+  fill: variables.$youtube-color;
+}
+
+.glue-icon--color-linkedin {
+  fill: variables.$linkedin-color;
+}
+
+.glue-icon--color-blogger {
+  fill: variables.$blogger-color;
+}
+
+.glue-icon--color-instagram {
+  fill: variables.$instagram-color;
+}

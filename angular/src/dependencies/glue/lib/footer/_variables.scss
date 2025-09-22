@@ -1,0 +1,45 @@
+// Glue footers variables
+
+@use '../colors/variables' as colors;
+
+// User-customized variables
+$animation-timing-base: 200ms !default;
+$breakpoint-min-columns-base: 'md' !default;
+
+// general
+$background-color: colors.$grey-50;
+$header-color: colors.$grey-900;
+$link-color: colors.$grey-700;
+$link-color-hover: colors.$grey-900;
+$link-size: 14px;
+$link-letter-spacing: 0.25px;
+$link-line-height: 22px;
+$link-focus-background: colors.$grey-200;
+$divider-color: colors.$grey-300;
+
+// global section
+$logo-color: colors.$grey-700;
+$logo-height: 24px;
+$logo-width: 75px;
+$logo-margin-horizontal: 48px;
+$logo-margin-bottom: 32px;
+$global-link-padding-horizontal: 24px;
+$global-link-padding-vertical: 16px;
+$global-elem-margin-bottom: 40px;
+$global-padding-top: 40px;
+$global-padding-bottom: 40px;
+$global-padding-bottom-desktop: 48px;
+$global-dropdown-spacing: 32px;
+
+// upper/social section
+$upper-padding-vertical: 24px;
+$upper-padding-vertical-desktop: 32px;
+
+// Sitelinks section
+$column-padding-top: 24px;
+$column-padding-top-desktop: 40px;
+$column-padding-bottom-desktop: 48px;
+$column-header-padding-vertical: 24px;
+$column-margin-horizontal: 24px;
+$column-margin-horizontal-lg: 40px;
+$column-link-spacing: 16px;

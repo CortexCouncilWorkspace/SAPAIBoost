@@ -1,0 +1,22 @@
+// Design tokens for Glue theme of MWC3 switch
+
+@use '../../colors/variables' as colors-variables;
+@use '../partials';
+
+.glue-mwc3-switch {
+  @extend %glue-mwc3-container;
+  --md-switch-track-color: #{colors-variables.$grey-100};
+
+  label {
+    @extend %glue-mwc3-label;
+
+    // Adjust spacing around label
+    &:first-child {
+      margin-inline-end: 12px;
+    }
+
+    &:last-child {
+      margin-inline-start: 12px;
+    }
+  }
+}

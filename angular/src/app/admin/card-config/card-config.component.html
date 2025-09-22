@@ -1,0 +1,65 @@
+<hr class="glue-grid__col glue-grid__col--span-12 glue-spacer-5-top">
+
+<div class="button-container glue-grid__col glue-grid__col--span-12">
+  <div class="button-container-left">
+    <h2 class="glue-headline glue-headline--headline-5"><b>Action Card Configuration</b></h2>
+    <p class="glue-spacer-1-top">
+      Action cards jump-start conversations with Gemini and other AI models.<br>
+      Configure action cards using the interface below.
+    </p>
+  </div>
+  <div class="button-container-right">
+    <button class="glue-button glue-button--medium-emphasis" (click)="editActionCardCategory()">New Card Category</button>
+    <button class="glue-button glue-button--medium-emphasis" (click)="editActionCard()">New Card</button>
+  </div>
+</div>
+
+<div class="glue-table__overflowcontainer glue-grid__col glue-grid__col--span-12 glue-spacer-4-top">
+  <table class="glue-table glue-table--datatable">
+    <ng-container *ngFor="let actionCardCategory of this.configService.config.actionCardCategoryConfig" >
+      <tr class="category">
+        <td class="icon"><span class="google-symbols">{{actionCardCategory.iconSymbolName}}</span></td>
+        <td colspan="2">
+          {{actionCardCategory.name}}
+        </td>
+        <td>
+          <button mat-icon-button class="small-icon-button" (click)="move(MoveDirection.Up, actionCardCategory)">
+            <mat-icon aria-hidden="false" aria-label="Up" fontIcon="arrow_upward"></mat-icon>
+          </button>
+        </td>
+        <td>
+          <button mat-icon-button class="small-icon-button" (click)="move(MoveDirection.Down, actionCardCategory)">
+            <mat-icon aria-hidden="false" aria-label="Down" fontIcon="arrow_downward"></mat-icon>
+          </button>
+        </td>
+        <td>
+          <button mat-icon-button class="small-icon-button" (click)="editActionCardCategory(actionCardCategory)">
+            <mat-icon aria-hidden="false" aria-label="Edit" fontIcon="edit"></mat-icon>
+          </button>
+        </td>
+      </tr>
+      <ng-container *ngFor="let actionCard of actionCardCategory.actionCardConfig">
+        <tr>
+          <td></td>
+          <td>{{actionCard.name}}</td>
+          <td>{{actionCard.description}}</td>
+          <td>
+            <button mat-icon-button class="small-icon-button" (click)="move(MoveDirection.Up, actionCardCategory, actionCard)">
+              <mat-icon aria-hidden="false" aria-label="Up" fontIcon="arrow_upward"></mat-icon>
+            </button>
+          </td>
+          <td>
+            <button mat-icon-button class="small-icon-button" (click)="move(MoveDirection.Down, actionCardCategory, actionCard)">
+              <mat-icon aria-hidden="false" aria-label="Down" fontIcon="arrow_downward"></mat-icon>
+            </button>
+          </td>
+          <td>
+            <button mat-icon-button class="small-icon-button" (click)="editActionCard(actionCardCategory, actionCard)">
+              <mat-icon aria-hidden="false" aria-label="Edit" fontIcon="edit"></mat-icon>
+            </button>
+          </td>
+        </tr>
+      </ng-container>
+    </ng-container>
+  </table>
+</div>

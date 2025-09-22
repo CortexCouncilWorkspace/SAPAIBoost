@@ -1,0 +1,47 @@
+// Placeholder selectors for commonly extended Glue link classes.
+// @see https://sass-lang.com/documentation/style-rules/placeholder-selectors
+
+@use '../accessibility/mixins' as accessibility-mixins;
+@use 'mixins';
+@use 'variables';
+
+%glue-link {
+  @include mixins.base-styles(
+    variables.$color,
+    variables.$color-hover,
+    variables.$color-visited
+  );
+
+  &:hover,
+  &:focus,
+  &:active {
+    cursor: pointer;
+    outline: none;
+  }
+
+  &:hover {
+    background-color: variables.$hover-background;
+  }
+
+  &:focus {
+    @include accessibility-mixins.hcm-focus;
+    background-color: variables.$focus-background;
+    box-shadow: 0 0 0 2px variables.$shadow-color-focus;
+  }
+
+  // Override normalize css which disabled outlines. Unfortunately, there's no
+  // good way to tell this to reset back to browser default.
+  // See cl/156619168
+  // https://stackoverflow.com/a/11684199
+  // https://stackoverflow.com/a/38571103
+  &:active {
+    background-color: variables.$active-background;
+    box-shadow: none;
+    outline: auto 2px Highlight; // Firefox
+    outline: auto 5px -webkit-focus-ring-color;
+  }
+
+  img {
+    border: 0;
+  }
+}

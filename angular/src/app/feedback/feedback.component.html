@@ -1,0 +1,169 @@
+<div class="glue-spacer-4-top"></div>
+
+<section id="chat-conversation" class="glue-fullbleed">
+  <div class="glue-page">
+    <div class="glue-grid">
+      <div class="glue-grid__col glue-grid__col--span-12">
+				
+        <h1 class="glue-headline glue-headline--headline-3">
+            <span class="glue-font-weight-medium gemini-gradient">Help us improve.</span>
+        </h1>
+
+        <div class="glue-spacer-4-top"></div>
+
+        <ng-container *ngIf="hasCompleted == false">
+
+	        <div>
+		        <p class="glue-body--large">
+		        	Your ideas, insights and feedback are critical to the future direction of AI Boost Toolbox for SAP RISE. Share your thoughts and help us create something amazing.
+		        </p>
+		        <p class="glue-body--large">
+		        	Top feedback and ideas will be integrated into the tool, and you'll receive credit on the <a routerLink="/about">About</a> page.
+		        </p>
+		    	</div>
+
+	      	<div class="glue-spacer-4-top"></div>
+
+	      	<form class="glue-form glue-mwc3 " method="post" id="feedback-form" [formGroup]="feedbackForm" (ngSubmit)="submit()">
+	      		<div class="glue-grid">
+
+				      <div class="glue-grid__col glue-grid__col--span-1 glue-grid__col--span-0-md"></div>
+				      <div class="glue-grid__col glue-grid__col--span-2 glue-grid__col--span-4-md">
+				        <h2 class="glue-headline glue-headline--headline-5 glue-spacer-1-bottom">About You</h2>
+				      </div>
+				      <div class="glue-grid__col glue-grid__col--span-7 glue-grid__col--span-8-md">
+
+				      	<mat-form-field appearance="outline" class="form-field">
+							    <mat-label>Email</mat-label>
+							    <input type="email" name="email" matInput [formControl]="feedbackForm.controls.email" [errorStateMatcher]="matcher" placeholder="Ex. lorraine@google.com">
+							    <mat-hint></mat-hint>
+							    <ng-container *ngIf="feedbackForm.controls.email.hasError('email') && !feedbackForm.controls.email.hasError('required')">
+							      <mat-error>Please enter a valid email address</mat-error>
+							    </ng-container>
+							    <ng-container *ngIf="feedbackForm.controls.email.hasError('required') && hasSubmitted">
+							      <mat-error>Email is <strong>required</strong></mat-error>
+							    </ng-container>
+							  </mat-form-field>
+
+				      </div>
+
+				      <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-1-top"></div>
+
+				      <div class="glue-grid__col glue-grid__col--span-1 glue-grid__col--span-0-md"></div>
+				      <div class="glue-grid__col glue-grid__col--span-2 glue-grid__col--span-4-md">
+				        <h2 class="glue-headline glue-headline--headline-5 glue-spacer-1-bottom">Your Feedback</h2>
+				      </div>
+				      <div class="glue-grid__col glue-grid__col--span-7 glue-grid__col--span-8-md">
+				      	
+				      	<div>
+				      		<mat-radio-group [formControl]="feedbackForm.controls.feedbackType" aria-label="Select an option">
+				      			<mat-radio-button value="general">I have general feedback</mat-radio-button><br>
+									  <mat-radio-button value="bug">I'd like to report a bug</mat-radio-button><br>
+									  <mat-radio-button value="idea">I have a feature request or idea</mat-radio-button>
+									</mat-radio-group>
+							  </div>
+
+							  <div class="glue-grid__col glue-grid__col--span-4 glue-spacer-4-top"></div>
+
+				      	<mat-form-field appearance="outline" class="form-field">
+							    <mat-label>Feedback</mat-label>
+							    <textarea [formControl]="feedbackForm.controls.feedbackDetails" matInput rows="10" type="text" style="width:100%;" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="12" placeholder=""></textarea>
+							  </mat-form-field>
+
+							  <div>
+							  	<p>
+							  		How would you rate the product?
+							  	</p>
+				      		<mat-radio-group [formControl]="feedbackForm.controls.rating" aria-label="Select an option">
+				      			<mat-radio-button value="1">1 (Low)</mat-radio-button>&nbsp;
+									  <mat-radio-button value="2">2</mat-radio-button>&nbsp;
+									  <mat-radio-button value="3">3</mat-radio-button>&nbsp;
+									  <mat-radio-button value="4">4</mat-radio-button>&nbsp;
+									  <mat-radio-button value="5">5 (High)</mat-radio-button>
+									</mat-radio-group>
+							  </div>
+
+							  <div class="glue-grid__col glue-grid__col--span-4 glue-spacer-4-top"></div>
+
+							  <button class="glue-button glue-button--high-emphasis" type="submit">
+				            Submit
+				        </button>
+
+				      </div>
+
+				    </div>
+	      	</form>
+
+	      </ng-container>
+
+	      <ng-container *ngIf="hasCompleted == true">
+	      	<div>
+		        <p class="glue-body--large">
+		        	Thanks for your feedback!
+		        </p>
+		    	</div>
+
+		    	 <div class="glue-spacer-8-top"></div>
+		    </ng-container>
+
+    	</div>
+		</div>
+  </div>
+</section>
+
+<div class="glue-spacer-2-top"></div>
+
+<!-- glue footer -->
+<footer class="glue-footer glue-spacer-3-top" >
+  <h2 class="glue-visually-hidden">Footer links</h2>
+  <section class="glue-footer__global">
+    <div class="glue-footer__logo">
+      <a href="https://www.google.com" title="Google">
+        <svg role="presentation" aria-hidden="true" class="glue-footer__logo-img">
+          <use href="/assets/glue-icons.svg#google-solid-logo"></use>
+        </svg>
+      </a>
+    </div>
+
+    <ul class="glue-footer__global-links glue-no-bullet" role="list">
+      <li class="glue-footer__global-links-list-item">
+        <a class="glue-footer__link" href="https://about.google/">
+          About Google
+        </a>
+      </li>
+
+      <li class="glue-footer__global-links-list-item">
+        <a class="glue-footer__link" href="https://about.google/products/">
+          Google products
+        </a>
+      </li>
+
+      <li class="glue-footer__global-links-list-item">
+        <a class="glue-footer__link" href="https://policies.google.com/privacy">
+          Privacy
+        </a>
+      </li>
+
+      <li class="glue-footer__global-links-list-item">
+        <a class="glue-footer__link" href="https://policies.google.com/terms">
+          Terms
+        </a>
+      </li>
+    </ul>
+
+    <ul class="glue-footer__global-links glue-footer__global-links--extra glue-no-bullet"
+        role="list">
+      <li class="glue-footer__global-links-list-item
+          glue-footer__global-links-list-item--extra">
+        <a class="glue-footer__link" href="https://support.google.com/?hl=en">
+          <svg role="presentation" aria-hidden="true" class="glue-icon
+              glue-icon--24px glue-icon--footer-help">
+            <use href="/assets/glue-icons.svg#help"></use>
+          </svg>
+          Help
+        </a>
+      </li>
+    </ul>
+  </section>
+</footer>
+<!-- end glue footer -->

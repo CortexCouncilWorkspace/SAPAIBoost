@@ -1,0 +1,67 @@
+// Glue color component
+// Colors based on Google Material.
+
+@use 'variables';
+
+// Sets Glue color variables on the :root psuedo-element
+:root {
+  --glue-grey-0: #{variables.$grey-0};
+  --glue-grey-25: #{variables.$grey-25};
+  --glue-grey-50: #{variables.$grey-50};
+  --glue-grey-100: #{variables.$grey-100};
+  --glue-grey-200: #{variables.$grey-200};
+  --glue-grey-300: #{variables.$grey-300};
+  --glue-grey-400: #{variables.$grey-400};
+  --glue-grey-500: #{variables.$grey-500};
+  --glue-grey-600: #{variables.$grey-600};
+  --glue-grey-700: #{variables.$grey-700};
+  --glue-grey-800: #{variables.$grey-800};
+  --glue-grey-900: #{variables.$grey-900};
+
+  --glue-blue-50: #{variables.$blue-50};
+  --glue-blue-100: #{variables.$blue-100};
+  --glue-blue-200: #{variables.$blue-200};
+  --glue-blue-300: #{variables.$blue-300};
+  --glue-blue-400: #{variables.$blue-400};
+  --glue-blue-500: #{variables.$blue-500};
+  --glue-blue-600: #{variables.$blue-600};
+  --glue-blue-700: #{variables.$blue-700};
+  --glue-blue-800: #{variables.$blue-800};
+  --glue-blue-900: #{variables.$blue-900};
+
+  --glue-green-50: #{variables.$green-50};
+  --glue-green-100: #{variables.$green-100};
+  --glue-green-200: #{variables.$green-200};
+  --glue-green-300: #{variables.$green-300};
+  --glue-green-400: #{variables.$green-400};
+  --glue-green-500: #{variables.$green-500};
+  --glue-green-600: #{variables.$green-600};
+  --glue-green-700: #{variables.$green-700};
+  --glue-green-800: #{variables.$green-800};
+  --glue-green-900: #{variables.$green-900};
+
+  --glue-red-50: #{variables.$red-50};
+  --glue-red-100: #{variables.$red-100};
+  --glue-red-200: #{variables.$red-200};
+  --glue-red-300: #{variables.$red-300};
+  --glue-red-400: #{variables.$red-400};
+  --glue-red-500: #{variables.$red-500};
+  --glue-red-600: #{variables.$red-600};
+  --glue-red-700: #{variables.$red-700};
+  --glue-red-800: #{variables.$red-800};
+  --glue-red-900: #{variables.$red-900};
+
+  --glue-yellow-50: #{variables.$yellow-50};
+  --glue-yellow-100: #{variables.$yellow-100};
+  --glue-yellow-200: #{variables.$yellow-200};
+  --glue-yellow-300: #{variables.$yellow-300};
+  --glue-yellow-400: #{variables.$yellow-400};
+  --glue-yellow-500: #{variables.$yellow-500};
+  --glue-yellow-600: #{variables.$yellow-600};
+  --glue-yellow-700: #{variables.$yellow-700};
+  --glue-yellow-800: #{variables.$yellow-800};
+  --glue-yellow-900: #{variables.$yellow-900};
+
+  --glue-purple-100: #{variables.$purple-100};
+  --glue-purple-900: #{variables.$purple-900};
+}

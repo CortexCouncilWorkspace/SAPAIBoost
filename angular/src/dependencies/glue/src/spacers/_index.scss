@@ -1,0 +1,16 @@
+// Glue spacers component
+// Vertical spacing between components.
+// For horizontal layouting, use glue-grids.
+
+@use 'mixins';
+
+// Create spacer-1 through spacer-8 classes
+@for $i from 1 through 8 {
+  .glue-spacer-#{$i}-bottom {
+    @include mixins.spacer($i, margin, bottom);
+  }
+
+  .glue-spacer-#{$i}-top {
+    @include mixins.spacer($i, margin, top);
+  }
+}

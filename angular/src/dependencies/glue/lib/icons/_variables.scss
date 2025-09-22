@@ -1,0 +1,22 @@
+// Glue icon variables
+
+@use '../colors/variables' as colors;
+
+$size-map: (18px, 20px, 24px, 32px);
+
+// Social media colors
+$sharemail-color: colors.$red-500;
+$sharelink-color: colors.$grey-700;
+$facebook-color: #1877f2;
+$twitter-color: #1da1f2;
+$x-color: #000;
+$youtube-color: #f00;
+$linkedin-color: #0077b5;
+$blogger-color: #ff8000;
+$instagram-color: #df465f;
+
+// Placeholders
+%glue-icon {
+  display: inline-block; // inline-block needed for rotation.
+  fill: currentColor;
+}

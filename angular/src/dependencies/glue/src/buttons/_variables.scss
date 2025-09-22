@@ -1,0 +1,74 @@
+// Glue buttons variables
+
+@use 'sass:color';
+@use '../colors/variables' as colors;
+
+$border-width: 1px;
+$font-size: 16px;
+$min-height: 48px;
+$padding-bottom: 12px;
+$padding-left: 24px;
+$padding-right: $padding-left;
+$padding-top: $padding-bottom;
+
+$disabled-bg-color: colors.$grey-50;
+$disabled-text-color: colors.$grey-500;
+
+// Note that the font size must be at least 19px if paired with google blue 500
+// to meet accessibility requirements. If you want a smaller button, please use
+// a darker blue.
+$heb-color: colors.$white;
+$heb-bg-color: colors.$blue-600;
+$heb-bg-color-hover: colors.$blue-800;
+$heb-bg-color-active: colors.$blue-800;
+$heb-shadow-color: colors.$blue-500;
+$heb-shadow-color-active: colors.$grey-800;
+$heb-border-color-focus: colors.$blue-200;
+$heb-border-color-focus-inner: colors.$white;
+$heb-border-color-focus-center: colors.$blue-800;
+
+$meb-color: colors.$blue-600;
+$meb-color-hover: colors.$blue-900;
+$meb-bg-color: colors.$white;
+$meb-bg-color-hover: color.mix(colors.$white, colors.$blue-600, 96%);
+$meb-bg-color-focus: color.mix(colors.$white, colors.$blue-600, 88%);
+$meb-bg-color-active: color.mix(colors.$white, colors.$blue-600, 90%);
+$meb-shadow-color: colors.$blue-600;
+$meb-border-color: colors.$grey-700;
+$meb-border-color-active: colors.$blue-600;
+
+$leb-color: colors.$blue-600;
+$leb-color-hover: colors.$blue-900;
+$leb-bg-color: transparent;
+$leb-bg-color-hover: rgba(colors.$blue-600, .04);
+$leb-bg-color-focus: rgba(colors.$blue-600, 0.12);
+$leb-bg-color-active: rgba(colors.$blue-600, 0.1);
+$reversed-leb-bg-color-hover: color.mix(colors.$white, colors.$blue-600, 96%);
+$reversed-leb-bg-color-focus: color.mix(colors.$white, colors.$blue-600, 88%);
+$reversed-leb-bg-color-active: color.mix(colors.$white, colors.$blue-600, 90%);
+$leb-shadow-color: colors.$blue-600;
+$leb-border-color: transparent;
+$leb-border-color-active: colors.$blue-600;
+$leb-padding-left: 12px;
+$leb-padding-right: 12px;
+
+$tonal-color: colors.$blue-700;
+$tonal-color-hover: colors.$blue-900;
+$tonal-bg-color: colors.$blue-50;
+$tonal-bg-color-hover: color.mix(colors.$blue-50, colors.$blue-700, 96%);
+$tonal-bg-color-focus: color.mix(colors.$blue-50, colors.$blue-700, 88%);
+$tonal-bg-color-active: color.mix(colors.$blue-50, colors.$blue-700, 90%);
+$tonal-shadow-color: colors.$blue-600;
+$tonal-shadow-color-focus: colors.$blue-600;
+$tonal-border-color: transparent;
+
+$reversed-color: colors.$blue-400;
+$reversed-color-alternate: colors.$white;
+$reversed-color-hover: colors.$blue-900;
+$reversed-bg-color-hover: mix(colors.$white, colors.$blue-600, 96%);
+
+$icon-dimension: 18px;
+$icon-padding-left: 12px;
+$icon-padding-right: 16px;
+$icon-leb-padding-left: 8px;
+$icon-leb-padding-right: 12px;

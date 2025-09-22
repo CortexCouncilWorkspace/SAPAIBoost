@@ -1,0 +1,104 @@
+// Glue header CTA styles
+
+@use '../breakpoints/mixins' as breakpoints;
+@use '../elevation/mixins' as elevation;
+@use 'mixins';
+@use 'variables';
+
+// User-customized variable for breakpoint
+$breakpoint-nav: variables.$breakpoint-default !default;
+
+.glue-header__cta {
+  align-items: center;
+  align-content: center;
+  background-color: variables.$bg;
+  display: flex;
+  flex-direction: column-reverse;
+  min-height: variables.$bar-height;
+
+  .glue-header__bar--mobile & {
+    flex-direction: row;
+    justify-content: space-around;
+
+    @include breakpoints.bp(sm-only) {
+      width: 100%;
+
+      .glue-header--complex-stacked & {
+        display: none;
+      }
+    }
+  }
+
+  .glue-header__drawer & {
+    @include elevation.draw-shadow(-1px, 2px, 1px, 3px, 1px);
+    padding: (variables.$cta-drawer-link-padding * 0.5)
+      variables.$cta-drawer-link-padding;
+    width: 100%;
+
+    @include breakpoints.bp($breakpoint-nav) {
+      box-shadow: none;
+      padding: 0;
+    }
+  }
+
+  @include breakpoints.bp($breakpoint-nav) {
+    align-items: center;
+    box-shadow: none;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 100%;
+
+    .glue-header__container & {
+      border: none;
+    }
+  }
+
+  .glue-header__drawer--is-open & {
+    .glue-header__link {
+      display: none;
+    }
+  }
+
+  .glue-header--transparent & {
+    background: transparent;
+  }
+}
+
+// Links and button only for CTA component
+.glue-button {
+  .glue-header__cta & {
+    align-items: center;
+    align-self: auto;
+    justify-content: center;
+    margin-block: auto;
+    padding-inline: variables.$cta-link-padding;
+    white-space: nowrap;
+
+    @include breakpoints.bp(sm-only) {
+      width: 100%;
+    }
+
+    @include breakpoints.bp($breakpoint-nav) {
+      margin-inline-start: variables.$link-margin-left-spacer;
+      width: auto;
+    }
+
+    .glue-header__bar--mobile & {
+      margin-inline-start: variables.$link-margin-left-spacer;
+
+      @include breakpoints.bp(sm-only) {
+        margin-inline-start: 0;
+
+        &.glue-button--low-emphasis,
+        &.glue-button--medium-emphasis {
+          display: none;
+        }
+      }
+    }
+
+    .glue-header__drawer--is-open & {
+      margin: (variables.$cta-drawer-link-padding * 0.5) 0;
+      width: 100%;
+    }
+  }
+}

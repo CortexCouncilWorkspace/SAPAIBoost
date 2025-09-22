@@ -1,0 +1,77 @@
+<form class="glue-form glue-mwc3" method="post" [formGroup]="editForm">
+
+  <div class="glue-page">
+
+    <div class="glue-grid">
+
+      <hr class="glue-grid__col glue-grid__col--span-12 glue-spacer-4-top">
+      <h2 class="glue-grid__col glue-grid__col--span-12 glue-headline glue-headline--headline-5"><b>Global Prompt</b></h2>
+      <p class="glue-grid__col glue-grid__col--span-12 glue-spacer-1-top">
+        Global prompts are used to ground all Gemini conversations and are combined with the user-selectable Brand Style & Tone prompt.
+      </p>
+
+      <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-4-top">
+        <mat-form-field appearance="outline" class="form-field glue-grid__col--span-8">
+          <mat-label>Global Prompt</mat-label>
+          <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10" cdkAutosizeMaxRows="20"
+                #systemPrompt [formControl]="editForm.controls.systemPrompt" [errorStateMatcher]="matcher" maxlength="50000" placeholder="System prompt to ground Gemini across all conversations."></textarea>
+          <mat-hint align="end">{{systemPrompt.value.length}} / 50000</mat-hint>
+          <ng-container *ngIf="editForm.controls.systemPrompt.hasError('required') && isSubmitted">
+            <mat-error>Please enter a system prompt.</mat-error>
+          </ng-container>
+        </mat-form-field>
+      </div>
+
+      <hr class="glue-grid__col glue-grid__col--span-12 glue-spacer-6-top">
+
+      <div class="button-container glue-grid__col glue-grid__col--span-12 glue-spacer-1-top">
+        <div class="button-container-left">
+          <h2 class="glue-grid__col glue-grid__col--span-12 glue-headline glue-headline--headline-5">Brand Style & Tone</h2>
+          <p class="glue-grid__col glue-grid__col--span-12 glue-spacer-1-top">
+            Brand Style & Tone prompts are combined with the Global Prompt to ground Gemini conversations.
+          </p>
+        </div>
+        <div class="button-container-right">
+          <button class="glue-button glue-button--medium-emphasis" (click)="editBrandConfig()">New Brand Style & Tone</button>
+        </div>
+      </div>
+
+      <div class="glue-grid__col glue-grid__col--span-12 glue-table__overflowcontainer glue-spacer-4-top">
+        <table class="glue-table glue-table--datatable glue-table--datatable-altrows">
+          <thead>
+            <tr>
+              <th scope="col">Logo</th>
+              <th scope="col" width="140">Name</th>
+              <th scope="col">Prompt</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <ng-container *ngFor="let brand of this.configService.config.brandConfig">
+            <tr>
+              <td><img src="{{brand.logoUrl}}" width="24" height="24"/></td>
+              <td>{{brand.name}}</td>
+              <td>
+                <p>{{brand.systemPrompt ? brand.systemPrompt : '-'}}</p>
+                <ng-container *ngIf="brand.subBrandConfig && brand.subBrandConfig.length > 0">
+                  <p class="glue-spacer-3-top"><b>Sub-brand Configurations:</b></p>
+                  <ul class="glue-spacer-1-top">
+                    <li *ngFor="let brand of brand.subBrandConfig">
+                      <img src="{{brand.logoUrl}}" width="24" height="24"/>&nbsp;&nbsp;&nbsp;{{brand.name}}
+                    </li>
+                  </ul>
+                </ng-container>
+              </td>
+              <td>
+                <button mat-icon-button class="small-icon-button" (click)="editBrandConfig(brand)">
+                  <mat-icon aria-hidden="false" aria-label="Edit" fontIcon="edit"></mat-icon>
+                </button>
+              </td>
+            </tr>
+          </ng-container>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+</form>

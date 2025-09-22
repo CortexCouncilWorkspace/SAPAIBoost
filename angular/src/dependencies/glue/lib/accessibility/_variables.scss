@@ -1,0 +1,12 @@
+// Glue accessibility variables
+
+// Variables for CSS color keywords
+// These use CSS2 keywords, but should be updated to CSS4 keywords in the future
+$hcm-color-background: window; // To be updated to canvas
+$hcm-color-text: windowText; // To be updated to canvasText
+$hcm-color-button-background: buttonFace;
+$hcm-color-button-text: buttonText;
+$hcm-color-selected-background: highlight;
+$hcm-color-selected-text: highlightText;
+$hcm-color-link-text: linkText; // CSS4 keyword which is already supported
+$hcm-color-disabled-text: grayText;

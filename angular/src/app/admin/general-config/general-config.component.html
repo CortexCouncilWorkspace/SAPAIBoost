@@ -1,0 +1,55 @@
+<form class="glue-form glue-mwc3" method="post" [formGroup]="editForm" (ngSubmit)="submit()">
+
+  <div class="glue-page">
+
+    <div class="glue-grid">
+
+      <hr class="glue-grid__col glue-grid__col--span-12 glue-spacer-4-top">
+      <h2 class="glue-grid__col glue-grid__col--span-12 glue-headline glue-headline--headline-5"><b>Application Settings</b></h2>
+      <p class="glue-grid__col glue-grid__col--span-12 glue-spacer-1-top">
+        Gemini for X application configuration.
+      </p>
+
+      <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-4-top">
+        <mat-form-field appearance="outline" class="form-field glue-grid__col--span-8">
+          <mat-label>Application Name (locked)</mat-label>
+          <input matInput #applicationName [formControl]="editForm.controls.applicationName" [errorStateMatcher]="matcher" maxlength="32">
+          <span matTextPrefix class="app-prefix">Gemini for&nbsp;</span>
+          <ng-container *ngIf="editForm.controls.applicationName.hasError('required') && isSubmitted">
+            <mat-error>Please enter an application name.</mat-error>
+          </ng-container>
+        </mat-form-field>
+      </div>
+
+      <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-4-top">
+        <mat-form-field appearance="outline" class="form-field glue-grid__col--span-8">
+          <mat-label>Configuration Path (locked)</mat-label>
+          <input matInput #configurationPath [formControl]="editForm.controls.configurationPath" [errorStateMatcher]="matcher" maxlength="128">
+          <ng-container *ngIf="editForm.controls.applicationName.hasError('required') && isSubmitted">
+            <mat-error>Please enter a Firestore path to store the application configuration.</mat-error>
+          </ng-container>
+        </mat-form-field>
+      </div>
+
+      <hr class="glue-grid__col glue-grid__col--span-12 glue-spacer-6-top">
+      <h2 class="glue-grid__col glue-grid__col--span-12 glue-headline glue-headline--headline-5"><b>Welcome Message</b></h2>
+      <p class="glue-grid__col glue-grid__col--span-12 glue-spacer-1-top">
+        Welcome message delivered to users when they launch the application.
+      </p>
+
+      <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-4-top">
+        <mat-form-field appearance="outline" class="form-field glue-grid__col--span-8">
+          <mat-label>Welcome Message</mat-label>
+          <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4" cdkAutosizeMaxRows="8"
+                #welcomeMessage [formControl]="editForm.controls.welcomeMessage" [errorStateMatcher]="matcher" maxlength="5000" placeholder="System prompt to ground Gemini across all conversations."></textarea>
+          <mat-hint align="end">{{welcomeMessage.value.length}} / 5000</mat-hint>
+          <ng-container *ngIf="editForm.controls.welcomeMessage.hasError('required') && isSubmitted">
+            <mat-error>Please enter a welcome message.</mat-error>
+          </ng-container>
+        </mat-form-field>
+      </div>
+
+    </div>
+  </div>
+
+</form>

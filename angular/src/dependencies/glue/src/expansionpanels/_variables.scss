@@ -1,0 +1,14 @@
+// Glue expansion panels variables
+
+@use "sass:math";
+
+@use '../colors/variables' as colors;
+@use '../links/variables' as links;
+
+// User-customized variables
+$animation-timing-content-base: 200ms !default;
+
+// Internal variables
+$animation-timing-arrow: math.div($animation-timing-content-base, 2);
+$link-color: links.$color;
+$link-color-active: colors.$blue-900;

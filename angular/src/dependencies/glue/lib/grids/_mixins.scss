@@ -1,0 +1,137 @@
+// Glue grids mixins
+
+@use '../breakpoints/mixins' as breakpoints;
+@use 'variables';
+
+// Sets an element to the same width as a column in grid. It uses CSS calc as
+// the result combines % and px values. Assumes element is inside a glue-page
+// container, which sets page margins.
+// @param {number} $num-cols: The number of base grid cols to span.
+@mixin col-width($num-cols) {
+  // For mobile, if 4+ columns, width is full
+  @if ($num-cols > 3) {
+    width: 100%;
+  } @else {
+    // Otherwise calculate width based on 4 columns
+    $gutter-width: ($num-cols - 1) * variables.$gutter-sm;
+    $spacing-width: variables.$gutter-sm * 3;
+    width: calc(
+      ((100% - $spacing-width) / 4) * $num-cols + $gutter-width
+    );
+  }
+
+  // For all other breakpoints, calculate width based on 12 columns
+  @include breakpoints.bp(md) {
+    @if ($num-cols > 11) {
+      width: 100%;
+    } @else {
+      $gutter-width: ($num-cols - 1) * variables.$gutter-md;
+      $spacing-width: variables.$gutter-md * 11;
+      width: calc(
+        ((100% - $spacing-width) / 12) * $num-cols + $gutter-width
+      );
+    }
+  }
+
+  @include breakpoints.bp(lg) {
+    @if ($num-cols > 11) {
+      width: 100%;
+    } @else {
+      $gutter-width: ($num-cols - 1) * variables.$gutter-lg;
+      $spacing-width: variables.$gutter-lg * 11;
+      width: calc(
+        ((100% - $spacing-width) / 12) * $num-cols + $gutter-width
+      );
+    }
+  }
+
+  @include breakpoints.bp(xl) {
+    @if ($num-cols > 11) {
+      width: 100%;
+    } @else {
+      $gutter-width: ($num-cols - 1) * variables.$gutter-xl;
+      $spacing-width: variables.$gutter-xl * 11;
+      width: calc(
+        ((100% - $spacing-width) / 12) * $num-cols + $gutter-width
+      );
+    }
+  }
+}
+
+// Sets the margin of element to match offset spacing in grid. Sets either the
+// starting margin (inline aligned) or both margins (center aligned)
+// @param {number} $num-cols: The number of base grid cols to offset by.
+// @param {boolean} $centered: Optional. Sets both margins for a centered layout
+@mixin col-offset($num-cols, $centered: false) {
+  // For mobile, you can't offset more than 3 columns.
+  @if ($num-cols < 4) {
+    // Otherwise calculate offset based on 4 columns
+    $gutter-width: $num-cols * variables.$gutter-sm;
+    $spacing-width: variables.$gutter-sm * 3;
+    margin-inline-start: calc(
+      ((100% - $spacing-width) / 4) * $num-cols + $gutter-width
+    );
+    @if ($centered and $num-cols < 2) {
+      // Can't center an offset more than 1 column
+      margin-inline-end: calc(
+        ((100% - $spacing-width) / 4) * $num-cols + $gutter-width
+      );
+    } @else {
+      margin-inline-end: auto;
+    }
+  }
+
+  // For all other breakpoints, calculate offset based on 12 columns
+  @include breakpoints.bp(md) {
+    // For all other breakpoints, you can't offset more than 11 columns.
+    @if ($num-cols < 12) {
+      $gutter-width: $num-cols * variables.$gutter-md;
+      $spacing-width: variables.$gutter-md * 11;
+      margin-inline-start: calc(
+        ((100% - $spacing-width) / 12) * $num-cols + $gutter-width
+      );
+      @if ($centered and $num-cols < 6) {
+        // Can't center an offset more than 5 columns
+        margin-inline-end: calc(
+          ((100% - $spacing-width) / 12) * $num-cols + $gutter-width
+        );
+      } @else {
+        margin-inline-end: auto;
+      }
+    }
+  }
+
+  @include breakpoints.bp(lg) {
+    @if ($num-cols < 12) {
+      $gutter-width: $num-cols * variables.$gutter-lg;
+      $spacing-width: variables.$gutter-lg * 11;
+      margin-inline-start: calc(
+        ((100% - $spacing-width) / 12) * $num-cols + $gutter-width
+      );
+      @if ($centered and $num-cols < 6) {
+        margin-inline-end: calc(
+          ((100% - $spacing-width) / 12) * $num-cols + $gutter-width
+        );
+      } @else {
+        margin-inline-end: auto;
+      }
+    }
+  }
+
+  @include breakpoints.bp(xl) {
+    @if ($num-cols < 12) {
+      $gutter-width: $num-cols * variables.$gutter-xl;
+      $spacing-width: variables.$gutter-xl * 11;
+      margin-inline-start: calc(
+        ((100% - $spacing-width) / 12) * $num-cols + $gutter-width
+      );
+      @if ($centered and $num-cols < 6) {
+        margin-inline-end: calc(
+          ((100% - $spacing-width) / 12) * $num-cols + $gutter-width
+        );
+      } @else {
+        margin-inline-end: auto;
+      }
+    }
+  }
+}

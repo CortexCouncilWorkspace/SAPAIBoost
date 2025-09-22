@@ -1,0 +1,38 @@
+// Placeholder selectors commonly extended Glue Typography classes.
+// @see https://sass-lang.com/documentation/style-rules/placeholder-selectors
+
+@use 'mixins';
+@use 'variables';
+
+%glue-headline {
+  @include mixins.font-smoothing(
+    variables.$font-smoothing-moz,
+    variables.$font-smoothing-webkit,
+    variables.$font-smoothing-rendering
+  );
+  font-weight: variables.$headline-font-weight;
+  overflow-wrap: initial;
+  word-wrap: initial;
+}
+
+%glue-headline-5 {
+  @extend %glue-headline;
+  @include mixins.create-responsive-typography(variables.$headline-5-bp);
+}
+
+%glue-headline-6 {
+  @extend %glue-headline;
+  @include mixins.create-responsive-typography(variables.$headline-6-bp);
+}
+
+%glue-small-text {
+  @include mixins.create-responsive-typography(variables.$small-text-bp);
+}
+
+%glue-cta {
+  @include mixins.create-responsive-typography(variables.$cta-bp);
+}
+
+%glue-body-large {
+  @include mixins.create-responsive-typography(variables.$body-large-bp);
+}

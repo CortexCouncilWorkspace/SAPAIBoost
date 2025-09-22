@@ -1,0 +1,51 @@
+// Glue buttons mixins
+
+@use '../accessibility/mixins' as accessibility-mixins;
+@use '../accessibility/variables' as accessibility-variables;
+@use '../colors/variables' as colors;
+@use 'variables';
+
+// One disabled visual style for all button variants
+@mixin disable {
+  &,
+  &:hover {
+    background-color: variables.$disabled-bg-color;
+    box-shadow: none;
+    border-color: transparent;
+    color: variables.$disabled-text-color;
+
+    @include hcm-adjust(
+      accessibility-variables.$hcm-color-background,
+      accessibility-variables.$hcm-color-disabled-text,
+      accessibility-variables.$hcm-color-disabled-text
+    );
+
+    svg {
+      fill: variables.$disabled-text-color;
+
+      @include accessibility-mixins.hcm-mq {
+        fill: accessibility-variables.$hcm-color-disabled-text;
+      }
+    }
+  }
+}
+
+// Sets colors specifically for HCM. Should use CSS keywords for colors.
+// If $focus is true, explicitly set the outline as well
+@mixin hcm-adjust($bgcolor, $textcolor, $bordercolor, $focus: false) {
+  @include accessibility-mixins.hcm-mq {
+    // Disable text backplate
+    @include accessibility-mixins.hcm-forced-color;
+    background: $bgcolor;
+    border-color: $bordercolor;
+    color: $textcolor;
+
+    @if ($focus) {
+      outline: 2px solid accessibility-variables.$hcm-color-selected-background;
+    }
+
+    svg {
+      fill: $textcolor;
+    }
+  }
+}

@@ -1,0 +1,15 @@
+// Glue page component
+// Margins and padding for full page content
+
+@use 'sass:math';
+@use '../breakpoints/mixins' as breakpoints;
+@use 'variables';
+
+.glue-page {
+  @extend %glue-page;
+}
+
+.glue-fullbleed {
+  margin: 0 auto;
+  max-width: variables.$fullbleed-max-width;
+}

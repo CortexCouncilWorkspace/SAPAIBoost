@@ -1,0 +1,157 @@
+// Glue modal component
+// Modal window that takes over the viewport
+
+@use '../accessibility/mixins' as accessibility-mixins;
+@use '../accessibility/variables' as accessibility-variables;
+@use '../colors/variables' as colors;
+@use 'variables';
+
+.glue-modal {
+  background-color: variables.$glue-modal-background-color;
+  bottom: 0;
+  display: none;
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  overflow: auto;
+  padding: variables.$glue-modal-padding;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: variables.$glue-z-index-modal-overlay;
+
+  &.glue-modal-closing {
+    display: block;
+    transition: opacity variables.$glue-modal-animation-duration ease-out;
+  }
+
+  &.glue-modal--dark {
+    background-color: variables.$glue-modal-dark-background-color;
+    padding: variables.$glue-modal-close-box-size;
+  }
+
+  &.glue-modal-open {
+    display: block;
+    opacity: 1;
+    transition: opacity variables.$glue-modal-animation-duration ease-in;
+  }
+
+  .glue-modal__content-wrapper {
+    height: 100%;
+
+    iframe {
+      display: block;
+    }
+  }
+
+  &__close-btn {
+    background-color: variables.$glue-modal-background-close-color;
+    border: none;
+    border-radius: 0;
+    color: variables.$glue-modal-text-color;
+    cursor: pointer;
+    font-size: variables.$glue-modal-close-font-size;
+    height: variables.$glue-modal-close-box-size;
+    padding: 12px;
+    position: absolute;
+    inset-inline-end: 0;
+    top: 0;
+    width: variables.$glue-modal-close-box-size;
+
+    &:before,
+    &:after {
+      background-color: variables.$glue-modal-text-color;
+      border: 1px solid transparent;
+      content: ' ';
+      height: 24px;
+      left: 24px;
+      position: absolute;
+      top: 12px;
+      width: 2px;
+    }
+
+    &:before {
+      transform: rotate(45deg);
+    }
+
+    &:after {
+      transform: rotate(-45deg);
+    }
+
+    &:hover,
+    &:focus {
+      background-color: variables.$glue-modal-background-hover-close-color;
+      outline: none;
+
+      &:before,
+      &:after {
+        background-color: variables.$glue-modal-text-color;
+      }
+    }
+
+    &:focus {
+      background-color: variables.$glue-modal-background-focus-close-color;
+      box-shadow: 0 0 0 2px inset variables.$glue-modal-focus-shadow-close-color;
+    }
+
+    .glue-modal--dark & {
+      background-color: variables.$glue-modal-dark-background-close-color;
+
+      &:before,
+      &:after {
+        background-color: variables.$glue-modal-dark-text-color;
+      }
+
+      &:hover,
+      &:focus {
+        background-color: variables.$glue-modal-dark-background-hover-close-color;
+
+        &:before,
+        &:after {
+          background-color: variables.$glue-modal-text-color;
+        }
+      }
+    }
+
+    @include accessibility-mixins.hcm-mq {
+      background-color: accessibility-variables.$hcm-color-button-background;
+      border: 2px solid accessibility-variables.$hcm-color-button-text;
+      inset-inline-end: 2px;
+      top: 2px;
+
+      &:focus {
+        @include accessibility-mixins.hcm-focus;
+      }
+
+      &:before,
+      &:after {
+        background-color: accessibility-variables.$hcm-color-button-text;
+        left: 22px;
+        top: 10px;
+      }
+    }
+  }
+}
+
+.glue-modal__video-container {
+  cursor: pointer;
+  position: relative;
+
+  > img {
+    width: 100%;
+  }
+}
+
+.glue-modal__video--icon {
+  cursor: pointer;
+  height: variables.$glue-video-player-icon-height;
+  left: calc(50% - variables.$glue-video-player-icon-width / 2);
+  position: absolute;
+  top: calc(50% - variables.$glue-video-player-icon-height / 2);
+  width: variables.$glue-video-player-icon-width;
+}
+
+.glue-no-scroll {
+  overflow: hidden;
+  height: 100%;
+}

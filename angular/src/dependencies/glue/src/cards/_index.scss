@@ -1,0 +1,339 @@
+// Glue cards component
+// Cards for sectioned/grouped content
+
+@use 'sass:map';
+@use 'sass:math';
+
+@use '../accessibility/mixins' as accessibility-mixins;
+@use '../accessibility/variables' as accessibility-variables;
+@use '../breakpoints/mixins' as breakpoints;
+@use '../colors/variables' as colors;
+@use '../elevation/mixins' as elevation;
+@use '../typography/mixins' as typography-mixins;
+@use '../typography/variables' as typography-variables;
+@use 'mixins';
+@use 'variables';
+
+.glue-cards {
+  @include mixins.grid-gutter(
+    variables.$gutter-sm,
+    variables.$gutter-compact-sm
+  );
+  list-style: none;
+  margin: 0;
+
+  @include breakpoints.bp(md) {
+    @include mixins.grid-gutter(
+      variables.$gutter-md,
+      variables.$gutter-compact-md
+    );
+  }
+
+  @include breakpoints.bp(lg) {
+    @include mixins.grid-gutter(
+      variables.$gutter-lg,
+      variables.$gutter-compact-lg
+    );
+  }
+
+  @include breakpoints.bp(xl) {
+    @include mixins.grid-gutter(
+      variables.$gutter-xl,
+      variables.$gutter-compact-xl
+    );
+  }
+}
+
+.glue-card {
+  background: variables.$background;
+  border-radius: variables.$border-radius;
+  box-shadow: 0 0 0 0 transparent;
+  display: block;
+  height: 100%;
+  min-height: variables.$min-height;
+  outline: 0;
+  overflow: hidden;
+  text-decoration: none;
+  transition: box-shadow variables.$transition;
+  transform: translateZ(0);
+  width: 100%;
+
+  &:active,
+  &:hover,
+  &:focus {
+    background: variables.$background;
+
+    .glue-card__inner:before {
+      border-color: rgba(variables.$border-color, 0);
+    }
+  }
+
+  &:hover {
+    @include elevation.set-level(1);
+  }
+
+  &:active,
+  &:focus {
+    @include accessibility-mixins.hcm-focus;
+    box-shadow: 0 0 0 2px variables.$focus-border-color;
+  }
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: variables.$min-height - 2px;
+    position: relative;
+    width: 100%;
+
+    &:before {
+      border: 1px solid variables.$border-color;
+      border-radius: variables.$border-radius;
+      content: '';
+      height: 100%;
+      position: absolute;
+      transition: border variables.$transition;
+      width: 100%;
+      z-index: -1;
+    }
+  }
+
+  &__asset {
+    flex: 0 0 auto;
+    position: relative;
+    width: 100%;
+
+    img {
+      display: block;
+      width: 100%;
+    }
+
+    .glue-icon {
+      color: variables.$asset-video-white;
+      height: variables.$asset-video-size;
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: variables.$asset-video-size;
+    }
+
+    &--logo {
+      padding: variables.$content-spacing variables.$content-spacing
+        (variables.$asset-logo-spacing - variables.$content-spacing);
+
+      img {
+        height: variables.$asset-logo-size;
+        width: auto;
+      }
+    }
+
+    &--grey,
+    &--red {
+      // 2 color YouTube icon
+      &:before {
+        background: variables.$asset-video-white;
+        content: '';
+        height: math.div(variables.$asset-video-size, 2);
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: math.div(variables.$asset-video-size, 2);
+      }
+    }
+
+    &--grey {
+      .glue-icon {
+        color: variables.$asset-video-grey;
+      }
+    }
+
+    &--red {
+      .glue-icon {
+        color: variables.$asset-video-red;
+      }
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-flow: column;
+    padding: variables.$content-spacing variables.$content-spacing 0;
+    width: 100%;
+
+    &:last-child {
+      padding-bottom: variables.$content-spacing;
+    }
+
+    .glue-label {
+      color: variables.$content-eyebrow-color;
+    }
+
+    .glue-headline {
+      color: variables.$content-headline-color;
+    }
+
+    .glue-card__description,
+    .glue-caption {
+      color: variables.$content-description-color;
+    }
+
+    .glue-label,
+    .glue-headline,
+    .glue-card__description,
+    .glue-caption {
+      display: block;
+      margin-top: variables.$content-vertical-spacing;
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+  }
+
+  &__description {
+    // Duplication of .glue-body style, see lib/typography
+    @each $size, $collection in typography-variables.$body-bp {
+      @include typography-mixins.language-font-stacks(
+        map.get($collection, typography-variables.$mws-font-family)
+      );
+      @include breakpoints.bp($size) {
+        @include typography-mixins.calculate-font-size-rem(
+          map.get($collection, typography-variables.$mws-font-size)
+        );
+        @include typography-mixins.calculate-unitless-line-height(
+          map.get($collection, typography-variables.$mws-line-height),
+          map.get($collection, typography-variables.$mws-font-size)
+        );
+        font-weight: map.get(
+          $collection,
+          typography-variables.$mws-font-weight
+        );
+        letter-spacing: map.get(
+          $collection,
+          typography-variables.$mws-letter-spacing
+        );
+        text-transform: map.get(
+          $collection,
+          typography-variables.$mws-text-transform
+        );
+      }
+    }
+  }
+
+  &__cta {
+    margin-top: auto;
+    padding: variables.$cta-vertical-spacing variables.$cta-spacing
+      variables.$cta-spacing;
+
+    // removing border so high contrast rendering does not render an outline
+    .glue-button {
+      border: 0;
+      margin: 0;
+      padding: variables.$cta-padding-top variables.$cta-padding-right
+        variables.$cta-padding-bottom variables.$cta-padding-left;
+      pointer-events: none; // disables button hover state
+
+      @include accessibility-mixins.hcm-mq {
+        // Make button appear like normal link text in HCM
+        background: accessibility-variables.$hcm-color-background;
+        color: accessibility-variables.$hcm-color-link-text;
+      }
+    }
+
+    &--arrow {
+      align-self: flex-end;
+
+      .glue-button {
+        border-radius: 100%;
+
+        @include accessibility-mixins.hcm-mq {
+          background: accessibility-variables.$hcm-color-background;
+        }
+
+        .glue-icon {
+          display: block;
+          height: variables.$cta-icon-size;
+          width: variables.$cta-icon-size;
+
+          @include accessibility-mixins.hcm-mq {
+            fill: accessibility-variables.$hcm-color-link-text;
+          }
+        }
+      }
+    }
+
+    &--hover {
+      .glue-button {
+        pointer-events: auto; // in 'exceptional' circumstances, allow button hover
+      }
+    }
+  }
+
+  &--border {
+    .glue-card__asset,
+    .glue-video__info {
+      z-index: -2; // move asset behind border
+    }
+  }
+
+  &--list {
+    .glue-card__inner {
+      align-items: center;
+      flex-flow: row wrap;
+    }
+
+    .glue-card__asset {
+      align-self: stretch;
+      width: variables.$list-asset-width;
+
+      img {
+        height: 100%;
+        object-fit: cover;
+      }
+
+      &--logo {
+        align-self: center;
+        padding-block: 0;
+        padding-inline: 0 variables.$list-asset-logo-spacing;
+        width: variables.$list-asset-logo-size +
+          variables.$list-asset-logo-spacing;
+
+        img {
+          height: auto;
+          margin: auto;
+          width: 100%;
+        }
+      }
+    }
+
+    .glue-card__content {
+      order: -1;
+      padding: variables.$list-content-spacing variables.$list-content-spacing 0;
+      width: calc(100% - variables.$list-asset-width);
+
+      &:last-child {
+        padding-bottom: variables.$list-content-spacing;
+      }
+
+      .glue-label,
+      .glue-headline,
+      .glue-card__description,
+      .glue-caption {
+        margin-top: variables.$list-content-vertical-spacing;
+
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+    }
+
+    .glue-card__cta {
+      padding: variables.$list-cta-vertical-spacing variables.$list-cta-spacing
+        variables.$list-cta-spacing;
+      width: 100%;
+    }
+  }
+}

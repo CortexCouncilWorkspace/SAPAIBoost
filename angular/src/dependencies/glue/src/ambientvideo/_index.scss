@@ -1,0 +1,296 @@
+// Styles for Ambient video
+
+@use "sass:math";
+
+@use '../colors/variables' as colors;
+@use '../accessibility/mixins' as glue-accessibility-mixins;
+@use '../accessibility/variables' as glue-accessibility-variables;
+@use '../typography/variables' as typography-variables;
+
+.glue-ambient-video {
+  position: relative;
+
+  &__container {
+    border-radius: 4px;
+    width: 100%;
+  }
+
+  //Ambient button used for play/pause
+  &__button {
+    align-items: center;
+    background: none;
+    border-radius: 2px;
+    bottom: 18px;
+    display: flex;
+    height: 48px;
+    inset-inline-end: 14px;
+    justify-content: center;
+    padding: 0;
+    position: absolute;
+    width: 48px;
+
+    &:hover {
+      transition: 0.3s;
+
+      .glue-ambient-video__icon {
+        @include glue-accessibility-mixins.hcm-mq {
+          @include glue-accessibility-mixins.hcm-forced-color;
+          background-color: glue-accessibility-variables.$hcm-color-background;
+        }
+        background-color: rgba(colors.$grey-900, 1);
+      }
+
+      svg {
+        background-color: rgba(colors.$grey-900, 1);
+        border-radius: 50%;
+        fill: colors.$grey-0;
+
+        @include glue-accessibility-mixins.hcm-mq {
+          @include glue-accessibility-mixins.hcm-forced-color;
+          background-color: glue-accessibility-variables.$hcm-color-background;
+        }
+      }
+
+      .glue-ambient-video__tooltip {
+        visibility: visible;
+
+        &-play,
+        &-pause {
+          font-weight: typography-variables.$font-weight-regular;
+        }
+      }
+    }
+
+    &:focus {
+      background-color: rgba(colors.$grey-0, 0.33);
+      outline: 2px solid transparent;
+
+      .glue-ambient-video__icon {
+        @include glue-accessibility-mixins.hcm-mq {
+          @include glue-accessibility-mixins.hcm-forced-color;
+          background-color: glue-accessibility-variables.$hcm-color-background;
+        }
+        background-color: rgba(colors.$grey-900, 1);
+        opacity: 1;
+      }
+
+      .glue-ambient-video__icon::before {
+        background-color: transparent;
+        border: 2px solid colors.$grey-900;
+        border-radius: 50%;
+        content: '';
+        position: absolute;
+        display: inherit;
+        height: 36px;
+        width: 36px;
+
+        @include glue-accessibility-mixins.hcm-mq {
+          border: 2px solid glue-accessibility-variables.$hcm-color-background;
+        }
+      }
+
+      svg {
+        background-color: rgba(colors.$grey-900, 1);
+        border-radius: 50%;
+        fill: colors.$grey-0;
+
+        @include glue-accessibility-mixins.hcm-mq {
+          @include glue-accessibility-mixins.hcm-forced-color;
+          background-color: glue-accessibility-variables.$hcm-color-background;
+        }
+      }
+    }
+
+    &--paused {
+      .glue-ambient-video__tooltip-play,
+      .glue-ambient-video__icon-play {
+        text-transform: lowercase;
+        display: none;
+      }
+
+      .glue-ambient-video__tooltip-pause,
+      .glue-ambient-video__icon-pause {
+        text-transform: lowercase;
+        display: block;
+      }
+    }
+  }
+
+  &__tooltip {
+    align-items: center;
+    background-color: rgba(colors.$grey-900, 0.9);
+    border-radius: 2px;
+    bottom: 48px;
+    color: colors.$grey-0;
+    display: flex;
+    inset-inline-end: 0;
+    justify-content: center;
+    max-width: 164px;
+    min-height: 22px;
+    padding: 1px 6px;
+    position: absolute;
+    width: max-content;
+    visibility: hidden;
+    z-index: 1;
+
+    &-play {
+      display: block;
+      text-transform: lowercase;
+    }
+
+    &-pause {
+      display: none;
+      text-transform: lowercase;
+    }
+  }
+
+  &__icon {
+    align-items: center;
+    background-color: rgba(colors.$grey-900, 0.75);
+    border-radius: 50%;
+    display: flex;
+    height: 28px;
+    position: relative;
+    width: 28px;
+    justify-content: center;
+
+    &:focus {
+      outline: transparent;
+    }
+
+    @include glue-accessibility-mixins.hcm-mq {
+      @include glue-accessibility-mixins.hcm-forced-color;
+      background-color: glue-accessibility-variables.$hcm-color-background;
+    }
+
+    svg {
+      border-radius: 50%;
+      height: 16px;
+      width: 16px;
+      fill: colors.$grey-0;
+    }
+
+    &-play {
+      display: block;
+      fill: colors.$grey-0;
+
+      @include glue-accessibility-mixins.hcm-mq {
+        @include glue-accessibility-mixins.hcm-forced-color;
+        fill: glue-accessibility-variables.$hcm-color-text;
+      }
+    }
+
+    &-pause {
+      display: none;
+      fill: colors.$grey-0;
+
+      @include glue-accessibility-mixins.hcm-mq {
+        @include glue-accessibility-mixins.hcm-forced-color;
+        fill: glue-accessibility-variables.$hcm-color-text;
+      }
+    }
+  }
+
+  //Light controls
+  &--light {
+    position: relative;
+
+    .glue-ambient-video__icon {
+      background-color: rgba(colors.$grey-0, 0.75);
+      fill: colors.$grey-900;
+
+      @include glue-accessibility-mixins.hcm-mq {
+        @include glue-accessibility-mixins.hcm-forced-color;
+        background-color: glue-accessibility-variables.$hcm-color-background;
+      }
+
+      svg {
+        fill: colors.$grey-900;
+      }
+
+      &-play {
+        fill: colors.$grey-900;
+
+        @include glue-accessibility-mixins.hcm-mq {
+          @include glue-accessibility-mixins.hcm-forced-color;
+          fill: glue-accessibility-variables.$hcm-color-text;
+        }
+      }
+
+      &-pause {
+        fill: colors.$grey-900;
+
+        @include glue-accessibility-mixins.hcm-mq {
+          @include glue-accessibility-mixins.hcm-forced-color;
+          fill: glue-accessibility-variables.$hcm-color-text;
+        }
+      }
+    }
+
+    .glue-ambient-video__tooltip {
+      background-color: rgba(colors.$grey-0, 0.9);
+      color: colors.$grey-900;
+    }
+
+    .glue-ambient-video__tooltip-text {
+      color: colors.$grey-900;
+    }
+
+    .glue-ambient-video__button:hover {
+      svg {
+        background-color: rgba(colors.$grey-0, 1);
+        border-radius: 50%;
+        fill: colors.$grey-900;
+
+        @include glue-accessibility-mixins.hcm-mq {
+          @include glue-accessibility-mixins.hcm-forced-color;
+          background-color: glue-accessibility-variables.$hcm-color-background;
+        }
+      }
+
+      .glue-ambient-video__tooltip {
+        visibility: visible;
+      }
+
+      .glue-ambient-video__icon {
+        background-color: rgba(colors.$grey-0, 1);
+
+        @include glue-accessibility-mixins.hcm-mq {
+          @include glue-accessibility-mixins.hcm-forced-color;
+          background-color: glue-accessibility-variables.$hcm-color-background;
+        }
+      }
+    }
+
+    .glue-ambient-video__button:focus {
+      background-color: rgba(colors.$grey-900, 0.33);
+      border-radius: 4px;
+
+      .glue-ambient-video__icon {
+        background-color: rgba(colors.$grey-0, 1);
+        opacity: 1;
+        outline-color: colors.$grey-0;
+
+        @include glue-accessibility-mixins.hcm-mq {
+          @include glue-accessibility-mixins.hcm-forced-color;
+          background-color: glue-accessibility-variables.$hcm-color-background;
+        }
+      }
+
+      .glue-ambient-video__icon::before {
+        border: 2px solid colors.$grey-0;
+      }
+
+      svg {
+        background-color: rgba(colors.$grey-0, 1);
+        border-radius: 50%;
+        fill: colors.$grey-900;
+
+        @include glue-accessibility-mixins.hcm-mq {
+          @include glue-accessibility-mixins.hcm-forced-color;
+          background-color: glue-accessibility-variables.$hcm-color-background;
+        }
+      }
+    }
+  }
+}

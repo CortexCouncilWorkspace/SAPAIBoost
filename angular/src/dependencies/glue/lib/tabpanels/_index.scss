@@ -1,0 +1,160 @@
+// Glue tabpanels component
+// Tabbed content that swaps to expansion panels on narrow viewports
+
+@use '../accessibility/mixins' as accessibility-mixins;
+@use '../accessibility/variables' as accessibility-variables;
+@use '../spacers/mixins' as spacers;
+@use '../tabs/variables' as tabs-variables;
+@use 'variables';
+
+// Default (left-aligned) styles for tabpanels
+.glue-tabpanels {
+  // Hide Tab/Panel components until needed
+  .glue-tabpanels__panel-toggle,
+  .glue-tabpanels__page-list {
+    display: none;
+  }
+
+  // Styles for tabs
+  .glue-tabs__tablist {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  // Styles for panels
+  .glue-expansion-panel {
+    border-top: 0;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+
+    .glue-expansion-panel__toggle {
+      display: block;
+    }
+
+    .glue-expansion-panel__button {
+      border-bottom: tabs-variables.$tablist-border-size solid
+        tabs-variables.$border-color;
+      color: tabs-variables.$text-color;
+      padding: variables.$panel-toggle-padding-vertical 0;
+
+      .glue-expansion-panel__header-text {
+        color: currentColor;
+      }
+
+      .glue-expansion-panel__header-arrow {
+        fill: currentColor;
+
+        @include accessibility-mixins.hcm-mq {
+          fill: accessibility-variables.$hcm-color-text;
+        }
+      }
+
+      &:focus {
+        background: tabs-variables.$background-color-focus;
+        border-bottom-color: tabs-variables.$border-color-selected;
+        color: tabs-variables.$text-color-selected;
+
+        .glue-expansion-panel__header-text {
+          color: currentColor;
+        }
+
+        .glue-expansion-panel__header-arrow {
+          fill: currentColor;
+
+          @include accessibility-mixins.hcm-mq {
+            fill: accessibility-variables.$hcm-color-text;
+          }
+        }
+      }
+    }
+
+    .glue-expansion-panel__content {
+      & > div {
+        @include spacers.spacer(5, padding, top);
+        @include spacers.spacer(5, padding, bottom);
+        border-bottom: tabs-variables.$tablist-border-size solid
+          tabs-variables.$border-color;
+      }
+    }
+
+    &.glue-is-expanded {
+      .glue-expansion-panel__button {
+        border-bottom-color: tabs-variables.$border-color-selected;
+        color: tabs-variables.$text-color-selected;
+
+        &:focus {
+          border-bottom-color: tabs-variables.$border-color-focus;
+        }
+
+        .glue-expansion-panel__header-text {
+          color: currentColor;
+        }
+
+        .glue-expansion-panel__header-arrow {
+          fill: currentColor;
+
+          @include accessibility-mixins.hcm-mq {
+            fill: accessibility-variables.$hcm-color-text;
+          }
+        }
+      }
+    }
+  }
+
+  // Misc styles used by both tabs and panels
+  .glue-tabpanels__heading-icon {
+    margin-inline: 0 variables.$tab-centered-heading-icon-margin-right;
+    text-indent: 0;
+    vertical-align: bottom;
+
+    @include accessibility-mixins.hcm-mq {
+      fill: accessibility-variables.$hcm-color-text;
+    }
+  }
+
+  // Styles and overrides for center-aligned tabpanels
+  &.glue-tabpanels--centeredtabs {
+    // Styles for tabs
+    .glue-tabs__tablist {
+      border-bottom-width: variables.$tab-centered-border-bottom-thickness;
+      justify-content: center;
+
+      .glue-tab {
+        border: 0;
+        flex: 1 1 0;
+        margin: 0 0 (-(variables.$tab-centered-border-bottom-thickness));
+        max-width: variables.$tab-centered-max-width;
+        padding: variables.$tab-centered-padding-top 0
+          (
+            variables.$tab-centered-padding-bottom +
+              variables.$tab-centered-border-bottom-thickness
+          );
+        text-align: center;
+
+        &:after {
+          // Colored border under tab title
+          border-top-width: variables.$tab-centered-border-bottom-thickness;
+        }
+      }
+    }
+
+    // Styles for panels
+    .glue-expansion-panel {
+      .glue-expansion-panel__button {
+        border-bottom-width: variables.$tab-centered-border-bottom-thickness;
+
+        @include accessibility-mixins.hcm-mq {
+          border-bottom-width: 1px;
+        }
+      }
+
+      .glue-expansion-panel__content {
+        & > div {
+          border-bottom-width: variables.$tab-centered-border-bottom-thickness;
+        }
+      }
+    }
+  }
+}

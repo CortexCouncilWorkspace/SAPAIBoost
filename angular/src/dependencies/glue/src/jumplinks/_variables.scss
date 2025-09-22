@@ -1,0 +1,49 @@
+// Glue jumplinks variables
+
+@use '../colors/variables' as colors;
+
+$button-hover-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
+  0 1px 3px 1px rgba(60, 64, 67, 0.15);
+
+// Root
+$height: 48px;
+$max-width-xg: 1120px;
+$sm-padding: 16px;
+$md-padding: 24px;
+
+$button-transition: all 300ms ease;
+
+// Border
+$link-border-width: 2px;
+$link-border-radius: 4px;
+
+// links
+$link-height: 36px;
+
+// Colors
+$text-color: colors.$grey-700;
+$text-highlighted-color: colors.$grey-900;
+
+// BG Colors
+$link-hover-bg: colors.$grey-50;
+$link-focused-bg: colors.$grey-0;
+$link-focused-border: colors.$blue-500;
+$link-pressed-bg: colors.$grey-100;
+$link-active: colors.$grey-100;
+
+// Buttons
+$arrow-button-size: $height;
+$button-width: 20px;
+$button-gradient-left: linear-gradient(
+  269deg,
+  rgba(255, 255, 255, 0),
+  rgba(255, 255, 255) 100%
+);
+$button-gradient-right: linear-gradient(
+  269deg,
+  rgba(255, 255, 255),
+  rgba(255, 255, 255, 0)
+);
+$buttons-z-index: 100;
+
+$container-z-index: 100;

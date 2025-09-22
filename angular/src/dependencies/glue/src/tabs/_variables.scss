@@ -1,0 +1,16 @@
+// Glue tabs variables
+
+@use '../colors/variables' as colors;
+
+$tablist-border-size: 2px;
+$text-color: colors.$grey-700;
+$text-color-selected: colors.$grey-900;
+$background-color-focus: colors.$grey-100;
+$border-color: colors.$grey-100;
+$border-color-selected: colors.$blue-600;
+$border-color-focus: colors.$blue-900;
+
+// Tab styles
+$tabs-width: 64px;
+$padding-top-bottom: 16px;
+$border-size-left-right: 10px;

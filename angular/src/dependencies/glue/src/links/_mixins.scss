@@ -1,0 +1,27 @@
+// Glue links mixins
+
+@use 'variables';
+
+// Sets link text and icon colors for resting state, visited, hover, active.
+@mixin base-styles($color, $color-hover, $color-visited) {
+  background: transparent;
+  border-radius: variables.$border-radius;
+  color: $color;
+
+  // display and overflow are explicitly set so Firefox will render the
+  // background color behind the whole link area
+  display: inline;
+  overflow: hidden;
+  text-decoration: underline;
+  transition: background-color 0.2s, color 0.2s;
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: $color-hover;
+  }
+
+  &:visited {
+    color: $color-visited;
+  }
+}

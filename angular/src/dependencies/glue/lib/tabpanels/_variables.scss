@@ -1,0 +1,26 @@
+// Glue tabpanels variables
+
+@use 'sass:map';
+@use 'sass:math';
+@use '../typography/variables' as typography;
+
+// Centered tab styles
+$tab-centered-border-bottom-thickness: 4px;
+$tab-centered-max-width: 600px;
+$tab-centered-height: 80px;
+$tab-centered-padding-bottom: 24px;
+$tab-centered-padding-top: (
+  $tab-centered-height - $tab-centered-border-bottom-thickness -
+    map.get(typography.$mws-header-link, typography.$mws-line-height) -
+    $tab-centered-padding-bottom
+);
+$tab-centered-heading-icon-margin-right: 20px;
+
+// Panel styles
+$panel-toggle-height: 72px;
+$panel-toggle-padding-vertical: math.floor(
+  math.div(
+      $panel-toggle-height - $tab-centered-border-bottom-thickness -
+        map.get(typography.$mws-header-link, typography.$mws-line-height)
+    , 2)
+);

@@ -1,0 +1,14 @@
+// Glue cards mixins
+
+@use 'variables';
+
+@mixin grid-gutter($gutter, $compact-gutter) {
+  @supports (display: grid) {
+    display: grid;
+    grid-gap: $gutter $gutter;
+
+    &--compact {
+      grid-gap: $compact-gutter $compact-gutter;
+    }
+  }
+}

@@ -1,0 +1,545 @@
+// Glue filter component styles
+@use 'sass:math';
+
+@use '../accessibility/mixins' as accessibility-mixins;
+@use '../accessibility/variables' as accessibility-variables;
+@use '../breakpoints/mixins' as breakpoints-mixins;
+@use '../buttons/variables' as button-variables;
+@use '../colors/variables' as colors;
+@use '../elevation/mixins' as elevation-mixins;
+@use '../modal/variables' as modal-variables;
+@use '../spacers/mixins' as spacers-mixins;
+@use '../typography' as typography;
+@use '../typography/variables' as typography-variables;
+
+// Glue Filter variables
+@use './variables';
+
+// Default Glue Filter styles
+.glue-filter__category-item {
+  display: inline-block;
+}
+
+.glue-filter__results {
+  list-style: none;
+
+  .glue-filter__result {
+    display: none;
+
+    &.glue-filter__result--is-matching {
+      display: block;
+    }
+  }
+
+  &.glue-is-hidden {
+    display: none;
+  }
+}
+
+.glue-filter__category {
+  select {
+    width: inherit;
+  }
+}
+
+.glue-filter__chip {
+  border: 1px solid gray;
+  display: none;
+  font-family: Times;
+  font-size: 16px;
+  margin: 5px;
+  padding: 5px;
+  position: relative;
+  width: 128px;
+
+  &.glue-filter__chip--is-active {
+    display: inline-block;
+  }
+
+  &:hover {
+    cursor: pointer;
+
+    .glue-filter__chip-close-btn {
+      opacity: 1;
+    }
+  }
+}
+
+.glue-filter__chip-close-btn {
+  opacity: 0.5;
+  position: absolute;
+  right: 15px;
+  top: 10px;
+
+  &:before,
+  &:after {
+    background-color: #333;
+    content: ' ';
+    height: 10px;
+    left: 0;
+    position: absolute;
+    width: 2px;
+
+    @include accessibility-mixins.hcm-mq {
+      background-color: accessibility-variables.$hcm-color-text;
+    }
+  }
+
+  &:before {
+    transform: rotate(45deg);
+  }
+
+  &:after {
+    transform: rotate(-45deg);
+  }
+}
+
+.glue-filter__results-count {
+  display: inline-block;
+}
+
+// MWS Glue Filter styles
+.glue-filter--mws {
+  // Modal component layout and overrides
+  .glue-filter__modal-toggle {
+    margin: 0;
+
+    // Hide modal toggle when at larger viewports
+    @include breakpoints-mixins.bp(lg) {
+      display: none;
+    }
+  }
+
+  .glue-modal {
+    padding: 0;
+
+    // Layout when modal is open so controls are sticky to bottom of viewport
+    &.glue-modal-open {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;  // fallback for browsers that don't support dvh
+      height: 100dvh;
+
+      .glue-filter__modal-content {
+        flex-grow: 2;
+        margin-top: modal-variables.$glue-modal-close-box-size;
+        overflow-y: auto;
+        padding-inline: modal-variables.$glue-modal-padding;
+      }
+
+      .glue-filter__modal-controls {
+        @include elevation-mixins.draw-shadow(-1px, 2px, 1px, 3px, 1px);
+        @include spacers-mixins.spacer(2, padding, bottom);
+        @include spacers-mixins.spacer(2, padding, top);
+        padding-inline: modal-variables.$glue-modal-padding;
+      }
+    }
+
+    // Display modal content inline when at larger viewports
+    @include breakpoints-mixins.bp(lg) {
+      display: block;
+      opacity: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    .glue-filter__reset-all {
+      // Include space so the focus ring isn't cut off
+      @include breakpoints-mixins.bp(lg) {
+        margin-inline-start: 2px;
+      }
+    }
+
+    .glue-filter__show-results {
+      display: inline-block;
+    }
+
+    .glue-modal__close-btn,
+    .glue-filter__show-results,
+    .glue-filter__results-status {
+      // Hide modal controls and output when at larger viewports
+      @include breakpoints-mixins.bp(lg) {
+        display: none;
+      }
+    }
+  }
+
+  // Expansion Panels component layout and overrides
+  .glue-expansion-panels {
+    .glue-expansion-panels__header {
+      @include spacers-mixins.spacer(2, padding, bottom);
+      @include spacers-mixins.spacer(2, padding, top);
+
+      @include breakpoints-mixins.bp(lg) {
+        padding-top: 0;
+      }
+
+      .glue-headline {
+        color: colors.$grey-700;
+      }
+    }
+
+    .glue-expansion-panel {
+      border-top: 0;
+    }
+
+    .glue-expansion-panel__header-text {
+      color: colors.$grey-900;
+      line-height: variables.$filter-expansion-panel-header-line-height;
+    }
+
+    .glue-expansion-panel__header-arrow {
+      fill: colors.$grey-900;
+      align-self: center;
+
+      @include accessibility-mixins.hcm-mq {
+        fill: accessibility-variables.$hcm-color-text;
+      }
+    }
+
+    .glue-expansion-panel__button {
+      // Adjust border display
+      border-top: 1px solid colors.$grey-300;
+      border-bottom-width: 1px;
+      padding: 16px 0;
+
+      @include breakpoints-mixins.bp(lg) {
+        padding: 27px 0;
+      }
+
+      &:focus,
+      &:focus-within {
+        .glue-expansion-panel__header-text {
+          color: colors.$blue-800;
+        }
+
+        .glue-expansion-panel__header-arrow {
+          fill: colors.$blue-800;
+          align-self: center;
+
+          @include accessibility-mixins.hcm-mq {
+            fill: accessibility-variables.$hcm-color-text;
+          }
+        }
+      }
+
+      &:active,
+      &:focus {
+        border-color: colors.$blue-800;
+        border-bottom-width: 1px;
+        padding: 16px 0;
+
+        @include breakpoints-mixins.bp(lg) {
+          padding: 27px 0;
+        }
+      }
+    }
+
+    .glue-expansion-panel__content > div {
+      @include spacers-mixins.spacer(2, padding, bottom);
+      @include spacers-mixins.spacer(1, padding, top);
+    }
+
+    .glue-is-expanded {
+      .glue-expansion-panel__button {
+        &:active,
+        &:focus {
+          border-color: colors.$blue-800;
+          border-bottom-width: 1px;
+        }
+      }
+    }
+  }
+
+  // Horizontal layout elements
+  .glue-filter__filter-title {
+    @include spacers-mixins.spacer(2, margin, bottom);
+    color: colors.$grey-700;
+    font-weight: typography-variables.$font-weight-medium;
+  }
+
+  .glue-filter__filter-controls {
+    @include spacers-mixins.spacer(3, margin, bottom);
+    text-align: end;
+
+    @include breakpoints-mixins.bp(lg) {
+      @include spacers-mixins.spacer(2, margin, top);
+    }
+
+    .glue-filter__reset-all {
+      margin: 0;
+    }
+  }
+
+  // Category styles
+  .glue-filter__category {
+    margin-bottom: 0;
+
+    .glue-select,
+    .glue-mwc3-select {
+      @include spacers-mixins.spacer(2, margin, bottom);
+
+      @include breakpoints-mixins.bp(md) {
+        margin-bottom: 0;
+      }
+    }
+
+    & > li {
+      display: block;
+    }
+  }
+
+  // Styles for reset button
+  .glue-filter__reset-all {
+    display: none;
+
+    &--filtered {
+      // Show reset button only when a filter is active
+      display: inline-flex;
+    }
+  }
+
+  // Styles for chips
+  .glue-filter__chips-bar {
+    @include spacers-mixins.spacer(3, margin, top);
+    @include spacers-mixins.spacer(3, margin, bottom);
+    display: flex;
+    flex-wrap: wrap;
+
+    @include breakpoints-mixins.bp(lg) {
+      align-items: center;
+      justify-content: center;
+    }
+
+    .glue-headline {
+      @include spacers-mixins.spacer(2, margin, bottom);
+      flex-basis: 100%;
+
+      @include breakpoints-mixins.bp(lg) {
+        flex-basis: auto;
+        margin-bottom: 0;
+        margin-inline-end: 24px;
+      }
+    }
+
+    .glue-filter__chips {
+      margin-block: 0;
+    }
+
+    .glue-filter__reset-all {
+      // Styles for chip reset button
+      border: 1px solid transparent;
+      color: button-variables.$leb-color;
+      display: none;
+      letter-spacing: normal;
+      min-height: variables.$chip-icon-size;
+      padding-inline: (2 * variables.$chip-padding-horizontal);
+
+      &--filtered {
+        // Show reset button only when a filter is active
+        display: inline-flex;
+      }
+
+      &:hover,
+      &:focus,
+      &:active {
+        background: button-variables.$leb-bg-color-hover;
+        border-color: transparent;
+        color: button-variables.$leb-color-hover;
+      }
+
+      &:focus {
+        background: button-variables.$leb-bg-color-focus;
+      }
+
+      &:active {
+        background: button-variables.$leb-bg-color-active;
+      }
+    }
+  }
+
+  .glue-filter__chips {
+    @include spacers-mixins.spacer(3, margin, top);
+    @include spacers-mixins.spacer(3, margin, bottom);
+  }
+
+  .glue-filter__chip {
+    align-items: center;
+    background: variables.$chip-bgcolor;
+    border: 1px solid variables.$chip-border;
+    border-radius: variables.$chip-border-radius;
+    color: variables.$chip-color;
+    cursor: pointer;
+    display: none;
+    font-family: typography-variables.$font-family-google-sans;
+    font-size: 14px;
+    font-weight: typography-variables.$font-weight-medium;
+    line-height: variables.$chip-icon-size;
+    margin-inline: 0 variables.$chip-margin-horizontal;
+    padding-block: variables.$chip-padding-vertical;
+    padding-inline: (2 * variables.$chip-padding-horizontal)
+      variables.$chip-padding-horizontal;
+    width: auto;
+
+    &:hover {
+      background-color: variables.$chip-hover-bgcolor;
+      border-color: variables.$chip-hover-border;
+      color: variables.$chip-hover-color;
+    }
+
+    &:active,
+    &:focus {
+      @include accessibility-mixins.hcm-focus;
+      background-color: variables.$chip-focus-bgcolor;
+      border-color: variables.$chip-focus-border;
+      color: variables.$chip-focus-color;
+    }
+
+    &.glue-filter__chip--is-active {
+      display: inline-flex;
+
+      .glue-filter__chip-checkmark {
+        transition: width variables.$chip-selected-timing
+            variables.$standard-curve-timing-function,
+          opacity variables.$chip-icon-opacity-timing linear
+            math.div(variables.$chip-selected-timing, 2);
+
+        path {
+          stroke-dashoffset: 0;
+          transform: translate(0, 0);
+          transition: stroke-dashoffset variables.$chip-selected-timing
+              variables.$standard-curve-timing-function
+              math.div(variables.$chip-selected-timing, 2),
+            transform variables.$chip-selected-timing
+              variables.$standard-curve-timing-function;
+        }
+      }
+    }
+  }
+
+  .glue-filter__chip-checkmark {
+    display: block;
+    height: variables.$chip-icon-size;
+    fill: none;
+    margin-inline-end: 6px;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none; // Let clicks pass through to button element
+    stroke-width: 2px;
+    stroke: currentColor;
+    transition: width variables.$chip-unselected-timing
+        variables.$standard-curve-timing-function,
+      opacity variables.$chip-icon-opacity-timing linear
+        math.div(variables.$chip-unselected-timing, 2);
+    width: 0;
+
+    path {
+      // Based on Material chips setup
+      stroke-dasharray: 29.7833385;
+      stroke-dashoffset: 29.7833385;
+      transform: translate(-100%, 0);
+      transition: stroke-dashoffset variables.$chip-unselected-timing
+          variables.$standard-curve-timing-function
+          math.div(variables.$chip-unselected-timing, 2),
+        transform variables.$chip-unselected-timing
+          variables.$standard-curve-timing-function;
+    }
+  }
+
+  // Chip close icon
+  .glue-filter__chip-close-btn {
+    height: variables.$chip-icon-size;
+    margin-inline-start: variables.$chip-padding-horizontal;
+    opacity: 1;
+    right: inherit;
+    position: relative;
+    top: inherit;
+    width: variables.$chip-icon-size;
+
+    &:before,
+    &:after {
+      background-color: variables.$chip-color;
+      content: ' ';
+      height: 13px;
+      left: 8px;
+      position: absolute;
+      top: 2px;
+      width: 2px;
+
+      @include accessibility-mixins.hcm-mq {
+        background-color: accessibility-variables.$hcm-color-text;
+      }
+    }
+
+    &:before {
+      transform: rotate(45deg);
+    }
+
+    &:after {
+      transform: rotate(-45deg);
+    }
+  }
+
+  // Style overrides for primary chips
+  .glue-filter__chips--primary {
+    .glue-filter__chip {
+      background: variables.$chip-bgcolor;
+      border: 1px solid variables.$chip-border;
+      color: variables.$chip-color;
+      display: inline-flex;
+      padding-inline: 10px (2 * variables.$chip-padding-horizontal);
+
+      &:hover {
+        background-color: variables.$chip-hover-bgcolor;
+        border-color: variables.$chip-hover-border;
+        color: variables.$chip-hover-color;
+      }
+
+      &:active,
+      &:focus {
+        background-color: variables.$chip-focus-bgcolor;
+        border-color: variables.$chip-focus-border;
+        color: variables.$chip-focus-color;
+      }
+
+      &.glue-filter__chip--is-active {
+        background: variables.$chip-selected-bgcolor;
+        border-color: variables.$chip-selected-bgcolor;
+        color: variables.$chip-selected-color;
+
+        .glue-filter__chip-checkmark {
+          opacity: 1;
+          width: variables.$chip-icon-size;
+        }
+
+        &:hover,
+        &:focus,
+        &:active {
+          background-color: variables.$chip-selected-hover-bgcolor;
+        }
+      }
+    }
+  }
+
+  // Styles for results
+  .glue-filter__results {
+    @include spacers-mixins.spacer(2, margin, top);
+
+    @include breakpoints-mixins.bp(lg) {
+      margin-top: 0;
+    }
+  }
+
+  // Container for results status (count of results)
+  .glue-filter__results-status {
+    @include spacers-mixins.spacer(2, margin, bottom);
+    @extend %glue-small-text;
+    color: colors.$grey-700;
+    display: block;
+    font-weight: typography-variables.$font-weight-regular;
+
+    @include breakpoints-mixins.bp(lg) {
+      @include spacers-mixins.spacer(3, margin, bottom);
+    }
+  }
+}

@@ -1,0 +1,567 @@
+#chat-main {
+  position: relative;
+  height: calc(100% - 280px);
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  margin-top: 80px;
+}
+
+.full-height {
+  position: relative;
+  height: 100%;
+}
+
+#chat-conversation {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  overflow-y: scroll;
+  padding: 30px 30px 30px 0px;
+}
+
+#chat-panel {
+  display: none;
+  overflow: clip;
+  width: 65%;
+  right: 0;
+  float: right;
+  background-color: var(--glue-grey-200);
+  height: 100%;
+  padding: 20px;
+  position: relative;
+  background-image: url('/assets/gemini_sparkle_animated.gif');
+  background-size: 40%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#chat-panel-loading {
+  display:flex; 
+  justify-content:center;
+  align-items:center;
+  height: 100%;
+  margin-top: 70px;
+}
+
+#doc-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background-color: var(--glue-grey-200);
+}
+
+#doc-header button {
+  margin-top: 0px;
+  background-color: var(--glue-grey-200);
+  color: var(--glue-grey-800);
+  float: right;
+}
+
+#doc-header button:hover {
+  color: var(--glue-blue-400);
+}
+
+#chat-main.panel-layout #chat-conversation {
+  width: 35%;
+  padding: 30px 10px 30px 0px;
+}
+
+#chat-main.panel-layout #chat-panel {
+  display: block;
+}
+
+#chat-main.panel-layout #chat-panel iframe {
+  margin-top: -60px;
+  height: calc(100% + 60px);
+}
+
+.google-symbols {
+  font-variation-settings:
+    'wght' 300,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+div.message {
+  clear: both;
+}
+
+.message.user div.outer-container {
+  display: flex;
+}
+
+.message.user img.photo {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin: 14px 10px 0px 0px;
+  float: left;
+}
+
+.message.user div.container {
+  background-color: #F1F3F4;
+  border-radius: 14px;
+  padding: 20px;
+  margin: 0 0 20px 0;
+  float: left;
+  flex-grow: 1;
+}
+
+.message.user a.doc-link {
+  float: left;
+  margin-right: 20px;
+}
+
+.message.user div.file {
+  width: 210px;
+  margin: 20px 0px 20px 0px;
+  background: var(--glue-blue-50);
+  border: 1px solid var(--glue-blue-500);
+  border-radius: 10px;
+  clear: both;
+}
+
+.message.user div.file div.thumbnail {
+  padding: 20px 20px 15px 20px;
+}
+
+.message.user div.file div.nameContainer {
+  clear:both;
+  height: 40px;
+}
+
+.message.user div.file .icon {
+  float: left;
+  margin: 0px 0px 0px 20px;
+}
+
+.message.user div.file .name {
+  float:left;
+  margin: 1px 0px 0px 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 140px;
+}
+
+.message.info {
+  background: no-repeat 0px 16px url("/assets/info.svg");
+  padding-left: 40px;
+}
+
+.message.info p {
+  background-color: #E8F0FE;
+  border-radius: 14px;
+  padding: 20px;
+  margin: 0 0 20px 0;
+}
+
+.message.widget {
+  padding-left: 40px;
+  margin-bottom: 20px;
+}
+.message.widget p {
+  padding: 0px;
+  margin: 0 0 20px 0;
+}
+
+
+.message.bot, .message.app, .message.loading {
+  background: no-repeat 0px 16px url("/assets/gemini_sparkle.svg");
+  padding-left: 40px;
+}
+
+.message.bot p, .message.loading p {
+  background-color: #F1F3F4;
+  border-radius: 14px;
+  padding: 20px;
+  margin: 0 0 20px 0;
+}
+
+.message.app .bubble {
+  background-color: #F1F3F4;
+  border-radius: 14px;
+  padding: 20px;
+  margin: 0 0 20px 0;
+}
+
+.message.app .bubble button.glue-button {
+  margin-top:20px;
+}
+
+.message.bot p {
+  margin: 0px;
+}
+
+.message.bot .bot-response-buttons {
+  margin: 0 0 20px 0;
+  text-align: right;
+}
+
+.message.bot .bot-response-buttons button {
+  background-color: transparent;
+  color: gray;
+  width: 50px;
+}
+
+.message.bot .bot-response-buttons button span {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 300,
+    'GRAD' 1,
+    'opsz' 24;
+}
+
+.message.bot .bot-response-buttons button.selected span {
+  animation-duration: .2s;
+  animation-name: bot-response-selected-animation;
+  animation-timing-function: ease-out;
+  font-variation-settings:
+    'FILL' 1;
+}
+
+.message.bot .bot-response-buttons button.selected.copy-button span {
+  animation-duration: .3s;
+  animation-name: bot-response-selected-reset-animation;
+  animation-timing-function: ease-in-out;
+  font-variation-settings:
+    'FILL' 0;
+}
+
+@keyframes bot-response-selected-animation {
+  0% {
+    font-variation-settings: 'FILL' 0;
+  }
+  100% {
+    font-variation-settings: 'FILL' 1;
+  }
+}
+
+@keyframes bot-response-selected-reset-animation {
+  0% {
+    font-variation-settings: 'FILL' 0;
+  }
+  100% {
+    font-variation-settings: 'FILL' 1;
+  }
+}
+
+.message.bot .bot-response-buttons button:hover {
+  background-color: rgba(225, 225, 225, 1);
+}
+
+.message.botAudio {
+  background: no-repeat 0px 16px url("/assets/gemini_sparkle.svg?v=2");
+  padding-left: 40px;
+}
+
+.message.botAudio audio {
+  width: 50%;
+  float: left;
+}
+
+.message.botAudio button.glue-button {
+  float: left;
+  clear: none;
+  margin: 0px 0px 0px 20px;
+  padding: 12px 28px 12px 28px;
+  background-color: rgb(215, 230, 255);
+}
+
+.message.botAudio button.glue-button:hover {
+  box-shadow: none !important;
+  background-color: rgb(199, 228, 255);
+}
+
+.message.botAudio audio::-webkit-media-controls-panel {
+  background: linear-gradient(74deg,
+		rgb(215, 230, 255) 0,
+		rgb(199, 228, 255) 50%,
+		rgb(220, 226, 255) 90%,
+    rgb(236,220, 251) 100%);
+}
+
+.message.botAudio audio::-webkit-media-controls-mute-button {
+  background-color: var(--glue-blue-50);
+  border-radius: 50%;
+}
+
+.message.botAudio audio::-webkit-media-controls-mute-button:hover {
+  background-color: white;
+}
+
+.message.botAudio audio::-webkit-media-controls-play-button {
+  background-color: var(--glue-blue-50);
+  border-radius: 50%;
+}
+
+.message.botAudio audio::-webkit-media-controls-play-button:hover {
+  background-color: white;
+  
+}
+
+.message.botAudio .bubble {
+  background-color: #F1F3F4;
+  border-radius: 14px;
+  padding: 20px;
+  margin: 0 0 20px 0;
+}
+
+.message.botImage {
+  background: no-repeat 0px 16px url("/assets/gemini_sparkle.svg?v=2");
+  padding-left: 40px;
+}
+
+.message.botImage .bubble {
+  background-color: #F1F3F4;
+  border-radius: 14px;
+  padding: 20px;
+  margin: 0 0 20px 0;
+}
+
+.message.botImage .image-container {
+  width: 50%;
+  padding:10px;
+  display: inline-block;
+  position: relative;
+}
+
+.image-container:hover .download {
+  visibility: visible;
+}
+
+.image-container .download {
+  visibility: hidden;
+}
+
+.message.botImage .bubble .download {
+  float: left;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 30px;
+  width: 40px;
+  height: 40px;
+  font-weight: lighter;
+  color: white;
+  text-align: center;
+  background-color: white;
+  background: radial-gradient(40px circle at 20px 20px, #00000066 50%, transparent 51%);
+  display: inline-block;
+  cursor: pointer;
+}
+
+.message.botImage .bubble .download span {
+  display: inline-block;
+  vertical-align: middle;
+  margin-top:7px;
+}
+
+.message.botImage img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.widget-button {
+  margin-right: 20px;
+}
+
+.disclaimer {
+  clear: both;
+  margin-top: 9px;
+  color: #AAAAAA;
+}
+.disclaimer p {
+  margin: 0px;
+  line-height: 150%;
+}
+.disclaimer a, .disclaimer a:link, .disclaimer a:visited, .disclaimer a:hover, .disclaimer a:active {
+  color: #AAAAAA;
+}
+
+.form-container {
+  display: flex;
+}
+
+.form-container .mdc-text-field--textarea {
+  height: auto;
+}
+
+.form-container .glue-text-field {
+  flex: 1;
+  margin-right: 0px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 10px;
+  border-radius: 40px;
+  background-color: var(--glue-grey-300);
+  border-width: 0 !important;
+}
+
+.form-container button {
+  margin-left:20px;
+}
+
+.form-container button.disabled {
+  background-color: var(--glue-grey-300);
+  color: gray;
+}
+
+#chat-box { 
+  background-color: var(--glue-grey-100);
+  border-radius: 20px 20px 0px 0px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 1400px;
+  text-align: center;
+  z-index: 1;
+}
+
+#chat-box .glue-form {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.tool-label {
+  margin-top: 10px;
+}
+
+.glue-card-disabled {
+  background: var(--glue-grey-100);
+  color: var(--glue-grey-400) !important;
+}
+.glue-card-disabled:hover {
+  background: var(--glue-grey-100);
+}
+
+#chat-conversation .glue-tabpanels__panel-list {
+  margin-top: 30px;
+}
+
+#start-new-session, #open-picker, #brand-picker, #language-selector, #voice-picker {
+  background-color: var(--glue-grey-300);
+}
+
+#start-new-session:hover, #open-picker:hover, #brand-picker:hover, #language-selector:hover, #voice-picker:hover {
+  background-color: var(--glue-grey-200);
+}
+
+#start-new-session, #open-picker, #brand-picker, #language-selector, #voice-picker {
+  color: gray;
+}
+
+.voice-gender {
+  font-size: 11px;
+  font-weight: medium;
+  text-transform: uppercase;
+}
+
+.voice-quality {
+  font-size: 14px;
+  vertical-align: super;
+}
+
+#processing-file {
+  background-color: var(--glue-grey-300);
+  border-radius: 40px;
+  height: 50px;
+  padding: 14px 0px 0px 20px;
+  margin-left: 20px;
+  margin-top: 8px;
+  width: 210px;
+}
+
+#processing-file div.icon {
+  float: left;
+  color: var(--glue-blue-500);
+}
+
+#processing-file div.name {
+  float: left;
+  margin-left: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  width: 110px;
+}
+
+#processing-file div.name {
+  float: left;
+}
+
+@keyframes shine {
+  to {
+    background-position-x: -200%;
+  }
+}
+
+#processing-file.loading {
+  background: var(--glue-grey-300);
+  background: linear-gradient(110deg, var(--glue-grey-300) 8%, var(--glue-grey-100) 18%, var(--glue-grey-300) 33%);
+  background-size: 200% 100%;
+  animation: 1.5s shine linear infinite;
+}
+
+#processing-file.loaded {
+  background: var(--glue-blue-50);
+  border: 2px solid var(--glue-blue-500);
+  padding: 12px 0px 0px 20px;
+}
+
+#brand-picker {
+  width: 160px;
+}
+
+#brand-picker.glue-button img {
+  display: block !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.glue-cards li {
+  position: relative;
+}
+
+button.edit-card {
+  border: 0px;
+  position: absolute;
+  bottom: 0px;
+  left: calc(100% - 60px);
+  z-index: 100;
+}
+
+button.edit-card:focus {
+  background-color: transparent;
+  box-shadow: 0 0 0 0 transparent;
+  color: #174ea6;
+}
+
+span.add-icon {
+  font-size: 34px;
+}
+
+.add-custom-prompt-card {
+  background-color: #4286f40f;
+}
+
+.welcome {
+  color: 	#6e7377;
+}
+
+.clear {
+  clear: both;
+}
+
+#prompt {
+  
+}

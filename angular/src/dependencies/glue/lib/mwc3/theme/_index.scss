@@ -1,0 +1,11 @@
+// Glue theme for MWC3 components
+@use '../../colors/variables' as colors-variables;
+
+@use 'tokens';
+@use 'theme';
+
+// Additional tokens affecting multiple components
+.glue-mwc3 {
+  // Focus styles affecting multiple components
+  --md-focus-ring-color: #{colors-variables.$blue-600};
+}

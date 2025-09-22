@@ -1,0 +1,84 @@
+<form class="glue-form glue-mwc3" method="post" [formGroup]="editForm">
+
+  <div class="glue-page">
+
+    <div class="glue-grid">
+
+      <hr class="glue-grid__col glue-grid__col--span-12 glue-spacer-4-top">
+      <h2 class="glue-grid__col glue-grid__col--span-12 glue-headline glue-headline--headline-5"><b>Image Compliance</b></h2>
+      <p class="glue-grid__col glue-grid__col--span-12 glue-spacer-1-top">
+        Configure compliance settings and notifications for image generation.
+      </p>
+
+      <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-4-top">
+        <mat-form-field appearance="outline" class="form-field glue-grid__col--span-8">
+          <mat-label>Image Generation Notification</mat-label>
+          <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" cdkAutosizeMaxRows="5"
+                #imageDownloadComplianceMessage [formControl]="editForm.controls.imageDownloadComplianceMessage" [errorStateMatcher]="matcher" maxlength="1000" placeholder="Notification to deliver when users generate images."></textarea>
+          <mat-hint align="end">{{imageDownloadComplianceMessage.value.length}} / 1000</mat-hint>
+          <ng-container *ngIf="editForm.controls.imageDownloadComplianceMessage.hasError('required') && isSubmitted">
+            <mat-error>Please enter a compliance message.</mat-error>
+          </ng-container>
+        </mat-form-field>
+      </div>
+
+      <hr class="glue-grid__col glue-grid__col--span-12 glue-spacer-4-top">
+      <h2 class="glue-grid__col glue-grid__col--span-12 glue-headline glue-headline--headline-5"><b>Audio Compliance</b></h2>
+      <p class="glue-grid__col glue-grid__col--span-12 glue-spacer-1-top">
+        Configure compliance settings and notifications for audio generation.
+      </p>
+
+      <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-4-top">
+        <mat-form-field appearance="outline" class="form-field glue-grid__col--span-8">
+          <mat-label>Audio Generation Notification</mat-label>
+          <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3" cdkAutosizeMaxRows="5"
+                #audioDownloadComplianceMessage [formControl]="editForm.controls.audioDownloadComplianceMessage" [errorStateMatcher]="matcher" maxlength="1000" placeholder="Notification to deliver when users generate audio."></textarea>
+          <mat-hint align="end">{{audioDownloadComplianceMessage.value.length}} / 1000</mat-hint>
+          <ng-container *ngIf="editForm.controls.audioDownloadComplianceMessage.hasError('required') && isSubmitted">
+            <mat-error>Please enter a compliance message.</mat-error>
+          </ng-container>
+        </mat-form-field>
+      </div>
+
+      <hr class="glue-grid__col glue-grid__col--span-12 glue-spacer-6-top">
+      <div class="button-container glue-grid__col glue-grid__col--span-12">
+        <div class="button-container-left">
+          <h2 class="glue-grid__col glue-grid__col--span-12 glue-headline glue-headline--headline-5"><b>Copy & Claims Compliance</b></h2>
+          <p class="glue-grid__col glue-grid__col--span-12 glue-spacer-1-top">
+            Configure compliance settings and notifications for copy generation.
+          </p>
+        </div>
+        <div class="button-container-right">
+          <button class="glue-button glue-button--medium-emphasis" (click)="editClaimConfig()">New Claim</button>
+        </div>
+      </div>
+
+      <div class="glue-grid__col glue-grid__col--span-12 glue-table__overflowcontainer glue-spacer-4-top">
+        <table class="glue-table glue-table--datatable glue-table--datatable-altrows">
+          <thead>
+            <tr>
+              <th scope="col"># of Terms</th>
+              <th scope="col">Terms to Match</th>
+              <th scope="col">Notification Message</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <ng-container *ngFor="let complianceClaim of this.configService.config.complianceConfig.complianceClaimsConfig">
+            <tr>
+              <td>{{(complianceClaim.problematicTerms.split(',') || []).length}}</td>
+              <td>{{complianceClaim.problematicTerms}}</td>
+              <td>{{complianceClaim.complianceMessage}}</td>
+              <td>
+                <button mat-icon-button class="small-icon-button" (click)="editClaimConfig(complianceClaim)">
+                  <mat-icon aria-hidden="false" aria-label="Edit" fontIcon="edit"></mat-icon>
+                </button>
+              </td>
+            </tr>
+          </ng-container>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+</form>

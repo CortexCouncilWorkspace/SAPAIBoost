@@ -1,0 +1,313 @@
+// Glue header variables
+
+@use 'sass:math';
+
+@use '../accessibility/mixins' as accessibility-mixins;
+@use '../accessibility/variables' as accessibility-variables;
+@use '../breakpoints/mixins' as breakpoints;
+@use '../colors/variables' as colors;
+@use '../typography/mixins' as typography-mixins;
+@use '../typography/variables' as typography-variables;
+
+// Colors
+$bg: colors.$grey-0;
+$border: colors.$grey-300;
+$burger-standard-color: colors.$grey-700;
+$burger-reversed-color: colors.$grey-0;
+$product-font-color: #5f6368;
+$transparent-header: transparent;
+$transparent-header-campaign-color: colors.$white;
+$transparent-header-burger-color: colors.$white;
+
+// Logo / lockup
+$logo-height: 24px;
+
+// Border
+$border-width: 2px;
+$border-radius-active: 4px;
+$border-radius-active-mobile: 100px;
+$link-item-border-width: 1px;
+$selected-item-border-width: 2px;
+
+// Root
+$bar-height-base: 64px;
+$bar-height: $bar-height-base;
+$bar-height-double: (2 * $bar-height);
+$height--full-size: ($bar-height-base - $border-width);
+$height-double--full-size: (2 * $height--full-size);
+
+$transition: 300ms ease;
+$transition-long: 400ms ease;
+
+$border-height: 1px;
+$skip-button-width: 160px;
+$skip-button-top: 8px;
+
+// LOCK up
+$lock-up-link-padding: 5px;
+$lock-up-logo-only-padding: 14px;
+$lock-up-campaign-left-margin: 5px;
+$lock-up-horiz-padding: 9px;
+$lock-up-icon-padding: 23px;
+$lock-up-icon-link-margin: 5px;
+$lock-up-icon-image-margin: 6px;
+$modifier-stacked-margin: 5px;
+$modifier-margin-left: 6px;
+$modifier-padding-right: 20px;
+
+// Lock up mobile
+$lock-up-mobile-campaign-padding: 23px;
+$lock-up-mobile-campaign-stacked-padding: 10px;
+$lock-up-mobile-campaign-margin: 25px;
+$lock-up-mobile-logo-link-padding: 10px;
+
+$lock-up-logo-padding-left: 8px;
+$lock-up-logo-svg-height-mobile: 29px;
+$lock-up-logo-svg-height: 29px;
+$lock-up-logo-svg-width: 75px;
+$lock-up-logo-svg-container-height: 24px;
+$lock-up-logo-svg-container-width: 75px;
+
+$lock-up-icon-width: 40px;
+$lock-up-icon-height: 40px;
+$lock-up-icon-product-text-padding: 12px;
+
+// These are the same and we should leave these here. Changes in font sizes are coming for V23.
+$lock-up-product-font-size-sm: 22px;
+$lock-up-product-font-size-md: 22px;
+$lock-up-product-font-size-lg: 22px;
+$lock-up-product-line-height-sm: $lock-up-product-font-size-sm - 1px;
+$lock-up-product-line-height-md: $lock-up-product-font-size-md - 1px;
+$lock-up-product-line-height-lg: $lock-up-product-font-size-lg - 1px;
+
+// Caret notch
+$caret-bottom: -12px;
+$caret-height: 10px;
+$caret-width: 10px;
+$caret-half-width: $caret-width * 0.5;
+$caret-width-cos: calc($caret-width * math.cos(45deg));
+$caret-height-sin: calc($caret-height * math.sin(45deg));
+$caret-transformed-width: calc($caret-width-cos + $caret-height-sin);
+
+// Link bar
+$link-bar-active-border-bottom: 0;
+$link-margin-left-spacer: 8px;
+$link-margin-left-spacer-first-child: 22px;
+$link-bar-links-max-height: 48px;
+$link-bar-item-padding: 8px;
+$link-bar-item-padding-top: 8px;
+$link-bar-item-padding-bottom: $link-bar-item-padding-top;
+$link-bar-links-padding: 12px;
+
+$link-bar-bg: colors.$grey-0;
+$link-bar-bg-focus: colors.$grey-50;
+$link-bar-bg-hover: colors.$grey-50;
+$link-bar-bg-active: #f1f1f1;
+$link-bar-bg-inactive: $link-bar-bg;
+$link-bar-bg-visited: #f1f1f1;
+
+$link-bar-default: colors.$grey-700;
+$link-bar-active: colors.$grey-900;
+$link-bar-focus: colors.$grey-900;
+$link-bar-hover: colors.$grey-900;
+$link-bar-inactive: colors.$grey-700;
+$link-bar-transparent: colors.$grey-0;
+$link-bar-high-contrast-white: colors.$white;
+$link-bar-high-contrast-black: colors.$black;
+
+$link-bar-border-active: colors.$blue-600;
+$link-bar-border-active-alt: colors.$blue-300;
+$link-bar-border-inactive: colors.$grey-0;
+$link-bar-border-transparent-active: colors.$white;
+$link-bar-border-bottom-left-pos: calc(50% - $caret-transformed-width);
+$link-bar-border-bottom-right-pos: calc(50% + $caret-width);
+
+$link-bar-bottom: $bar-height-base;
+
+$link-bar-font-size: 16px;
+$link-bar-font-size-line-height: 24px;
+
+// Backdrop
+$drawer-backdrop-opacity--active: 1;
+$drawer-backdrop-opacity-speed: 0.2s;
+$drawer-backdrop-opacity-bezier: cubic-bezier(0.4, 0, 0.2, 1);
+$drawer-backdrop-background-color: rgba(0, 0, 0, 0.4);
+
+// Box shadow v-offset
+$bar-drop-shadow-v-offset: 6px;
+$drawer-drop-shadow-v-offset: $bar-drop-shadow-v-offset;
+$drawer-cta-drop-shadow-v-offset: 1px;
+$rewind-drop-shadow-offset: -6px;
+
+// Animations
+$drawer-slide-speed-in: 0.35s;
+$drawer-slide-bezier-in: cubic-bezier(0.24, 1, 0.32, 1);
+$drawer-slide-speed-out: 0.2s;
+$drawer-slide-bezier-out: cubic-bezier(0.24, 1, 0.32, 1);
+
+// Offset
+$height--full-size-offset: $bar-height + $bar-drop-shadow-v-offset;
+
+// CTA
+$cta-primary-bg-color: colors.$blue-600;
+$cta-primary-color: colors.$grey-0;
+$cta-secondary-color: colors.$blue-600;
+$cta-secondary-border-color: colors.$grey-300;
+$cta-supplemental-color: #80868b;
+$cta-link-padding: (($link-bar-links-padding - 1px) * 2);
+$cta-link-margin-left-spacer: 8px;
+$cta-drawer-link-padding: 8px;
+$cta-drawer-box-shadow: 0 0 $drawer-cta-drop-shadow-v-offset 1px
+  rgba(54, 64, 67, 0.3);
+$cta-drawer-height: 121px;
+
+// Drawer
+$drawer-hamburger-margin: 12px;
+$drawer-hamburger-height: 48px;
+$drawer-hamburger-width: 48px;
+$drawer-right-edge-spacing: 56px;
+$drawer-max-width: 400px;
+$drawer-background-color: colors.$grey-0;
+$drawer-drop-shadow: 0 2px $drawer-drop-shadow-v-offset 1px rgba(0, 0, 0, 0.12);
+$drawer-product-logo-text-color: colors.$grey-700;
+$drawer-initiative-logo-text-color: colors.$grey-700;
+$drawer-hamburger-color: colors.$grey-700;
+$drawer-hamburger-color-hover: colors.$grey-50;
+$drawer-hamburger-width: $bar-height;
+$drawer-link-active-padding: 8px;
+$drawer-link-padding: 20px;
+$drawer-link-nested-padding-left: 2 * $drawer-link-padding;
+$drawer-link-double-nested-padding-left: 3 * $drawer-link-padding;
+$drawer-link-triple-nested-padding-left: 4 * $drawer-link-padding;
+$drawer-list-padding-top: 30px;
+$drawer-list-padding-bottom: 23px;
+$drawer-link-bar-item-height: 52px;
+$drawer-fixed-elements-height: $cta-drawer-height;
+$drawer-lock-up-mobile-campaign-padding: 20px;
+$drawer-lock-up-mobile-campaign-stacked-padding: 13px;
+$drawer-supplemental-links-top-padding: 27px;
+$drawer-supplemental-divider-padding: 20px;
+
+// Site Switcher
+$site-switcher-menu-horiz-padding: 20px;
+$site-switcher-menu-vert-padding: 16px;
+$site-switcher-menu-width: 330px;
+$site-switcher-menu-drawer-spacing: 56px;
+$site-switcher-menu-top-adjust: $bar-height-base - 2px -
+  math.div($bar-height-base - $link-bar-links-max-height, 2);
+$site-switcher-menu-padding-top: 12px;
+$site-switcher-animation-duration: 100ms;
+$site-switcher-min-width: 240px;
+$site-switcher-max-width: 480px;
+$site-switcher-selected-item: colors.$grey-100;
+
+// Deep Navigation
+$deep-nav-animation-duration: 150ms;
+$deep-nav-highlight-color: colors.$grey-50;
+$deep-nav-active-border-color: colors.$blue-500;
+$deep-nav-dialog-min-width: 112px;
+$deep-nav-dialog-max-width: 280px;
+$deep-nav-dialog-border-radius: 8px;
+$deep-nav-dialog-vert-margin: 5px;
+$deep-nav-dialog-left-padding: 16px - $selected-item-border-width;
+$deep-nav-dialog-right-margin: 8px;
+$deep-nav-dialog-top-offset: 7px;
+$deep-nav-dialog-right-padding: 12px;
+$deep-nav-dialog-drawer-right-padding: 24px;
+$deep-nav-dialog-arrow-right-padding: 16px;
+$deep-nav-dialog-with-subnav-right-padding: 48px;
+$deep-nav-dialog-with-selected-right-padding: 40px;
+$deep-nav-item-vert-margin: 1px;
+$deep-nav-item-vert-padding: 8px;
+$deep-nav-dialog-left-offset: $link-bar-links-padding -
+  $deep-nav-dialog-left-padding;
+$deep-nav-menu-helper-duraction: 350ms;
+$deep-nav-menu-helper-delay: 500ms;
+
+// Stepped Nav
+$stepped-nav-animation-duration: 300ms;
+$stepped-nav-controls-height: 64px;
+$stepped-nav-controls-border-color: colors.$grey-300;
+$stepped-nav-menus-top-margin: 25px;
+$stepped-nav-menus-left-padding: 40px;
+$stepped-nav-menus-right-padding: 16px;
+$stepped-nav-controls-text-width: $stepped-nav-menus-left-padding -
+  ($drawer-link-active-padding);
+
+// Z-index
+$drawer-backdrop-z-index: 101;
+$double-border-bottom-z-index: 103;
+$link-bar-item-active-z-index: 104;
+$link-bar-link-active-z-index: 104;
+
+$z-index-root: 100;
+$z-index-bar-mobile: 800;
+$z-index-drawer-backdrop: $z-index-bar-mobile + 10;
+$z-index-drawer: $z-index-bar-mobile + 20;
+$z-index-double-border-bottom: $z-index-bar-mobile + 30;
+$z-index-link-bar-item-active: $z-index-bar-mobile + 40;
+$z-index-link-bar-link-active: $z-index-bar-mobile + 40;
+$z-index-caret: $z-index-bar-mobile + 50;
+$z-index-link-bar-border: 100;
+$z-index-lockup-logo: 100;
+
+// Letter-spacing
+$lock-up-letter-spacing: 0.1px;
+
+// Breakpoints
+$breakpoint-default: 'lg';
+$drawer-rewind-drop-shadow: $rewind-drop-shadow-offset 1px 2px 0
+    rgba(54, 64, 67, 0.3),
+  $rewind-drop-shadow-offset 1px 3px 1px rgba(54, 64, 67, 0.15);
+
+%lockup-product-text {
+  @include typography-mixins.calculate-font-size-rem(
+    $lock-up-product-font-size-sm
+  );
+  @include typography-mixins.calculate-unitless-line-height(
+    $lock-up-product-line-height-sm,
+    $lock-up-product-font-size-sm
+  );
+  @include typography-mixins.font-smoothing(
+    typography-variables.$font-smoothing-moz,
+    typography-variables.$font-smoothing-webkit,
+    typography-variables.$font-smoothing-rendering
+  );
+  color: $product-font-color;
+  font-family: typography-variables.$font-family-product-sans;
+  font-style: normal;
+  font-weight: 400;
+  hyphens: auto;
+  letter-spacing: typography-variables.$copy-one-mobile-letter-spacing;
+  overflow-wrap: initial;
+  padding-inline-start: $lock-up-link-padding;
+  text-decoration: none;
+  text-rendering: optimizeLegibility;
+  word-wrap: initial;
+
+  @include accessibility-mixins.hcm-mq {
+    color: accessibility-variables.$hcm-color-text;
+  }
+
+  @include breakpoints.bp(md) {
+    @include typography-mixins.calculate-font-size-rem(
+      $lock-up-product-font-size-md
+    );
+    @include typography-mixins.calculate-unitless-line-height(
+      $lock-up-product-line-height-md,
+      $lock-up-product-font-size-md
+    );
+    letter-spacing: typography-variables.$copy-one-mobile-letter-spacing;
+  }
+
+  @include breakpoints.bp(lg) {
+    @include typography-mixins.calculate-font-size-rem(
+      $lock-up-product-font-size-lg
+    );
+    @include typography-mixins.calculate-unitless-line-height(
+      $lock-up-product-line-height-lg,
+      $lock-up-product-font-size-lg
+    );
+    letter-spacing: typography-variables.$copy-one-desktop-letter-spacing;
+  }
+}

@@ -1,0 +1,48 @@
+// Glue popover component
+// Shows/hides a small content box.
+// These do not yet include Brand Standards styling
+
+.glue-popover {
+  position: relative;
+  display: inline-block;
+
+  &.glue-is-shown {
+    .glue-popover__dialog {
+      visibility: visible;
+      z-index: 900;
+    }
+  }
+}
+
+.glue-popover__trigger {
+  cursor: pointer;
+}
+
+.glue-popover__dialog {
+  background: white;
+  border: 1px solid black;
+  position: absolute;
+  visibility: hidden;
+  width: max-content;
+  z-index: -1;
+}
+
+.glue-popover__close-btn {
+  clip: rect(1px, 1px, 1px, 1px);
+  cursor: pointer;
+  font-size: 11px;
+  height: 1px;
+  inset-inline: auto 10px;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  width: 1px;
+
+  &:focus,
+  &.glue-is-shown {
+    clip: auto;
+    height: auto;
+    overflow: visible;
+    width: auto;
+  }
+}

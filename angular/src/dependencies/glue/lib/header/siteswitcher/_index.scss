@@ -1,0 +1,219 @@
+// Glue header: site switcher subcomponent
+
+@use '../../accessibility/mixins' as accessibility-mixins;
+@use '../../accessibility/variables' as accessibility-variables;
+@use '../../breakpoints/mixins' as breakpoints;
+@use '../../colors/variables' as colors;
+@use '../../elevation/mixins' as elevation;
+@use '../../links/variables' as links-variables;
+@use '../../typography/mixins' as typography-mixins;
+@use '../../typography/variables' as typography-variables;
+@use '../../typography';
+@use '../mixins';
+@use '../variables';
+
+// User-customized variable for breakpoint
+$breakpoint-nav: variables.$breakpoint-default !default;
+
+// Appearance for trigger in the desktop header bar.
+.glue-header__site-switcher {
+  .glue-header__logo--product-campaign {
+    .glue-icon {
+      margin-inline-start: 2px;
+      padding-top: 1px;
+
+      @include accessibility-mixins.hcm-mq {
+        fill: accessibility-variables.$hcm-color-text;
+      }
+    }
+  }
+}
+
+// Styles that apply to the menu in all situations.
+.glue-header__site-switcher-menu {
+  height: auto;
+  margin: 0;
+  max-width: variables.$site-switcher-max-width;
+  min-width: variables.$site-switcher-min-width;
+  overflow: hidden;
+  outline: none;
+  padding-block: variables.$site-switcher-menu-vert-padding;
+  padding-inline: 0 variables.$site-switcher-menu-horiz-padding;
+  width: auto;
+
+  .glue-header__item {
+    @include typography-mixins.calculate-font-size-rem(
+      variables.$link-bar-font-size
+    );
+    @include typography-mixins.font-smoothing(
+      typography-variables.$font-smoothing-moz,
+      typography-variables.$font-smoothing-webkit,
+      typography-variables.$font-smoothing-rendering
+    );
+    @include typography-mixins.language-font-stacks(
+      typography-variables.$font-face-googlesans
+    );
+
+    display: list-item;
+    font-weight: 500;
+    height: auto;
+    list-style: none;
+    padding-block: 0;
+    padding-inline-start: variables.$site-switcher-menu-horiz-padding;
+
+    &:first-child {
+      margin-inline-start: 0;
+    }
+
+    .glue-header__site-switcher-more-products {
+      border-top: 1px solid colors.$grey-300;
+      margin: 8px 0;
+      padding-top: 4px;
+    }
+
+    &.selected {
+      .glue-header__link {
+        background-color: variables.$site-switcher-selected-item;
+        border-color: colors.$blue-500;
+        box-shadow: none;
+        color: variables.$link-bar-hover;
+        cursor: default;
+
+        @include breakpoints.bp($breakpoint-nav) {
+          background-color: variables.$link-bar-bg-hover;
+        }
+
+        @include accessibility-mixins.hcm-mq {
+          font-weight: 700;
+          border-inline-start: variables.$selected-item-border-width solid
+            transparent;
+        }
+
+        &:focus {
+          background-color: links-variables.$focus-background;
+          box-shadow: 0 0 0 2px links-variables.$shadow-color-focus;
+        }
+
+        .glue-header__site-switcher-item-description {
+          @include accessibility-mixins.hcm-mq {
+            font-weight: 700;
+          }
+        }
+      }
+    }
+
+    .glue-header__link {
+      align-items: flex-start;
+      border: none;
+      border-inline-start: variables.$selected-item-border-width solid
+        transparent;
+      border-end-end-radius: variables.$border-radius-active-mobile;
+      border-start-end-radius: variables.$border-radius-active-mobile;
+      color: colors.$grey-900;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      height: auto;
+      justify-content: center;
+      margin-inline-start: -(variables.$site-switcher-menu-horiz-padding);
+      max-height: none;
+      min-height: 72px;
+      padding-block: variables.$site-switcher-menu-padding-top;
+      padding-inline: (
+          variables.$site-switcher-menu-horiz-padding -
+            variables.$selected-item-border-width
+        )
+        variables.$site-switcher-menu-horiz-padding;
+      text-decoration: none;
+
+      @include breakpoints.bp('sm-only') {
+        width: calc(100% + (variables.$drawer-link-active-padding * 1.5));
+      }
+
+      @include accessibility-mixins.hcm-mq {
+        border-inline-start: 0;
+      }
+    }
+  }
+}
+
+.glue-header__site-switcher-item-description {
+  @extend %glue-small-text;
+  align-items: center;
+  color: colors.$grey-700;
+  display: flex;
+  font-weight: typography-variables.$font-weight-regular; // Override font weight to regular
+  min-height: 24px;
+  line-height: 16px;
+  white-space: normal;
+
+  @include accessibility-mixins.hcm-mq {
+    color: accessibility-variables.$hcm-color-link-text;
+  }
+}
+
+// Styles that apply only when the header drawer is open.
+.glue-header {
+  // Styles that apply to the menu only when in the drawer.
+  &.glue-is-showing-drawer {
+    .glue-header__logo--product {
+      .glue-icon {
+        display: none;
+      }
+    }
+
+    .glue-header__site-switcher-menu {
+      align-self: stretch;
+      background-color: colors.$grey-50;
+      display: flex;
+      flex: 1 0 auto;
+      flex-direction: column;
+      justify-content: flex-end;
+      margin-top: variables.$site-switcher-menu-drawer-spacing;
+      max-width: 100%;
+      min-width: 100%;
+      padding-block: variables.$site-switcher-menu-vert-padding;
+      padding-inline: 0;
+
+      // Only have a hover background on items that aren't selected already.
+      .glue-header__item {
+        &:not(.selected) {
+          .glue-header__link {
+            &:hover,
+            &:focus {
+              background-color: colors.$grey-100;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Styles applied to the menu when it's a popover (i.e. when *not* in drawer).
+  &:not(.glue-is-showing-drawer) {
+    .glue-header__site-switcher-menu {
+      @include elevation.set-level(2);
+
+      background-color: colors.$white;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      margin-inline-start: variables.$lock-up-logo-padding-left;
+      opacity: 0;
+      position: absolute;
+      top: variables.$site-switcher-menu-top-adjust;
+      transition: opacity variables.$site-switcher-animation-duration ease-in
+        0ms;
+      visibility: hidden;
+      width: variables.$site-switcher-menu-width;
+      z-index: 1000;
+
+      // Makes the menu visible when the popover opens.
+      &.glue-header__menu--open {
+        opacity: 1;
+        transition: opacity variables.$site-switcher-animation-duration ease-in
+          0ms;
+        visibility: visible;
+      }
+    }
+  }
+}

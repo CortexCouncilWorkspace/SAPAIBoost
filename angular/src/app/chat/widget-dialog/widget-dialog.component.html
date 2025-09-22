@@ -1,0 +1,36 @@
+<form class="glue-form glue-mwc3" method="post" [formGroup]="editForm" (ngSubmit)="submit()">
+
+  <h2 mat-dialog-title class="dialog-heading">
+    {{ data.label }}
+  </h2>
+
+  <mat-dialog-content>
+
+    <div class="glue-page">
+
+        <div class="glue-grid">
+
+          <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-2-top">
+            <mat-form-field appearance="outline" class="form-field glue-grid__col--span-8">
+              <mat-label>{{ data.label }}</mat-label>
+              <input matInput #inputValue [formControl]="editForm.controls.inputValue" maxlength="50" placeholder="">
+              <mat-hint align="end">{{inputValue.value.length}} / 50</mat-hint>
+              <ng-container *ngIf="editForm.controls.inputValue.hasError('required') && isSubmitted">
+                <mat-error>Please enter a name.</mat-error>
+              </ng-container>
+            </mat-form-field>
+          </div>
+
+      </div>
+    </div>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <div class="button-container">
+      <button class="glue-button glue-button--medium-emphasis" mat-dialog-close>Close</button>
+      <button class="glue-button glue-button--high-emphasis" type="submit">Submit</button>
+    </div>
+  </mat-dialog-actions>
+
+</form>

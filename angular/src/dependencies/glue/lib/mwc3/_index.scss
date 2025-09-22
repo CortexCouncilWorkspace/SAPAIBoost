@@ -1,0 +1,12 @@
+// A stylesheet for importing all MWC3 components.
+// You can also import selected components for efficiency.
+
+// Glue theme for MWC3
+@use "theme";
+
+// Individual components
+@use "checkbox";
+@use "radio";
+@use "select";
+@use "switch";
+@use "textfield";

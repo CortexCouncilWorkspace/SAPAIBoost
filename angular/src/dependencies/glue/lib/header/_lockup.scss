@@ -1,0 +1,342 @@
+// Glue header logo lockup styles
+
+@use '../accessibility/mixins' as accessibility-mixins;
+@use '../accessibility/variables' as accessibility-variables;
+@use '../breakpoints/mixins' as breakpoints;
+@use '../colors/variables' as colors-variables;
+@use 'linkbar';
+@use 'mixins';
+@use 'variables';
+
+// User-customized variable for breakpoint
+$breakpoint-nav: variables.$breakpoint-default !default;
+
+.glue-header__lock-up {
+  align-content: flex-start;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  height: variables.$bar-height;
+  min-height: variables.$bar-height;
+  position: relative;
+  width: 100%;
+
+  @include breakpoints.bp($breakpoint-nav) {
+    width: auto;
+  }
+
+  // Product-campaign
+  .glue-header__bar--mobile & {
+    .glue-header__logo--product-campaign {
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: auto;
+
+      .glue-header__logo-product {
+        padding-left: 0;
+        padding-right: 0;
+        width: auto;
+      }
+
+      .glue-header__logo--campaign {
+        padding-left: 0;
+      }
+    }
+  }
+
+  // Product-campaign while in drawer
+  .glue-header__drawer--is-open & {
+    .glue-header--complex-stacked & {
+      height: inherit;
+    }
+  }
+}
+
+.glue-header__logo {
+  @include mixins.button-states;
+  align-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex: auto;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 100%;
+  max-height: 48px;
+
+  // TODO(gfrausto): Adding focus and to the parent element.
+  @include breakpoints.bp($breakpoint-nav) {
+    margin-inline-start: variables.$lock-up-logo-padding-left;
+  }
+
+  > .glue-header__logo-link {
+    width: auto;
+
+    .glue-header--transparent & {
+      transition: none;
+    }
+  }
+
+  .glue-header__drawer & {
+    margin-inline-start: variables.$lock-up-logo-padding-left;
+  }
+
+  @include breakpoints.bp($breakpoint-nav) {
+    flex: auto;
+  }
+
+  .glue-header--simple & {
+    align-content: center;
+
+    @include breakpoints.bp($breakpoint-nav) {
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  .glue-header__bar--mobile & {
+    .glue-header--complex-stacked & {
+      &:first-child {
+        margin-inline-start: 12px;
+      }
+    }
+  }
+
+  .glue-header__logo--product & {
+    align-content: flex-start;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .glue-header--complex-stacked & {
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+
+    @include breakpoints.bp($breakpoint-nav) {
+      align-content: center;
+      align-items: center;
+      flex-direction: row;
+    }
+  }
+
+  .glue-header__logo--product {
+    @extend %lockup-product-text;
+
+    .glue-header--reverse & {
+      padding-inline-start: 0;
+    }
+
+    .glue-header--icon-lockup & {
+      padding: 0 1px;
+    }
+
+    &:focus {
+      @include accessibility-mixins.hcm-focus;
+    }
+
+    .glue-header--transparent:not(.glue-header--active) & {
+      color: variables.$transparent-header-campaign-color;
+    }
+  }
+
+  .glue-header__logo--product-campaign {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    hyphens: none;
+    justify-content: flex-end;
+    letter-spacing: variables.$lock-up-letter-spacing;
+    margin-block: 0;
+    margin-inline: variables.$modifier-margin-left 0;
+    max-height: variables.$link-bar-links-max-height;
+    min-height: variables.$link-bar-links-max-height;
+    padding-inline: variables.$lock-up-horiz-padding
+      variables.$modifier-padding-right;
+    width: auto;
+    z-index: variables.$z-index-lockup-logo;
+
+    @include breakpoints.bp(md) {
+      padding-inline-end: variables.$lock-up-horiz-padding;
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: initial;
+      outline: none;
+    }
+
+    &:focus {
+      @include accessibility-mixins.hcm-focus;
+    }
+
+    .glue-header--transparent:not(.glue-header--active) & {
+      color: variables.$transparent-header-campaign-color;
+    }
+
+    .glue-header--complex-stacked & {
+      margin-inline-start: variables.$modifier-stacked-margin;
+      padding-inline: variables.$lock-up-mobile-campaign-stacked-padding 0;
+
+      @include breakpoints.bp($breakpoint-nav) {
+        padding: 0 variables.$lock-up-horiz-padding;
+      }
+    }
+
+    // Active Drawer class (modifier)
+    .glue-header__drawer--is-open & {
+      min-height: 48px;
+      padding: 0;
+
+      .glue-header--complex-stacked & {
+        margin-inline-start: 0;
+        padding-block: 0 1px;
+        padding-inline: variables.$drawer-lock-up-mobile-campaign-stacked-padding
+          0;
+      }
+    }
+  }
+
+  .glue-header__logo--subproduct {
+    align-content: flex-start;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    padding-inline-start: 20px;
+
+    &:focus {
+      @include accessibility-mixins.hcm-focus;
+    }
+
+    .glue-header__logo--subproduct-text {
+      @extend %lockup-product-text;
+    }
+  }
+
+  .glue-tile__icon {
+    margin-inline-start: variables.$lock-up-icon-image-margin;
+
+    @include breakpoints.bp($breakpoint-nav) {
+      margin-inline-start: 0;
+    }
+  }
+
+  .glue-header--icon-lockup & {
+    margin-inline-start: 0;
+    padding-inline-start: 0;
+
+    @include breakpoints.bp($breakpoint-nav) {
+      margin-inline-start: variables.$lock-up-icon-padding;
+    }
+  }
+
+  // Active Drawer class (logo)
+  .glue-header__drawer--is-open & {
+    max-height: 100%;
+    padding-inline-end: variables.$drawer-lock-up-mobile-campaign-padding;
+
+    &:hover,
+    &:active {
+      background: inherit;
+    }
+
+    .glue-header--complex-stacked & {
+      justify-content: space-around;
+    }
+  }
+}
+
+.glue-header__logo-link {
+  @extend .glue-header__link;
+  border-radius: variables.$border-radius-active;
+  padding: 0 variables.$lock-up-horiz-padding;
+  width: auto;
+
+  &:hover {
+    background-color: initial;
+  }
+
+  .glue-header__bar--mobile & {
+    padding-inline: variables.$lock-up-mobile-logo-link-padding;
+  }
+
+  .glue-header__drawer--is-open & {
+    justify-content: space-between;
+  }
+
+  .glue-header--reverse & {
+    flex-direction: row-reverse;
+  }
+
+  .glue-header--icon-lockup & {
+    margin-inline-start: variables.$lock-up-icon-link-margin;
+    padding-inline: variables.$lock-up-horiz-padding;
+  }
+}
+
+.glue-header__logo-container {
+  height: variables.$lock-up-logo-svg-container-height;
+  width: variables.$lock-up-logo-svg-container-width;
+
+  .glue-header__logo-svg {
+    fill: currentColor;
+    height: variables.$lock-up-logo-svg-height-mobile;
+    width: 75px;
+
+    @include breakpoints.bp(md) {
+      height: variables.$lock-up-logo-svg-height;
+      width: variables.$lock-up-logo-svg-width;
+
+      use {
+        height: variables.$lock-up-logo-svg-height;
+        width: variables.$lock-up-logo-svg-width;
+      }
+    }
+  }
+
+  .glue-header--reverse & {
+    padding-inline-start: variables.$lock-up-link-padding;
+  }
+
+  .glue-header--icon-lockup & {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: variables.$lock-up-icon-width;
+  }
+}
+
+.glue-header--complex-stacked {
+  .glue-header__container {
+    .glue-header__logo:last-child {
+      &:hover {
+        background-color: initial;
+      }
+    }
+  }
+}
+
+// Dynamic logo for transparent header
+.glue-header {
+  &.glue-header--transparent {
+    .glue-header__logo-svg {
+      --g-logo-blue: #{colors-variables.$grey-0};
+      --g-logo-red: #{colors-variables.$grey-0};
+      --g-logo-yellow: #{colors-variables.$grey-0};
+      --g-logo-green: #{colors-variables.$grey-0};
+      fill: currentColor;
+    }
+    &.glue-header--active {
+      .glue-header__logo-svg {
+        --g-logo-blue: #{colors-variables.$blue-500};
+        --g-logo-red: #{colors-variables.$red-500};
+        --g-logo-yellow: #{colors-variables.$yellow-500};
+        --g-logo-green: #{colors-variables.$green-500};
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+// Glue YTVideo variables
+
+@use '../colors/variables' as colors;
+@use '../icons/variables' as icons;
+
+$asset-video-red: icons.$youtube-color;
+$button-bg-color: colors.$white;
+$button-border: 0;
+$focus-border-width: 4px;
+$font-size: 19px;
+$height: 20px;
+$margin-right: 10px;
+$play-height: 60px;
+$play-height-inline: 48px;
+$play-width: 84px;
+$play-width-inline: 68px;
+$text-color: colors.$blue-700;
+$width: 28px;
+$youtube-link-color: colors.$blue-700;

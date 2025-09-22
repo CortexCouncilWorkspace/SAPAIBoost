@@ -1,0 +1,18 @@
+// Design tokens for Glue theme of MWC3 Text Field
+
+@use '../../colors/variables' as colors-variables;
+
+.glue-mwc3-textfield {
+  --md-filled-text-field-container-color: #{colors-variables.$grey-50};
+  --md-filled-text-field-focus-label-text-color: #{colors-variables.$blue-900};
+  --md-filled-text-field-error-focus-label-text-color: #{colors-variables.$red-700};
+  --md-outlined-text-field-outline-color: #{colors-variables.$grey-300};
+
+  // Set boundaries on the width of the component
+  md-filled-text-field,
+  md-outlined-text-field {
+    max-width: 1200px;
+    min-width: 160px;
+    width: 100%;
+  }
+}

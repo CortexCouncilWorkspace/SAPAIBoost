@@ -1,0 +1,198 @@
+// Glue expansion panels component
+
+// User-customized variables, which are passed into _variables
+$animation-timing-content: 200ms !default;
+
+@use '../accessibility/mixins' as accessibility-mixins;
+@use '../accessibility/variables' as accessibility-variables;
+@use '../breakpoints/mixins' as breakpoints;
+@use '../colors/variables' as colors;
+@use '../typography';
+@use 'variables' with (
+  $animation-timing-content-base: $animation-timing-content
+);
+
+.glue-expansion-panels {
+  &__header {
+    display: flex;
+
+    .glue-eyebrow {
+      flex: 1 0 auto;
+      margin: 24px 0;
+    }
+
+    .glue-expansion-panels__toggle-all {
+      flex: 0 0 auto;
+      margin: 10px 0;
+    }
+
+    .glue-expansion-panels__toggle-text {
+      &.glue-expansion-panels__toggle-text--collapsed {
+        display: none;
+      }
+    }
+  }
+
+  .glue-expansion-panel {
+    border-top: 1px solid colors.$border;
+    clear: both;
+
+    &:last-child {
+      border-bottom: 1px solid colors.$border;
+      margin-bottom: 20px;
+    }
+  }
+
+  .glue-expansion-panel__button {
+    background: none;
+    border: 0;
+    border-bottom: 1px solid transparent;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    padding: 24px 0 23px;
+    width: 100%;
+
+    @include breakpoints.bp(lg) {
+      padding: 28px 0 27px;
+    }
+
+    &:hover,
+    &:focus {
+      @include accessibility-mixins.hcm-focus;
+      color: variables.$link-color-active;
+
+      .glue-expansion-panel__header-text {
+        color: currentColor;
+      }
+
+      .glue-expansion-panel__header-arrow {
+        fill: currentColor;
+
+        @include accessibility-mixins.hcm-mq {
+          fill: accessibility-variables.$hcm-color-text;
+        }
+      }
+    }
+
+    &:focus {
+      border-bottom: 2px solid variables.$link-color-active;
+      padding-bottom: 22px;
+
+      @include breakpoints.bp(lg) {
+        padding-bottom: 26px;
+      }
+    }
+  }
+
+  .glue-expansion-panel__header-text {
+    @extend %glue-headline-6;
+    align-self: center;
+    color: variables.$link-color;
+    flex: 1 1 auto;
+    margin-inline-end: 8px;
+    text-align: start;
+
+    @include breakpoints.bp(md) {
+      margin-inline-end: 16px;
+    }
+
+    @include breakpoints.bp(lg) {
+      margin-inline-end: 24px;
+    }
+
+    &:hover {
+      color: variables.$link-color-active;
+    }
+  }
+
+  .glue-expansion-panel__header-arrow {
+    fill: variables.$link-color;
+    flex: 0 0 auto;
+    height: 24px;
+    padding: 0 3px;
+    transition: transform variables.$animation-timing-arrow ease-out;
+    width: 24px;
+
+    @include accessibility-mixins.hcm-mq {
+      fill: accessibility-variables.$hcm-color-text;
+    }
+
+    @include breakpoints.bp(lg) {
+      height: 36px;
+      padding: 0 4px;
+      width: 36px;
+    }
+  }
+
+  .glue-expansion-panel__content {
+    display: block;
+    height: 0;
+    overflow: hidden;
+    transition: height variables.$animation-timing-content-base ease-out;
+
+    &[data-glue-expansion-panel-initial='expanded'] {
+      // panels that are initially expanded should display content
+      height: auto;
+    }
+
+    > div {
+      padding: 24px 0;
+
+      @include breakpoints.bp(md) {
+        padding-inline-end: 40px;
+      }
+
+      @include breakpoints.bp(lg) {
+        padding-inline-end: 60px;
+      }
+    }
+  }
+
+  &.glue-is-expanded {
+    // Overrides for toggle all when group is expanded
+    .glue-expansion-panels__toggle-text {
+      &.glue-expansion-panels__toggle-text--expanded {
+        display: none;
+      }
+
+      &.glue-expansion-panels__toggle-text--collapsed {
+        display: inline-block;
+      }
+    }
+  }
+
+  .glue-is-expanded {
+    // overrides for toggle/content when panel is expanded
+    .glue-expansion-panel__button {
+      border-bottom: 1px solid colors.$border;
+
+      &:focus {
+        border-bottom: 2px solid variables.$link-color-active;
+      }
+
+      &.glue-social__title {
+        border-bottom: 1px solid transparent;
+      }
+    }
+
+    .glue-expansion-panel__header-arrow {
+      transform: rotate(180deg);
+      transition: transform variables.$animation-timing-arrow ease-in;
+    }
+
+    .glue-expansion-panel__content {
+      height: auto;
+      transition-timing-function: ease-in;
+    }
+  }
+
+  // overrides for content when panel is collapsed
+  .glue-is-collapsed {
+    .glue-expansion-panel__content {
+      // allows for smooth animation between expand/collapse states
+      height: auto;
+    }
+  }
+}

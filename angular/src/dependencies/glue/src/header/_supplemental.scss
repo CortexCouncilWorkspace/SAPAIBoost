@@ -1,0 +1,50 @@
+// Glue header supplemental link styles
+
+@use '../breakpoints/mixins' as breakpoints;
+@use 'mixins';
+@use 'variables';
+
+// User-customized variable for breakpoint
+$breakpoint-nav: variables.$breakpoint-default !default;
+
+.glue-header__supplemental {
+  display: none;
+  margin: 8px 0;
+
+  @include breakpoints.bp($breakpoint-nav) {
+    align-items: center;
+    display: flex;
+  }
+
+  .glue-header__link {
+    @include mixins.button-states;
+    border-radius: variables.$border-radius-active;
+    .glue-header--transparent:not(.glue-header--active) & {
+      color: #fff;
+    }
+  }
+
+  .glue-header__drawer--is-open & {
+    @include mixins.drawer-divider;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    &:first-child {
+      padding-top: variables.$drawer-supplemental-links-top-padding;
+    }
+
+    .glue-header__link {
+      border-end-end-radius: variables.$border-radius-active-mobile;
+      border-start-end-radius: variables.$border-radius-active-mobile;
+      justify-content: start;
+      margin: 0 0 4px;
+      padding-inline-start: variables.$drawer-link-padding;
+      width: calc(100% - variables.$drawer-link-active-padding);
+
+      &:active {
+        background-color: variables.$link-bar-bg-active;
+      }
+    }
+  }
+}

@@ -1,0 +1,84 @@
+// Glue social variables
+
+@use '../colors/variables' as colors;
+@use '../typography/variables' as typography;
+
+$zippy-icon-padding: 8px;
+$zippy-side-padding: 24px;
+$icon-size: 24px;
+$icon-container-size: 48px;
+$glue-focus-bg-color: colors.$grey-200;
+$glue-focus-border-color: colors.$blue-800;
+
+$close-btn-font-size: 18px;
+$close-btn-line-height: 14px;
+$copied-btn-color: colors.$grey-700;
+
+$animation-timing-open: 0.2s;
+$animation-timing-close: 0.15s;
+$animation-function-open: cubic-bezier(0, 0, 0.2, 1);
+$animation-function-close: cubic-bezier(0.4, 0, 1, 1);
+$copy-container-bg-color: colors.$white;
+$copy-container-rule-color: colors.$grey-200;
+$copy-input-font-size: 12px;
+$copy-btn-font-family: typography.$font-face-googlesans;
+$copy-btn-font-size: 14px;
+$copy-btn-font-size--desktop: 16px;
+
+$translate-distance: 52px;
+$start-position: 100px;
+$title-margin: 24px;
+$button-margin: #{32px - $zippy-side-padding}; //side-padding is half-width of 2 icons
+
+$num-links: 10;
+$link-mobile-row-max: 4;
+
+$popover-z-index: 900;
+
+$persistent-border-radius: 2px;
+$persistent-mobile-edge-spacing: 24px;
+$persistent-mobile-tooltip-spacing: 8px;
+$persistent-desktop-edge-spacing: 16px;
+$persistent-desktop-tooltip-spacing: 8px;
+$persistent-z-index: 200;
+
+$glue-social-mobile-height: calc(
+  ($button-margin * 2) + ($icon-container-size * 2)
+); // Getting the height by adding 2 rows of icons and margin for each
+$glue-social-mobile-list-padding: calc(
+  ($icon-size + $button-margin)
+); // Icons overflow out of the ul by 50% of the icon size, so will add to compensate
+
+// Placeholders
+%glue-social-dialog-spacing {
+  inset-inline: 0 auto;
+  margin-inline: 0 4px;
+  padding-block: 4px 0;
+  padding-inline: $zippy-icon-padding;
+}
+
+%glue-social-dialog-spacing-opposite {
+  inset-inline: auto 0;
+  padding-block: 4px 0;
+  padding-inline: $zippy-icon-padding;
+}
+
+%glue-social-margin-reset {
+  margin-inline: 0;
+}
+
+%glue-social-button-margin {
+  margin-inline: 0 $button-margin;
+}
+
+%glue-social-button-margin-opposite {
+  margin-inline: $button-margin 0;
+}
+
+%glue-social-title-margin {
+  margin-inline: 0 $title-margin;
+}
+
+%glue-social-title-margin-opposite {
+  margin-inline: $title-margin 0;
+}

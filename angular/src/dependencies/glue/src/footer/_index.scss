@@ -1,0 +1,555 @@
+// Glue footers component
+// Universal footer with space for global, social, and site-specific content
+
+// User-customized variables, which are passed into _variables
+$animation-timing: 200ms !default;
+$breakpoint-min-columns: 'md' !default;
+
+@use 'sass:map';
+@use 'sass:math';
+
+@use '../accessibility/mixins' as accessibility-mixins;
+@use '../accessibility/variables' as accessibility-variables;
+@use '../breakpoints/mixins' as breakpoints;
+@use '../page/variables' as page;
+@use '../typography';
+@use '../typography/mixins' as typography-mixins;
+@use '../typography/variables' as typography-variables;
+@use 'variables' with (
+  $animation-timing-base: $animation-timing,
+  $breakpoint-min-columns-base: $breakpoint-min-columns
+);
+
+.glue-footer {
+  background: variables.$background-color;
+  margin: 0;
+
+  @include accessibility-mixins.hcm-mq {
+    border-top: 1px solid variables.$divider-color;
+  }
+
+  &__link {
+    // copy mixins for header-link instead of extending, so color overrides work
+    @include typography-mixins.calculate-font-size-rem(
+      map.get(
+        typography-variables.$mws-header-link,
+        typography-variables.$mws-font-size
+      )
+    );
+    @include typography-mixins.calculate-unitless-line-height(
+      map.get(
+        typography-variables.$mws-header-link,
+        typography-variables.$mws-line-height
+      ),
+      map.get(
+        typography-variables.$mws-header-link,
+        typography-variables.$mws-font-size
+      )
+    );
+    @include typography-mixins.language-font-stacks(
+      map.get(
+        typography-variables.$mws-header-link,
+        typography-variables.$mws-font-family
+      )
+    );
+    @include typography-mixins.font-smoothing(
+      typography-variables.$font-smoothing-moz,
+      typography-variables.$font-smoothing-webkit,
+      typography-variables.$font-smoothing-rendering
+    );
+    background-color: variables.$background-color;
+    color: variables.$link-color;
+    display: inline-block;
+    font-family: map.get(
+      typography-variables.$mws-header-link,
+      typography-variables.$mws-font-family
+    );
+    font-weight: map.get(
+      typography-variables.$mws-header-link,
+      typography-variables.$mws-font-weight
+    );
+    letter-spacing: map.get(
+      typography-variables.$mws-header-link,
+      typography-variables.$mws-letter-spacing
+    );
+    min-height: 48px;
+    min-width: 48px;
+    padding: 12px 0;
+    text-decoration: none;
+    text-transform: map.get(
+      typography-variables.$mws-header-link,
+      typography-variables.$mws-text-transform
+    );
+
+    @include breakpoints.bp(lg) {
+      min-height: 0;
+      min-width: 0;
+      padding: 0;
+    }
+
+    &:visited {
+      color: variables.$link-color;
+
+      &:hover {
+        color: variables.$link-color-hover;
+      }
+    }
+
+    &:hover,
+    &:focus {
+      color: variables.$link-color-hover;
+    }
+
+    &:hover {
+      background: variables.$background-color;
+    }
+
+    &:focus {
+      background: variables.$link-focus-background;
+      border: 0;
+    }
+  }
+
+  // Global links section
+  &__global {
+    @extend %glue-page;
+    padding: variables.$global-padding-top 0
+      (variables.$global-padding-bottom - variables.$global-elem-margin-bottom);
+
+    @include breakpoints.bp(md) {
+      display: flex;
+      flex-wrap: wrap;
+      padding-bottom: (
+        variables.$global-padding-bottom-desktop -
+          variables.$global-elem-margin-bottom
+      );
+    }
+  }
+
+  &__logo {
+    height: variables.$logo-height;
+    margin-block: 0 variables.$logo-margin-bottom;
+    margin-inline: 0 variables.$logo-margin-horizontal;
+    width: variables.$logo-width;
+
+    @include breakpoints.bp(md) {
+      flex: 0 0 variables.$logo-width;
+    }
+
+    a {
+      align-items: center;
+      color: variables.$logo-color;
+      display: flex;
+      height: 48px;
+
+      @include breakpoints.bp(lg) {
+        align-items: inherit;
+        height: variables.$logo-height;
+      }
+
+      &:hover,
+      &:focus {
+        background: variables.$link-focus-background;
+        color: variables.$link-color-hover;
+      }
+    }
+  }
+
+  &__logo-img {
+    fill: currentColor;
+    height: variables.$logo-height;
+    width: variables.$logo-width;
+
+    @include accessibility-mixins.hcm-mq {
+      fill: accessibility-variables.$hcm-color-link-text;
+    }
+  }
+
+  &__global-links {
+    display: flex;
+    flex: 1 0 auto;
+    flex-wrap: wrap;
+    margin-bottom: 0;
+    padding: 0 0
+      (
+        variables.$global-elem-margin-bottom -
+          variables.$global-link-padding-vertical
+      );
+
+    &:after {
+      clear: both;
+      content: '';
+      display: flex;
+    }
+
+    @include breakpoints.bp(md) {
+      display: flex;
+      flex: 1 0 auto;
+      flex-wrap: wrap;
+      max-width: 100%;
+    }
+
+    @include breakpoints.bp(lg) {
+      padding-inline-end: variables.$global-link-padding-horizontal;
+    }
+  }
+
+  &__global-links--extra {
+    @include breakpoints.bp(md) {
+      flex: 0 0 auto;
+    }
+
+    @include breakpoints.bp(lg) {
+      padding-inline-end: 0;
+    }
+  }
+
+  &__global-links-list-item {
+    align-items: center;
+    display: flex;
+    padding-block: 0;
+    padding-inline: 0 variables.$global-link-padding-horizontal;
+
+    @include breakpoints.bp(lg) {
+      display: inline;
+      padding-block-end: variables.$global-link-padding-vertical;
+    }
+  }
+
+  .glue-icon--footer-help {
+    fill: currentColor;
+    margin-block: -2px 0;
+    margin-inline: 0 8px;
+    vertical-align: middle;
+
+    @include accessibility-mixins.hcm-mq {
+      fill: accessibility-variables.$hcm-color-link-text;
+    }
+  }
+
+  &__global-links-list-item--extra {
+    &:last-child {
+      padding-inline: 0;
+    }
+  }
+
+  // TODO(mlouie): Previous dropdown style; remove after MDC version is confirmed
+  &__lang-dropdown {
+    @include typography-mixins.calculate-font-size-rem(
+      map.get(
+        typography-variables.$mws-header-link,
+        typography-variables.$mws-font-size
+      )
+    );
+    @include typography-mixins.font-smoothing(
+      typography-variables.$font-smoothing-moz,
+      typography-variables.$font-smoothing-webkit,
+      typography-variables.$font-smoothing-rendering
+    );
+    // Resets dropdown appearance in most modern browsers
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: variables.$background-color;
+    // base64 encoded version of dropdown arrow SVG
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iIzU0NTQ1NCI+PHBhdGggZD0iTTcgMTBsNSA1IDUtNXoiPjwvcGF0aD48L3N2Zz4=);
+    background-position: right 50%;
+    background-repeat: no-repeat;
+    border: none;
+    border-radius: 0;
+    box-sizing: border-box;
+    color: variables.$link-color;
+    display: inline-block;
+    // Import header link styles
+    font-family: map.get(
+      typography-variables.$mws-header-link,
+      typography-variables.$mws-font-family
+    );
+    font-weight: typography-variables.$font-weight-medium;
+    height: 48px;
+    margin-block: 0;
+    margin-inline: (
+        variables.$global-dropdown-spacing -
+          variables.$global-link-padding-horizontal
+      )
+      0;
+    padding-block: 0;
+    padding-inline: 2px 24px;
+    text-overflow: ellipsis;
+    white-space: pre-wrap;
+    width: 100%;
+
+    @include breakpoints.bp(lg) {
+      height: (
+        map.get(
+            typography-variables.$mws-header-link,
+            typography-variables.$mws-font-size
+          ) + 8px
+      );
+    }
+
+    [dir='rtl'] &,
+    :host([dir='rtl']) & {
+      background-position: left 50%;
+    }
+
+    &::-ms-expand {
+      display: none; // Hides the select arrow for IE10+.
+    }
+
+    &:focus {
+      background-color: variables.$link-focus-background;
+      color: variables.$link-color-hover;
+    }
+  }
+
+  // Upper footer (Social container)
+  &__upper {
+    @extend %glue-page;
+    border-bottom: 1px solid variables.$divider-color;
+
+    // Explicitly naming glue-footer so override for margin/padding works
+    .glue-footer & {
+      @include breakpoints.bp(sm-only) {
+        margin: 0;
+        padding: variables.$upper-padding-vertical page.$margin-sm;
+      }
+    }
+
+    @include breakpoints.bp(md) {
+      padding: variables.$upper-padding-vertical 0;
+    }
+  }
+
+  // Basic social styles in components/social/_social.scss
+  // Footer-specific overrides
+  .glue-social {
+    .glue-social__title {
+      &.glue-social__title--inline {
+        @extend %glue-headline-6;
+        // force icons to next line on mobile
+        flex: 1 0 100%;
+        padding-bottom: variables.$upper-padding-vertical;
+
+        @include breakpoints.bp(md) {
+          flex: 0 0 auto;
+          padding-bottom: 0;
+        }
+      }
+    }
+
+    .glue-social__list {
+      align-self: center;
+    }
+
+    .glue-social__item {
+      margin-bottom: 0;
+    }
+
+    .glue-social__link {
+      background-color: variables.$background-color;
+
+      &:hover,
+      &:focus {
+        background-color: variables.$link-focus-background;
+      }
+
+      &:focus {
+        @include accessibility-mixins.hcm-focus;
+      }
+    }
+  }
+
+  // Sitelinks styles
+  &__site-links {
+    @extend %glue-page;
+    border-bottom: 1px solid variables.$divider-color;
+
+    // Explicitly naming glue-footer so override for margin/padding works
+    .glue-footer & {
+      @include breakpoints.bp(sm-only) {
+        margin: 0;
+        padding: 0 page.$margin-sm;
+      }
+    }
+
+    @include breakpoints.bp(variables.$breakpoint-min-columns-base) {
+      padding: variables.$column-padding-top-desktop 0
+        variables.$column-padding-bottom-desktop;
+    }
+  }
+
+  &__site-links-grid {
+    padding: variables.$column-padding-top 0 0;
+
+    @include breakpoints.bp(variables.$breakpoint-min-columns-base) {
+      box-sizing: content-box;
+      display: flex;
+      padding-top: 0;
+
+      // Only use if CSS support is detected
+      @supports (display: grid) {
+        display: grid;
+        grid-column-gap: variables.$column-margin-horizontal;
+        grid-template-columns: repeat(4, minmax(100px, 1fr));
+      }
+
+      // Set different numbers of columns in sitelinks
+      @for $i from 1 through 5 {
+        &.glue-footer__site-links-grid--#{$i}-col {
+          // Only use if CSS support is detected
+          @supports (display: grid) {
+            grid-template-columns: repeat(#{$i}, minmax(100px, 1fr));
+          }
+        }
+      }
+    }
+
+    @include breakpoints.bp(lg) {
+      @supports (display: grid) {
+        grid-column-gap: variables.$column-margin-horizontal-lg;
+      }
+    }
+  }
+
+  &__site-links-column {
+    margin: 0 0 variables.$column-padding-top;
+    padding: 0;
+
+    @include breakpoints.bp(variables.$breakpoint-min-columns-base) {
+      margin-inline-end: variables.$column-margin-horizontal;
+      width: calc(25% - variables.$column-margin-horizontal);
+
+      @supports (display: grid) {
+        // overrides for when css-grid layout is used
+        margin: 0;
+        width: 100%;
+      }
+
+      // Set different numbers of columns in sitelinks
+      .glue-footer__site-links-grid--1-col & {
+        width: calc(100% - variables.$column-margin-horizontal);
+      }
+
+      .glue-footer__site-links-grid--2-col & {
+        width: calc(50% - variables.$column-margin-horizontal);
+      }
+
+      .glue-footer__site-links-grid--3-col & {
+        width: calc(33% - variables.$column-margin-horizontal);
+      }
+
+      .glue-footer__site-links-grid--4-col & {
+        width: calc(25% - variables.$column-margin-horizontal);
+      }
+
+      .glue-footer__site-links-grid--5-col & {
+        width: calc(20% - variables.$column-margin-horizontal);
+      }
+
+      .glue-footer__site-links-grid--1-col &,
+      .glue-footer__site-links-grid--2-col &,
+      .glue-footer__site-links-grid--3-col &,
+      .glue-footer__site-links-grid--4-col &,
+      .glue-footer__site-links-grid--5-col & {
+        @supports (display: grid) {
+          width: 100%;
+        }
+      }
+    }
+
+    // Styles for expansion panels only
+    &.glue-expansion-panel {
+      border-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  &__site-links-header {
+    @extend %glue-headline-6;
+    color: variables.$header-color;
+    overflow: hidden;
+
+    @include breakpoints.bp(variables.$breakpoint-min-columns-base) {
+      margin: 0 0 variables.$column-link-spacing;
+    }
+
+    .glue-footer__site-links-header-button {
+      border-top: 1px solid variables.$divider-color;
+      margin: 0;
+      padding: variables.$column-header-padding-vertical 0;
+
+      @include breakpoints.bp(variables.$breakpoint-min-columns-base) {
+        border-top: 0;
+        padding: 0;
+      }
+
+      .glue-expansion-panel__header-arrow {
+        display: none;
+      }
+
+      // Styles for expansion panels only
+      &.glue-expansion-panel__button {
+        color: variables.$header-color;
+        display: flex;
+        padding-bottom: variables.$column-header-padding-vertical - 1;
+
+        .glue-expansion-panel__header-arrow {
+          display: block;
+          fill: currentColor;
+          transition-duration: math.div(variables.$animation-timing-base, 2);
+        }
+
+        &:hover,
+        &:focus {
+          color: variables.$header-color;
+          outline: 2px solid transparent;
+        }
+
+        &:focus {
+          border-bottom-color: variables.$header-color;
+          padding-bottom: variables.$column-header-padding-vertical - 2;
+        }
+
+        .glue-is-expanded > & {
+          &:focus {
+            border-bottom-color: variables.$header-color;
+          }
+        }
+      }
+    }
+  }
+
+  &__site-links-list {
+    ul {
+      margin-bottom: 0;
+    }
+
+    &.glue-expansion-panel__content {
+      transition-duration: variables.$animation-timing-base;
+    }
+  }
+
+  &__site-links-list-item {
+    margin-bottom: (variables.$column-link-spacing - 8px);
+
+    &:first-child {
+      margin-top: (variables.$column-link-spacing - 8px);
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    @include breakpoints.bp(sm-only) {
+      margin-inline-start: 2px;
+    }
+  }
+
+  // Temporarily add extra padding if persisent social is present (mobile only)
+  .glue-social--persistent ~ & {
+    @include breakpoints.bp(sm-only) {
+      padding-bottom: 64px;
+    }
+  }
+}

@@ -1,0 +1,23 @@
+// Glue breakpoint variables
+
+// Breakpoint pixel values
+$viewport-sm-max-width: 599px;
+$viewport-md-max-width: 1023px;
+$viewport-lg-max-width: 1439px;
+
+// Media queries
+// Small breakpoint (mobile)
+$media-query-sm-only: '(max-width: #{$viewport-sm-max-width})';
+
+// Medium breakpoint (tablets)
+$media-query-md: '(min-width: #{($viewport-sm-max-width + 1)})';
+$media-query-md-only: '(min-width: #{($viewport-sm-max-width + 1)}) and (max-width: #{$viewport-md-max-width})';
+
+// Large breakpoint (laptop/small desktop)
+$media-query-lg: '(min-width: #{($viewport-md-max-width + 1)})';
+$media-query-lg-only: '(min-width: #{($viewport-md-max-width + 1)}) and (max-width: #{$viewport-lg-max-width})';
+
+// Extra Large breakpoint (medium/large desktop)
+$media-query-xl: '(min-width: #{($viewport-lg-max-width + 1)})';
+
+$media-query-sm-md-only: '(max-width: #{$viewport-md-max-width})';

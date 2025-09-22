@@ -1,0 +1,475 @@
+// Glue typography component
+// Styles for a variety of text elements.
+
+@use 'sass:map';
+@use '../breakpoints/mixins' as breakpoints;
+@use '../colors/variables' as colors;
+@use 'mixins';
+@use 'partials';
+@use 'variables';
+
+// Base styles for HTML and BODY elements
+
+html {
+  font-size: variables.$rem-base;
+}
+
+body {
+  background: variables.$body-bg;
+  color: variables.$body-font-color;
+  font-family: variables.$body-font-family;
+  font-size: variables.$body-font-size;
+  font-style: variables.$body-font-style;
+  font-weight: variables.$body-font-weight;
+  line-height: variables.$body-line-height;
+  margin: 0;
+  overflow-wrap: break-word;
+  padding: 0;
+  word-wrap: break-word;
+
+  // Set different default fonts for various languages
+  [lang='ar'] & {
+    font-family: variables.$font-family-ar;
+  }
+
+  [lang='ja'] & {
+    font-family: variables.$font-family-ja;
+  }
+
+  [lang='ko'] & {
+    font-family: variables.$font-family-ko;
+  }
+
+  [lang='zh-CN'] & {
+    font-family: variables.$font-family-zhcn;
+  }
+
+  [lang='zh-TW'] & {
+    font-family: variables.$font-family-zhtw;
+  }
+}
+
+// Styles for base text elements
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @include mixins.calculate-font-size-rem(variables.$header-font-size);
+  @include mixins.create-margins(variables.$header-margin);
+  font-weight: variables.$header-font-weight;
+}
+
+p {
+  @include mixins.calculate-font-size-rem(variables.$copy-one-mobile-font-size);
+  @include mixins.calculate-unitless-line-height(
+    variables.$copy-one-mobile-line-height,
+    variables.$copy-one-mobile-font-size
+  );
+  @include mixins.create-margins(variables.$paragraph-spacing);
+  @include mixins.create-paragraph-spacing(variables.$paragraph-spacing);
+  letter-spacing: variables.$copy-one-mobile-letter-spacing;
+
+  @include breakpoints.bp(md) {
+    @include mixins.calculate-font-size-rem(
+      variables.$copy-one-tablet-font-size
+    );
+    @include mixins.calculate-unitless-line-height(
+      variables.$copy-one-tablet-line-height,
+      variables.$copy-one-tablet-font-size
+    );
+    letter-spacing: variables.$copy-one-tablet-letter-spacing;
+  }
+
+  @include breakpoints.bp(lg) {
+    @include mixins.calculate-font-size-rem(
+      variables.$copy-one-desktop-font-size
+    );
+    @include mixins.calculate-unitless-line-height(
+      variables.$copy-one-desktop-line-height,
+      variables.$copy-one-desktop-font-size
+    );
+    @include mixins.create-margins(variables.$paragraph-spacing-desktop);
+    @include mixins.create-paragraph-spacing(
+      variables.$paragraph-spacing-desktop
+    );
+    letter-spacing: variables.$copy-one-desktop-letter-spacing;
+  }
+}
+
+hr {
+  border: variables.$hr-border-style variables.$hr-border-color;
+  border-width: variables.$hr-border-width 0 0;
+  clear: both;
+  height: 0;
+  margin-bottom: variables.$hr-margin-bottom;
+  margin-top: variables.$hr-margin-top;
+}
+
+em,
+i {
+  font-style: italic;
+}
+
+b,
+strong {
+  font-weight: variables.$font-weight-bold;
+}
+
+pre {
+  background: variables.$code-background-color;
+  border-color: variables.$code-border-color;
+  border-style: variables.$code-border-style;
+  border-width: variables.$code-border-size;
+  margin-bottom: variables.$pre-margin-bottom;
+  padding: variables.$code-padding;
+  white-space: pre;
+
+  code {
+    background: transparent;
+    padding: 0;
+  }
+}
+
+code {
+  background: variables.$code-background-color;
+  color: variables.$code-color;
+  font-family: variables.$code-font-family;
+  font-weight: variables.$code-font-weight;
+  overflow-x: auto;
+  padding: variables.$code-padding;
+  white-space: pre;
+  word-wrap: normal;
+}
+
+abbr,
+acronym {
+  color: variables.$body-font-color;
+  cursor: help;
+  font-size: 90%;
+  text-transform: uppercase;
+}
+
+abbr {
+  text-transform: none;
+}
+
+blockquote {
+  @include mixins.calculate-font-size-rem(
+    variables.$blockquote-mobile-font-size
+  );
+  @include mixins.calculate-unitless-line-height(
+    variables.$blockquote-mobile-line-height,
+    variables.$blockquote-mobile-font-size
+  );
+
+  color: variables.$blockquote-font-color;
+
+  @include breakpoints.bp(lg) {
+    @include mixins.calculate-font-size-rem(
+      variables.$blockquote-desktop-font-size
+    );
+    @include mixins.calculate-unitless-line-height(
+      variables.$blockquote-desktop-line-height,
+      variables.$blockquote-desktop-font-size
+    );
+  }
+}
+
+cite {
+  display: block;
+
+  &:before {
+    content: '\2014  ';
+    white-space: pre;
+  }
+}
+
+ul,
+ol,
+dl {
+  list-style-position: variables.$list-style-position;
+  margin-bottom: variables.$list-margin-bottom;
+}
+
+ul,
+ol,
+dl,
+li {
+  &.glue-no-bullet {
+    list-style: none;
+  }
+}
+
+ul,
+ol {
+  margin-inline-start: variables.$list-side-margin;
+
+  &.glue-no-bullet {
+    margin-inline-start: 0;
+  }
+
+  &.glue-inline {
+    li {
+      display: inline-block;
+    }
+  }
+
+  li {
+    ul,
+    ol {
+      margin-bottom: 0;
+      margin-inline-start: variables.$list-nested-margin;
+    }
+  }
+}
+
+// Unordered Lists
+ul {
+  &.glue-square,
+  &.glue-circle,
+  &.glue-disc {
+    li {
+      ul {
+        list-style: inherit;
+      }
+    }
+  }
+
+  &.glue-square {
+    list-style-type: square;
+  }
+
+  &.glue-circle {
+    list-style-type: circle;
+  }
+
+  &.glue-disc {
+    list-style-type: disc;
+  }
+}
+
+// Definition Lists
+dl {
+  dt {
+    font-weight: variables.$definition-list-header-weight;
+  }
+
+  dd {
+    margin-bottom: variables.$definition-list-margin-bottom;
+  }
+}
+
+li,
+dt,
+dd {
+  @include mixins.calculate-font-size-rem(variables.$list-mobile-font-size);
+  @include mixins.calculate-unitless-line-height(
+    variables.$list-mobile-line-height,
+    variables.$list-mobile-font-size
+  );
+
+  letter-spacing: variables.$list-mobile-letter-spacing;
+
+  @include breakpoints.bp(md) {
+    @include mixins.calculate-font-size-rem(variables.$list-tablet-font-size);
+    @include mixins.calculate-unitless-line-height(
+      variables.$list-tablet-line-height,
+      variables.$list-tablet-font-size
+    );
+
+    letter-spacing: variables.$list-tablet-letter-spacing;
+  }
+
+  @include breakpoints.bp(lg) {
+    @include mixins.calculate-font-size-rem(variables.$list-desktop-font-size);
+    @include mixins.calculate-unitless-line-height(
+      variables.$list-desktop-line-height,
+      variables.$list-desktop-font-size
+    );
+
+    letter-spacing: variables.$list-desktop-letter-spacing;
+  }
+}
+
+// Headlines and other typography classes
+
+// Headlines only
+.glue-headline {
+  @extend %glue-headline;
+  @include mixins.language-font-stacks(
+    map.get(variables.$mws-fluid-1-sm, variables.$mws-font-family)
+  );
+  color: variables.$headline-font-color;
+
+  // Fluid headlines
+  @each $name, $item in variables.$headlines-type-collection-fluid {
+    @each $size, $collection in $item {
+      &.glue-headline--#{$name} {
+        @include mixins.language-font-stacks(
+          map.get($collection, variables.$mws-font-family)
+        );
+        @include breakpoints.bp($size) {
+          font-size: map.get($collection, variables.$mws-font-size);
+          font-weight: map.get($collection, variables.$mws-font-weight);
+          letter-spacing: map.get($collection, variables.$mws-letter-spacing);
+          line-height: map.get($collection, variables.$mws-line-height);
+        }
+      }
+    }
+  }
+
+  // Heading level headlines
+  @each $name, $item in variables.$headlines-type-collection {
+    @each $size, $collection in $item {
+      &.glue-headline--#{$name} {
+        @include mixins.language-font-stacks(
+          map.get($collection, variables.$mws-font-family)
+        );
+        @include breakpoints.bp($size) {
+          @include mixins.calculate-font-size-rem(
+            map.get($collection, variables.$mws-font-size)
+          );
+          @include mixins.calculate-unitless-line-height(
+            map.get($collection, variables.$mws-line-height),
+            map.get($collection, variables.$mws-font-size)
+          );
+          font-weight: map.get($collection, variables.$mws-font-weight);
+          letter-spacing: map.get($collection, variables.$mws-letter-spacing);
+        }
+      }
+    }
+  }
+}
+
+// All other types
+@each $name, $item in variables.$all-type-collection {
+  @if $name == 'large' {
+    .glue-body {
+      @each $size, $collection in $item {
+        .glue-body--#{$name} {
+          @include mixins.language-font-stacks(
+            map.get($collection, variables.$mws-font-family)
+          );
+          @include breakpoints.bp($size) {
+            @include mixins.calculate-font-size-rem(
+              map.get($collection, variables.$mws-font-size)
+            );
+            @include mixins.calculate-unitless-line-height(
+              map.get($collection, variables.$mws-line-height),
+              map.get($collection, variables.$mws-font-size)
+            );
+            font-weight: map.get($collection, variables.$mws-font-weight);
+            letter-spacing: map.get($collection, variables.$mws-letter-spacing);
+            text-transform: map.get($collection, variables.$mws-text-transform);
+          }
+        }
+      }
+    }
+  } @else if $name == 'bp-agnostic' {
+    .glue-header {
+      @each $class-name, $collection in $item {
+        &.glue-header--#{$class-name} {
+          @include mixins.calculate-font-size-rem(
+            map.get($collection, variables.$mws-font-size)
+          );
+          @include mixins.calculate-unitless-line-height(
+            map.get($collection, variables.$mws-line-height),
+            map.get($collection, variables.$mws-font-size)
+          );
+          @include mixins.font-smoothing(
+            variables.$font-smoothing-moz,
+            variables.$font-smoothing-webkit,
+            variables.$font-smoothing-rendering
+          );
+          @include mixins.language-font-stacks(
+            map.get($collection, variables.$mws-font-family)
+          );
+          font-weight: map.get($collection, variables.$mws-font-weight);
+          letter-spacing: map.get($collection, variables.$mws-letter-spacing);
+          text-transform: map.get($collection, variables.$mws-text-transform);
+          @if $class-name == 'header-link' {
+            background: colors.$white;
+            color: map.get($collection, variables.$mws-text-color);
+          }
+        }
+      }
+
+      &.glue-header--header-link {
+        &:active {
+          background: colors.$grey-25;
+          border-radius: variables.$header-link-border-radius;
+          color: colors.$grey-900;
+        }
+
+        &:visited {
+          border-radius: variables.$header-link-border-radius;
+          color: colors.$grey-900;
+        }
+
+        &:hover {
+          background: colors.$grey-50;
+          border-radius: variables.$header-link-border-radius;
+          color: colors.$grey-900;
+        }
+
+        &:focus {
+          background: colors.$grey-50;
+          border: 2px solid colors.$grey-600;
+          border-radius: variables.$header-link-border-radius;
+          color: colors.$grey-700;
+        }
+      }
+    }
+  } @else {
+    .glue-#{$name} {
+      @each $size, $collection in $item {
+        @include mixins.language-font-stacks(
+          map.get($collection, variables.$mws-font-family)
+        );
+        @include breakpoints.bp($size) {
+          @include mixins.calculate-font-size-rem(
+            map.get($collection, variables.$mws-font-size)
+          );
+          @include mixins.calculate-unitless-line-height(
+            map.get($collection, variables.$mws-line-height),
+            map.get($collection, variables.$mws-font-size)
+          );
+          font-weight: map.get($collection, variables.$mws-font-weight);
+          letter-spacing: map.get($collection, variables.$mws-letter-spacing);
+          text-transform: map.get($collection, variables.$mws-text-transform);
+        }
+      }
+    }
+  }
+}
+
+// Font modifier classes
+.glue-font-weight-light {
+  font-weight: variables.$font-weight-light;
+}
+
+.glue-font-weight-regular {
+  font-weight: variables.$font-weight-regular;
+}
+
+.glue-font-weight-medium {
+  font-weight: variables.$font-weight-medium;
+}
+
+.glue-font-weight-bold {
+  font-weight: variables.$font-weight-bold;
+}
+
+.glue-font-smoothing {
+  @include mixins.font-smoothing(
+    variables.$font-smoothing-moz,
+    variables.$font-smoothing-webkit,
+    variables.$font-smoothing-rendering
+  );
+}
+
+.glue-font-reversed {
+  color: colors.$white;
+}

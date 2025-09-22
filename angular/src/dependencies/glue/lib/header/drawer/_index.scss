@@ -1,0 +1,194 @@
+// Glue header drawer styles
+
+@use '../../accessibility/mixins' as accessibility-mixins;
+@use '../../accessibility/variables' as accessibility-variables;
+@use '../../breakpoints/mixins' as breakpoints;
+@use '../../colors/variables' as colors;
+@use '../mixins';
+@use '../variables';
+
+// User-customized variable for breakpoint
+$breakpoint-nav: variables.$breakpoint-default !default;
+
+// burger icons
+.glue-header__hamburger {
+  margin-inline-start: variables.$drawer-hamburger-margin;
+
+  @include breakpoints.bp($breakpoint-nav) {
+    display: none;
+  }
+}
+
+.glue-header__drawer-toggle-btn {
+  align-items: center;
+  background: none;
+  border: 0;
+  border-radius: 4px;
+  color: variables.$drawer-hamburger-color;
+  display: flex;
+  flex-direction: row;
+  font: inherit;
+  height: 48px;
+  justify-content: center;
+  line-height: normal;
+  margin: 0;
+  overflow: visible;
+  padding: 0;
+  position: relative;
+  width: 48px;
+
+  &:focus,
+  &:hover {
+    background-color: variables.$drawer-hamburger-color-hover;
+    box-shadow: 0 0 0 2px colors.$blue-600;
+    outline: none;
+  }
+
+  > svg {
+    pointer-events: none;
+
+    @include accessibility-mixins.hcm-mq {
+      fill: accessibility-variables.$hcm-color-text;
+    }
+  }
+
+  .glue-header--transparent:not(.glue-header--active) & {
+    color: variables.$transparent-header-burger-color;
+  }
+}
+
+// Drawer
+.glue-header__drawer,
+.glue-header__bar--desktop {
+  border: 0 solid red;
+  bottom: 0;
+  height: 100%;
+  inset-inline-start: 0;
+  inset-inline-end: variables.$drawer-right-edge-spacing;
+  max-width: variables.$drawer-max-width;
+  position: fixed;
+  top: 0;
+  transform: translate3d(-100%, 0, 0);
+  visibility: hidden;
+  z-index: variables.$z-index-drawer;
+
+  @include breakpoints.bp($breakpoint-nav) {
+    visibility: visible;
+  }
+
+  [dir='rtl'] &,
+  :host([dir='rtl']) & {
+    transform: translate3d(100%, 0, 0);
+
+    @include breakpoints.bp($breakpoint-nav) {
+      transform: none;
+    }
+  }
+
+  // Drawer Open
+  &.glue-header__drawer--is-open {
+    box-shadow: none;
+    margin-inline-end: variables.$drawer-right-edge-spacing;
+    overflow: hidden;
+    transition: transform variables.$drawer-slide-speed-in
+      variables.$drawer-slide-bezier-in;
+    visibility: visible;
+    width: calc(100% - variables.$drawer-right-edge-spacing);
+
+    // Scrolling
+    .glue-header__tier {
+      margin: 0;
+      max-height: calc(100% - variables.$drawer-fixed-elements-height);
+      overflow-x: hidden;
+      overflow-y: auto;
+
+      .glue-header--no-cta & {
+        max-height: fit-content;
+      }
+
+      .glue-header__container {
+        min-height: fit-content;
+
+        &:first-child {
+          @include mixins.header-border-bottom(false, false);
+          position: relative;
+        }
+      }
+    }
+
+    .glue-header__container {
+      &:first-child {
+        .glue-header--complex-stacked & {
+          @include mixins.header-border-bottom(
+            variables.$bar-height-double,
+            false,
+            false,
+            true
+          );
+        }
+      }
+    }
+  }
+
+  &.glue-is-not-visible {
+    @include breakpoints.bp(sm-only) {
+      transition: transform variables.$drawer-slide-speed-out
+        variables.$drawer-slide-bezier-out;
+      visibility: visible;
+    }
+  }
+
+  .glue-is-showing-drawer & {
+    @include breakpoints.bp(sm) {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  @include breakpoints.bp($breakpoint-nav) {
+    display: block;
+    max-width: 100%;
+    transform: none;
+  }
+}
+
+// Drawer backdrop
+.glue-header__drawer-backdrop {
+  background: variables.$drawer-backdrop-background-color;
+  bottom: 0;
+  display: none;
+  opacity: 0;
+  position: fixed;
+  inset-inline-end: 0;
+  top: 0;
+  transition: opacity variables.$drawer-backdrop-opacity-speed
+      variables.$drawer-backdrop-opacity-bezier,
+    width 3s variables.$drawer-backdrop-opacity-bezier;
+  width: 100%;
+  z-index: variables.$z-index-drawer-backdrop;
+
+  &:not(.glue-is-showing-drawer &) {
+    pointer-events: none;
+  }
+
+  .glue-is-showing-drawer & {
+    display: block;
+    opacity: variables.$drawer-backdrop-opacity--active;
+  }
+
+  .glue-is-animating + & {
+    display: block;
+  }
+
+  @include breakpoints.bp($breakpoint-nav) {
+    display: none;
+  }
+}
+
+.glue-no-scroll {
+  overflow: hidden;
+  height: 100%;
+}

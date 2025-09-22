@@ -1,0 +1,39 @@
+// Glue carousel variables
+
+@use '../cards/variables' as cards;
+@use '../colors/variables' as colors;
+
+// Button
+$button-size: 64px;
+$button-radius: 34px;
+$button-hover-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
+  0 1px 3px 1px rgba(60, 64, 67, 0.15);
+$button-opacity: 0.75;
+
+// Nav dots
+$dots-size: 20px;
+$dots-size-large: 48px;
+$dots-border-width: 2px;
+$dots-focus-color: colors.$blue-600;
+$dots-inner-size: 10px;
+$dots-spacing-top: 10px;
+$dots-spacing-top-md: 22px;
+
+// List
+$list-transition: transform 400ms ease;
+
+// Items
+$item-border: 2px;
+$item-border-radius: 2px;
+
+$peek-out-padding: 10px;
+$button-color: colors.$grey-0;
+
+// Cards
+$cards-bleed: 5px;  // Size of overflow to allow visible focus/hover states
+$cards-button-size: 56px;
+$cards-button-position: 8px;
+$cards-gap-sm: cards.$gutter-compact-sm;
+$cards-gap-md: cards.$gutter-compact-md;
+$cards-gap-lg: cards.$gutter-compact-lg;
+$cards-gap-xl: cards.$gutter-compact-xl;

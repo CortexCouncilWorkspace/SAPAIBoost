@@ -1,0 +1,31 @@
+// Glue page variables
+
+@use '../breakpoints/mixins' as breakpoints;
+@use "sass:math";
+
+// Page width and margin settings
+$margin-sm: 28px;
+$margin-md: 40px;
+$margin-lg: 72px;
+$margin-xl: 72px;
+$max-width: 1440px;
+$fullbleed-max-width: 1920px;
+
+// Allow glue-page to be extended by other components which need to use
+// the same margins/padding, without placing them in a glue-page container
+%glue-page {
+  margin: 0 $margin-sm;
+
+  @include breakpoints.bp(md) {
+    margin: 0 $margin-md;
+  }
+
+  @include breakpoints.bp(lg) {
+    margin: 0 $margin-lg;
+  }
+
+  @include breakpoints.bp(xl) {
+    margin: 0 auto;
+    max-width: ($max-width - math.floor(2 * $margin-xl));
+  }
+}

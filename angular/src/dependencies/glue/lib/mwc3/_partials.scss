@@ -1,0 +1,18 @@
+// Extendable snippets for use by multiple MWC3 components
+
+@use '../colors/variables' as colors-variables;
+
+%glue-mwc3-container {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 48px; // min touch target size for a11y
+
+  label {
+    align-self: center;
+  }
+}
+
+%glue-mwc3-label {
+  color: colors-variables.$grey-800;
+  cursor: pointer;
+}

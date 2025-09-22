@@ -1,0 +1,103 @@
+// Glue typography mixins
+
+@use 'sass:map';
+@use 'sass:math';
+
+@use '../breakpoints/mixins' as breakpoints;
+@use 'variables';
+
+// Sets font smoothing variables across browsers
+@mixin font-smoothing($moz, $webkit, $rendering) {
+  -moz-osx-font-smoothing: $moz;
+  -webkit-font-smoothing: $webkit;
+  text-rendering: $rendering;
+}
+
+// Builds font stacks for specific languages. Always rely on the base Latin
+// fallbacks at the end of the stack.
+@mixin language-font-stacks(
+  $default,
+  $fallback: variables.$font-stack-latinfallback
+) {
+  font-family: $default, $fallback;
+
+  [lang='ar'] & {
+    font-family: $default, variables.$font-stack-ar, $fallback;
+  }
+
+  [lang='ja'] & {
+    font-family: $default, variables.$font-stack-ja, $fallback;
+  }
+
+  [lang='ko'] & {
+    font-family: $default, variables.$font-stack-ko, $fallback;
+  }
+
+  [lang='zh-CN'] & {
+    font-family: $default, variables.$font-stack-zhcn, $fallback;
+  }
+
+  [lang='zh-TW'] & {
+    font-family: $default, variables.$font-stack-zhtw, $fallback;
+  }
+}
+
+// Create a modifier class to add vertical margins to an element
+@mixin create-margins($margin) {
+  &.glue-has-top-margin {
+    margin-top: $margin;
+  }
+
+  &.glue-has-bottom-margin {
+    margin-bottom: $margin;
+  }
+
+  &.glue-has-top-bottom-margin {
+    margin-bottom: $margin;
+    margin-top: $margin;
+  }
+}
+
+// Create a few selectors to allow paragraph elements to display either
+// using a screen spacing style or a print spacing style
+@mixin create-paragraph-spacing($margin) {
+  & + & {
+    margin-top: $margin;
+  }
+}
+
+// Sets unitless line-height based on line-height and font-size
+@mixin calculate-unitless-line-height($line-height, $font-size) {
+  line-height: math.div($line-height, $font-size);
+}
+
+// Sets a rem value for font sizes; based on default browser font size of 16px
+@mixin calculate-font-size-rem($pixel-size, $unit: 1rem) {
+  font-size: math.div($pixel-size, 16px) * $unit;
+}
+
+// Renders typography styles for all breakpoints
+@mixin create-responsive-typography(
+  $collection-bp,
+  $fallback: variables.$font-stack-latinfallback,
+  $unit: 1rem
+) {
+  @each $size, $collection in $collection-bp {
+    @include language-font-stacks(
+      map.get($collection, variables.$mws-font-family),
+      $fallback
+    );
+    @include breakpoints.bp($size) {
+      @include calculate-font-size-rem(
+        map.get($collection, variables.$mws-font-size),
+        $unit
+      );
+      @include calculate-unitless-line-height(
+        map.get($collection, variables.$mws-line-height),
+        map.get($collection, variables.$mws-font-size)
+      );
+      font-weight: map.get($collection, variables.$mws-font-weight);
+      letter-spacing: map.get($collection, variables.$mws-letter-spacing);
+    }
+  }
+}

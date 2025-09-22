@@ -1,0 +1,450 @@
+<section class="glue-fullbleed full-height">
+
+  <div class="glue-page full-height">
+
+    <div class="glue-grid full-height">
+
+      <div class="glue-grid__col glue-grid__col--span-12">
+
+        <!-- Welcome Statement -->
+         
+        <div class="glue-spacer-3-top"></div>
+
+        <h1 class="glue-headline glue-headline--headline-3">
+          <ng-container *ngIf="authService.user && authService.user.displayName; else anonymousGreeting">
+            <span class="glue-font-weight-medium welcome">What should we <span class="gemini-gradient">boost</span>
+              today, {{ authService.user.givenName }}?</span>
+          </ng-container>
+          <ng-template #anonymousGreeting>
+            <span class="glue-font-weight-medium welcome">What should we <span class="gemini-gradient">boost</span>
+              today?</span>
+          </ng-template>
+        </h1>
+
+        <!-- Navigation -->
+
+        <mat-tab-group mat-stretch-tabs="true" mat-align-tabs="start" id="chat-navigation" 
+          (selectedTabChange)="navTabChanged($event)" [selectedIndex]="selectedTabIndex">
+          <mat-tab *ngFor="let actionCardCategory of this.configService.config.actionCardCategoryConfig">
+            <ng-template mat-tab-label>
+              <span class="google-symbols glue-tabpanels__heading-icon">{{actionCardCategory.iconSymbolName}}</span>&nbsp;
+              {{actionCardCategory.name}}
+            </ng-template>
+
+            <ul class="glue-cards glue-grid glue-cards--compact">
+              <ng-container *ngFor="let actionCard of actionCardCategory.actionCardConfig">
+                <ng-container
+                  *ngIf="!actionCard.isBeta || (actionCard.isBeta && authService.signedIn && authService.user.isBeta)">
+                  <li class="glue-grid__col glue-grid__col--span-3 glue-grid__col--span-6-md">
+                    <a class="glue-card"
+                      href="{{((actionCard.is3PExternal || actionCard.is1PExternal) && !actionCard.isComingSoon) ? actionCard.externalLinkUrl : '#'}}"
+                      target="{{((actionCard.is3PExternal || actionCard.is1PExternal) && !actionCard.isComingSoon) ? '_blank' : ''}}"
+                      (click)="(!actionCard.is3PExternal && !actionCard.is1PExternal) ? cardSelected(actionCard) : ''"
+                      [ngClass]="(actionCard.isComingSoon ? 'glue-card-disabled' : '')">
+                      <div class="glue-card__inner">
+                        <div class="glue-card__content">
+                          <p class="glue-headline glue-headline--headline-5">{{actionCard.name}}</p>
+                          <p class="glue-card__description" innerHTML="{{actionCard.description}}"></p>
+                          <mat-chip-set *ngIf="actionCard.is3PExternal && !actionCard.isComingSoon" class="tool-label"
+                            aria-label="tool labels">
+                            <mat-chip>
+                              <p class="glue-label">External tool
+                            </mat-chip>
+                          </mat-chip-set>
+                          <mat-chip-set *ngIf="actionCard.is1PExternal && !actionCard.isComingSoon" class="tool-label"
+                            aria-label="tool labels">
+                            <mat-chip>
+                              <p class="glue-label">Internal Tool</p>
+                            </mat-chip>
+                          </mat-chip-set>
+                          <mat-chip-set *ngIf="actionCard.isComingSoon" class="tool-label" aria-label="tool labels">
+                            <mat-chip>
+                              <p class="glue-label">Coming Soon</p>
+                            </mat-chip>
+                          </mat-chip-set>
+                          <mat-chip-set *ngIf="actionCard.isBeta" class="tool-label" aria-label="tool labels">
+                            <mat-chip>
+                              <p class="glue-label">Beta Feature</p>
+                            </mat-chip>
+                          </mat-chip-set>
+                        </div>
+                        <!--<div class="glue-card__cta glue-card__cta--arrow">
+                          <span class="glue-button glue-button--low-emphasis">
+                            <svg
+                              *ngIf="((actionCard.is3PExternal || actionCard.is1PExternal) && !actionCard.isComingSoon)"
+                              aria-hidden="true" class="glue-icon glue-icon--arrow-forward" role="presentation">
+                              <use href="/assets/glue-icons.svg#open-in-new"></use>
+                            </svg>
+                            <svg
+                              *ngIf="((!actionCard.is3PExternal && !actionCard.is1PExternal) && !actionCard.isComingSoon)"
+                              aria-hidden="true" class="glue-icon glue-icon--arrow-forward" role="presentation">
+                              <use href="/assets/glue-icons.svg#arrow-forward"></use>
+                            </svg>
+                          </span>
+                        </div>-->
+                      </div>
+                    </a>
+                  </li>
+                </ng-container>
+              </ng-container>
+            </ul>
+
+          </mat-tab>
+
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <span class="google-symbols glue-tabpanels__heading-icon">edit</span>&nbsp;
+              Custom
+            </ng-template>
+
+            <ul class="glue-cards glue-grid glue-cards--compact">
+              <ng-template [ngIf]="this.configService.userConfig && this.configService.userConfig.actionCardConfig">
+                <li *ngFor="let actionCard of this.configService.userConfig.actionCardConfig"
+                  class="glue-grid__col glue-grid__col--span-3 glue-grid__col--span-6-md">
+                  <button class="edit-card glue-button glue-button--low-emphasis" href="#"
+                    (click)="editCustomPrompt(actionCard);$event.stopPropagation();">
+                    <span class="google-symbols">edit</span>
+                  </button>
+                  <a class="glue-card" (click)="cardSelected(actionCard)">
+                    <div class="glue-card__inner">
+                      <div class="glue-card__content">
+                        <p class="glue-headline glue-headline--headline-5">{{actionCard.name}}</p>
+                        <p class="glue-card__description" innerHTML="{{actionCard.description}}"></p>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+              </ng-template>
+              <li class="glue-grid__col glue-grid__col--span-3 glue-grid__col--span-6-md">
+                <a class="glue-card add-custom-prompt-card" (click)="editCustomPrompt()">
+                  <div class="glue-card__inner">
+                    <div class="glue-card__content">
+                      <p class="glue-headline glue-headline--headline-5">Add Custom Prompt</p>
+                      <p class="glue-card__description">Add a custom prompt that you can define, similar to a Gemini
+                        Gem. Choose whether to share it with others.</p>
+                    </div>
+                    <div class="glue-card__cta glue-card__cta--arrow">
+                      <span class="google-symbols add-icon">add</span>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+
+          </mat-tab>
+
+        </mat-tab-group>
+
+
+        <!-- Chat Window-->
+
+        <div id="chat-main" [ngClass]="panelDisplay ? 'panel-layout' : ''">
+
+          <div id="chat-conversation">
+
+            <div class="message-list">
+              <div #messages *ngFor="let message of messages" class="message" [ngClass]="message.type">
+
+                <div *ngIf="message.type === 'botImage'">
+                  <div class="bubble">
+                    <div *ngIf="message.image1" class="image-container">
+                      <img src="data:image/png;base64,{{message.image1}}">
+                      <div class="download" (click)="downloadImage(message.image1)">
+                        <span class="google-symbols">download</span>
+                      </div>
+                    </div>
+                    <div *ngIf="message.image2" class="image-container">
+                      <div class="download" (click)="downloadImage(message.image2)">
+                        <span class="google-symbols">download</span>
+                      </div>
+                      <img src="data:image/png;base64,{{message.image2}}">
+                    </div>
+                    <div *ngIf="message.image3" class="image-container">
+                      <div class="download" (click)="downloadImage(message.image3)">
+                        <span class="google-symbols">download</span>
+                      </div>
+                      <img src="data:image/png;base64,{{message.image3}}">
+                    </div>
+                    <div *ngIf="message.image4" class="image-container">
+                      <div class="download" (click)="downloadImage(message.image4)">
+                        <span class="google-symbols">download</span>
+                      </div>
+                      <img src="data:image/png;base64,{{message.image4}}">
+                    </div>
+                    <div *ngIf="message.originalPrompt">
+                      <button class="glue-button glue-button--tonal glue-button--icon-right"
+                        (click)="generateMoreImages(message.originalPrompt)">
+                        Generate More
+                        <svg role="presentation" aria-hidden="true" class="glue-icon glue-icon--arrow-forward">
+                          <use href="/assets/glue-icons.svg#chevron-right"></use>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngIf="message.type === 'botAudio'">
+                  <div class="bubble">
+                    <div *ngIf="message.audio" class="audio-container">
+                      <audio controls src="data:audio/wav;base64,{{message.audio}}"
+                        controlsList="nodownload noplaybackrate"></audio>
+                      <button class="glue-button glue-button--tonal glue-button--icon-right"
+                        (click)="downloadAudio(message.audio)">
+                        Download
+                        <svg role="presentation" aria-hidden="true" class="glue-icon glue-icon--arrow-forward">
+                          <use href="/assets/glue-icons.svg#file-download"></use>
+                        </svg>
+                      </button>
+                      <div class="clear"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngIf="message.type === 'info'">
+                  <p [innerHTML]="message.text | safeHtml"></p>
+                </div>
+
+                <div *ngIf="message.type === 'app'">
+                  <div class="bubble">
+                    <p [innerHTML]="message.text | safeHtml"></p>
+                    <ng-container *ngIf="message.uploadHint">
+                      <p>If you already have a Marketing Brief or another document, <a
+                          (click)="openDriveFilePicker()">upload it to get started</a>. You can also paste a public
+                        website URL to provide additional context. No worries if you don't have these yet -- we can also
+                        start from scratch! ✨</p>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div *ngIf="message.type === 'loading'">
+                  <p [innerHTML]="message.text | safeHtml"></p>
+                </div>
+
+                <div *ngIf="message.type === 'bot'">
+                  <p [innerHTML]="message.text | safeHtml"></p>
+                  <div class="bot-response-buttons">
+                    <button (click)="copyText(message)" class="glue-button glue-button--low-emphasis copy-button"
+                      [ngClass]="message.copySelected ? 'selected' : ''">
+                      <span class="google-symbols glue-tabpanels__heading-icon">
+                        content_copy
+                      </span>
+                    </button>
+                    <button (click)="sendFeedback(message, 'positive')" class="glue-button glue-button--low-emphasis"
+                      [ngClass]="message.thumbsUpSelected ? 'selected' : ''">
+                      <span class="google-symbols glue-tabpanels__heading-icon">
+                        thumb_up
+                      </span>
+                    </button>
+                    <button (click)="sendFeedback(message, 'negative')" class="glue-button glue-button--low-emphasis"
+                      [ngClass]="message.thumbsDownSelected ? 'selected' : ''">
+                      <span class="google-symbols glue-tabpanels__heading-icon">
+                        thumb_down
+                      </span>
+                    </button>
+                  </div>
+                </div>
+
+                <div *ngIf="message.type === 'widget'">
+                  <ng-container *ngFor="let action of message.widgetActions">
+                    <ng-container *ngIf="action.type === 'button'">
+                      <button class="glue-button glue-button--medium-emphasis widget-button" (click)="widgetActionHandler(action, message.widgetActions)" [disabled]="action.disabled">
+                        {{ action.label }}
+                      </button>
+                    </ng-container>
+                  </ng-container>
+                </div>
+
+                <div *ngIf="message.type === 'user'" class="outer-container">
+                  <img class="photo"
+                    src="{{authService.signedIn ? authService.user.photoURL : '/assets/user_icon.png'}}">
+                  <div class="container">
+                    <p [innerHTML]="message.text"></p>
+
+                    <ng-container *ngIf="message.documents">
+                      <a *ngFor="let doc of message.documents" href="{{doc.webViewLink}}" target="_blank"
+                        class="doc-link">
+                        <div class="file">
+                          <div class="thumbnail">
+                            <img src="{{doc.thumbnailLink}}" width="170" height="220" />
+                          </div>
+                          <div class="nameContainer">
+                            <div class="icon"><img src="{{doc.iconLink}}" width="16" height="16" /></div>
+                            <div class="name">{{doc.name}}</div>
+                          </div>
+                        </div>
+                      </a>
+                    </ng-container>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+          <div id="chat-panel">
+            <ng-container *ngIf="!panelEmbeddedDocUrl">
+              <div id="chat-panel-loading">Loading Document...</div>
+            </ng-container>
+            <ng-container *ngIf="panelEmbeddedDocUrl">
+              <div id="doc-header">
+                <button class="glue-button glue-button--low-emphasis" (click)="openDocInNewWindow(panelEmbeddedDocUrl)">
+                  <span class="google-symbols">open_in_new</span>
+                </button>
+              </div>
+              <iframe [src]="panelEmbeddedDocUrl | safeUrl" width="100%" height="100%" frameborder="0">
+                Loading...
+              </iframe>
+            </ng-container>
+          </div>
+
+        </div>
+
+        
+      </div>
+
+    </div>
+
+    
+
+    <div id="chat-box" class="glue-fullbleed">
+      <div class="glue-page">
+        <form class="glue-form chat-form">
+          <div class="form-container">
+
+            <label class="mdc-text-field mdc-text-field--textarea mdc-text-field--filled glue-text-field">
+              <textarea class="mdc-text-field__input" rows="1" name="prompt" id="prompt" type="text"
+                [(ngModel)]="newMessage" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="1" cdkAutosizeMaxRows="12"
+                (keyup.enter)="sendRequest(this.newMessage, currentActionCardCategory.type)"></textarea>
+            </label>
+
+            <ng-container *ngIf="driveService.processingFileMetadata && driveService.processingFileMetadata.length > 0">
+              <div id="processing-file" [ngClass]="!driveService.documentsLoaded ? 'loading' : 'loaded'">
+                <div *ngIf="!driveService.documentsLoaded" class="icon google-symbols">upload</div>
+                <div *ngIf="driveService.documentsLoaded" class="icon google-symbols">check_circle</div>
+                <div class="name">{{driveService.processingFileMetadata.length}} Documents</div>
+                <div class="close">
+                  <a (click)="removeFile()">
+                    <span class="google-symbols">close</span>
+                  </a>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="currentActionCardCategory.type == CardCategoryType.Audio">
+
+              <button id="voice-picker" [matMenuTriggerFor]="voiceMenu"
+                class="glue-button glue-button--low-emphasis glue-button--icon" width="20" height="20">
+                &nbsp;&nbsp;<span class="google-symbols">volume_up</span>&nbsp;
+                <div class="glue-body"><b>Voice:</b>&nbsp;
+                  <span>{{currentVoiceLocale.name}}</span>&nbsp;>
+                  <span>{{currentVoice.name | voiceNameTransform}}</span>
+                  <span class="google-symbols voice-quality">{{currentVoice.type | voiceQualityTransform}}</span>
+                  <span class="voice-gender">&nbsp;{{currentVoice.gender | uppercase}}</span>
+                </div>
+              </button>
+
+              <mat-menu #voiceMenu="matMenu" yPosition="above">
+                <ng-container *ngFor="let voiceLocaleConfig of this.configService.config.voiceConfig">
+                  <button mat-menu-item [matMenuTriggerFor]="subVoiceMenu">
+                    <span>{{voiceLocaleConfig.name}}</span>
+                  </button>
+                  <mat-menu #subVoiceMenu="matMenu">
+                    <button *ngFor="let voiceConfig of voiceLocaleConfig.voiceConfig" (click)="selectVoice(voiceConfig)"
+                      mat-menu-item>
+                      <span>{{voiceConfig.name | voiceNameTransform}}</span>
+                      <span class="google-symbols voice-quality">{{voiceConfig.type | voiceQualityTransform}}</span>
+                      <span class="voice-gender">&nbsp;{{voiceConfig.gender | uppercase}}</span>
+                    </button>
+                  </mat-menu>
+                </ng-container>
+              </mat-menu>
+
+            </ng-container>
+
+            <ng-container *ngIf="currentActionCardCategory.type == CardCategoryType.Text">
+
+              <button id="brand-picker" [matMenuTriggerFor]="menu"
+                class="glue-button glue-button--low-emphasis glue-button--icon" width="20" height="20">
+                <img src="{{currentBrand.logoUrl}}" width="20" height="20">
+                <span class="glue-body">Style & Tone&nbsp;&nbsp;</span>
+              </button>
+
+              <mat-menu #menu="matMenu" yPosition="above">
+                <ng-container *ngFor="let brand of this.configService.config.brandConfig">
+                  <ng-container *ngIf="!brand.subBrandConfig || brand.subBrandConfig.length == 0">
+                    <button (click)="selectBrand(brand)" mat-menu-item>
+                      <img src="{{brand.logoUrl}}" width="16" height="16">&nbsp;
+                      <span>{{brand.name}}</span>
+                    </button>
+                  </ng-container>
+                  <ng-container *ngIf="brand.subBrandConfig && brand.subBrandConfig.length > 0">
+                    <button mat-menu-item [matMenuTriggerFor]="subBrandMenu">
+                      <img src="{{brand.logoUrl}}" width="16" height="16">&nbsp;
+                      <span>{{brand.name}}</span>
+                    </button>
+                    <mat-menu #subBrandMenu="matMenu">
+                      <button *ngFor="let subBrand of brand.subBrandConfig" (click)="selectBrand(subBrand)"
+                        mat-menu-item>
+                        <img src="{{subBrand.logoUrl}}" width="16" height="16">&nbsp;
+                        <span>{{subBrand.name}}</span>
+                      </button>
+                    </mat-menu>
+                  </ng-container>
+                </ng-container>
+              </mat-menu>
+
+              <button id="language-selector" [matMenuTriggerFor]="languageMenu"
+                class="glue-button glue-button--low-emphasis">
+                <span class="google-symbols">
+                  language
+                </span>&nbsp;{{currentLanguage ? currentLanguage.code : ''}}
+              </button>
+
+              <mat-menu #languageMenu="matMenu" yPosition="above">
+                <ng-container *ngFor="let language of this.configService.config.languageConfig">
+                  <button (click)="selectLanguage(language)" mat-menu-item>
+                    <span>{{language.name}} ({{language.code}})</span>
+                  </button>
+                </ng-container>
+              </mat-menu>
+
+              <ng-container
+                *ngIf="(!driveService.processingFileMetadata || driveService.processingFileMetadata.length == 0) || (driveService.processingFileMetadata.length > 0 && driveService.documentsLoaded)">
+                <button (click)="openDriveFilePicker()" id="open-picker" class="glue-button glue-button--low-emphasis">
+                  <span class="google-symbols">
+                    upload
+                  </span>
+                </button>
+              </ng-container>
+
+            </ng-container>
+
+            <button (click)="startNewSession()" id="start-new-session" class="glue-button glue-button--low-emphasis">
+              <span class="google-symbols">
+                refresh
+              </span>
+            </button>
+            <button (click)="sendRequest(this.newMessage, currentActionCardCategory.type)"
+              class="glue-button glue-button--high-emphasis"
+              [ngClass]="!driveService.documentsLoaded ? 'disabled' : ''">
+              <span class="google-symbols">
+                send
+              </span>
+            </button>
+          </div>
+          <div class="disclaimer">
+            <p class="glue-small-text glue-font-weight-light">
+              <i>AI Boost Toolbox for SAP RISE may display inaccurate information. Fact check thoroughly and use outputs
+                thoughtfully. You may enter confidential, need to know, and public
+                information, but not privileged information or user data.</i>
+            </p>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>

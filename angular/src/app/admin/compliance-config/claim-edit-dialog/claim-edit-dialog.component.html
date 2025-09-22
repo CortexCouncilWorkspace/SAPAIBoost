@@ -1,0 +1,53 @@
+<form class="glue-form glue-mwc3" method="post" [formGroup]="editForm" (ngSubmit)="submit()">
+
+  <h2 mat-dialog-title class="dialog-heading">
+    <ng-container *ngIf="data">Edit</ng-container>
+    <ng-container *ngIf="!data">New</ng-container>
+    Claim Configuration
+  </h2>
+
+  <mat-dialog-content>
+
+    <div class="glue-page">
+
+      <div class="glue-grid">
+
+        <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-3-top">
+          <mat-form-field appearance="outline" class="form-field glue-grid__col--span-8">
+            <mat-label>Matching Terms</mat-label>
+            <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4" cdkAutosizeMaxRows="8" 
+              #problematicTerms [formControl]="editForm.controls.problematicTerms" [errorStateMatcher]="matcher" maxlength="10000" placeholder="Enter a comma-seperated list of terms to match."></textarea>
+            <mat-hint>Enter a comma-seperated list of terms.</mat-hint>
+            <mat-hint align="end">{{problematicTerms.value.length}} / 10000</mat-hint>
+            <ng-container *ngIf="editForm.controls.problematicTerms.hasError('required') && isSubmitted">
+              <mat-error>Please enter a list of comma-seperated terms.</mat-error>
+            </ng-container>
+          </mat-form-field>
+        </div>
+
+        <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-4-top">
+          <mat-form-field appearance="outline" class="form-field glue-grid__col--span-8">
+            <mat-label>Compliance Message</mat-label>
+            <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4" cdkAutosizeMaxRows="8" 
+              #complianceMessage [formControl]="editForm.controls.complianceMessage" [errorStateMatcher]="matcher" maxlength="1000" placeholder="Enter the compliance message to deliver the user when a term appears in a Gemini response."></textarea>
+            <mat-hint align="end">{{complianceMessage.value.length}} / 1000</mat-hint>
+            <ng-container *ngIf="editForm.controls.complianceMessage.hasError('required') && isSubmitted">
+              <mat-error>Please enter a compliance message.</mat-error>
+            </ng-container>
+          </mat-form-field>
+        </div>
+
+      </div>
+
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <div class="button-container">
+      <button class="glue-button glue-button--medium-emphasis delete" mat-dialog-close (click)="delete()" *ngIf="data">Delete</button>
+      <button class="glue-button glue-button--medium-emphasis" mat-dialog-close>Close</button>
+      <button class="glue-button glue-button--high-emphasis" type="submit">Save</button>
+    </div>
+  </mat-dialog-actions>
+
+</form>

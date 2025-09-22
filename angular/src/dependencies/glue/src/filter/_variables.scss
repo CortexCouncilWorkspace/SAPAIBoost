@@ -1,0 +1,42 @@
+// Glue Filter variables
+@use 'sass:map';
+@use '../colors/variables' as colors;
+@use '../modal/variables' as modal-variables;
+@use '../spacers/variables' as spacers-variables;
+
+// Modal styles
+$modal-results-padding-top: modal-variables.$glue-modal-close-box-size -
+  modal-variables.$glue-modal-padding +
+  map.get(spacers-variables.$height-small-map, 'spacer-2');
+
+// Chip styles
+$chip-border-radius: 8px;
+$chip-margin-horizontal: 8px;
+$chip-padding-horizontal: 8px;
+$chip-padding-vertical: 6px;
+$chip-icon-size: 18px;
+
+// Chip colors
+$chip-bgcolor: colors.$white;
+$chip-border: colors.$grey-700;
+$chip-color: colors.$grey-800;
+$chip-hover-bgcolor: rgba(colors.$grey-800, 0.08);
+$chip-hover-border: $chip-border;
+$chip-hover-color: colors.$grey-900;
+$chip-focus-bgcolor: rgba(colors.$grey-800, 0.12);
+$chip-focus-border: colors.$grey-900;
+$chip-focus-color: colors.$grey-900;
+$chip-selected-bgcolor: colors.$blue-100;
+$chip-selected-color: colors.$grey-800;
+$chip-selected-iconcolor: colors.$grey-900;
+$chip-selected-hover-bgcolor: colors.$blue-200;
+
+// Chip animation timing
+$standard-curve-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+$chip-selected-timing: 150ms;
+$chip-unselected-timing: 100ms;
+$chip-icon-opacity-timing: 50ms;
+
+// Expansion panel in filter section
+$filter-expansion-panel-header-line-height: 36px;
+

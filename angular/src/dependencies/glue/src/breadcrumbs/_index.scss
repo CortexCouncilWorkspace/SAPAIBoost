@@ -1,0 +1,41 @@
+// Glue breadcrumbs component
+// Page navigation and wayfinding
+
+@use '../typography';
+@use 'variables';
+
+.glue-breadcrumbs {
+  @extend %glue-small-text;
+
+  color: variables.$font-color;
+  cursor: default;
+  font-weight: variables.$font-weight;
+  line-height: 1;
+}
+
+.glue-breadcrumbs__list {
+  margin-inline-start: 0;
+}
+
+.glue-breadcrumbs__item {
+  @extend %glue-small-text;
+
+  cursor: default;
+  display: inline-block;
+  font-weight: variables.$font-weight;
+  list-style: none;
+}
+
+.glue-breadcrumbs__item--active {
+  cursor: default;
+
+  &::after {
+    margin: 0;
+  }
+}
+
+.glue-breadcrumbs__link {
+  border-radius: 0;
+  cursor: pointer;
+  padding: 14px 0;
+}

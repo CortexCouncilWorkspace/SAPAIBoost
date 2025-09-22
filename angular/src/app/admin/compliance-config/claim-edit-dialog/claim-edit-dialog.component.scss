@@ -1,0 +1,31 @@
+form {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.button-container {
+  margin-left: auto;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+.button-container button {
+  margin-left: 20px;
+}
+
+.dialog-heading {
+  font-size: 20px;
+  margin: 20px 0px 20px 0px;
+}
+
+.logo-preview {
+  margin-right: 20px;
+}
+
+.glue-button.delete {
+  color: red;
+  border: 1px red solid;
+}
+.glue-button.delete:hover {
+  background-color: rgb(255, 240, 240);
+}

@@ -1,0 +1,364 @@
+// Glue tables component
+// Data and comparison tables
+
+@use '../accessibility/mixins' as accessibility-mixins;
+@use '../breakpoints/mixins' as breakpoints;
+@use '../colors/variables' as colors;
+@use '../typography/variables' as typography;
+@use 'mixins';
+@use 'variables';
+
+// Basic table styles
+
+// Overflow container includes gradients at edges to indicate more content
+// Based on concepts from:
+// http://dbushell.com/2016/03/04/css-only-responsive-tables/
+.glue-table__overflowcontainer {
+  background-attachment: scroll, scroll;
+  background-image: linear-gradient(
+      to left,
+      rgba(255, 255, 255, 0) 0,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    linear-gradient(
+      to left,
+      rgba(95, 99, 104, 0) 0,
+      rgba(95, 99, 104, 0.1) 100%
+    ),
+    linear-gradient(
+      to right,
+      rgba(95, 99, 104, 0) 0,
+      rgba(95, 99, 104, 0.1) 100%
+    );
+  background-position: left bottom, right bottom, left bottom, right bottom;
+  background-repeat: no-repeat;
+  background-size: 0 100%, 0 100%, 15px 100%, 15px 100%;
+  mix-blend-mode: multiply;
+  overflow: auto;
+  // padding prevents aria-live element in tablesort from producing a
+  // vertical scrollbar
+  padding: 0 0 1px;
+  position: relative;
+
+  @include accessibility-mixins.hcm-mq {
+    // Explicitly turn off background compositing in HCM so tables can be read
+    mix-blend-mode: unset;
+  }
+}
+
+.glue-table {
+  // Table overflow gradient background
+  @include mixins.overflow-gradients(base);
+
+  // Border tweak fixes issue with overflow hiding left border (Firefox)
+  // Also fixes issue with scrollbar always appearing (Chrome)
+  border: 2px solid variables.$row-background-flat;
+  border-width: 0 1px;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+
+  th {
+    border-bottom: 2px solid colors.$grey-300;
+    vertical-align: bottom;
+  }
+
+  td {
+    vertical-align: top;
+  }
+
+  .glue-table__cell--numerical {
+    // Numerical cells are right-aligned, even for RTL languages
+    text-align: right;
+  }
+}
+
+// Data table styles
+.glue-table--datatable {
+  @include mixins.style-altrows(reset);
+  @include mixins.style-bordered(rows);
+  @include mixins.overflow-gradients(base);
+
+  th {
+    padding-block: variables.$header-padding;
+  }
+
+  td {
+    padding-block: variables.$cell-padding-y;
+  }
+
+  th,
+  td {
+    padding-inline: variables.$cell-padding-x 0;
+    text-align: end;
+
+    &:first-child {
+      padding-inline: 0 variables.$cell-padding-x;
+      text-align: start;
+    }
+
+    // Force the same padding for all table cells in HCM
+    @include mixins.hcm-padding;
+  }
+
+  .glue-table__cell--numerical {
+    // Numerical cells are right-aligned, even for RTL languages
+    text-align: right;
+  }
+
+  @include breakpoints.bp(sm-only) {
+    td,
+    th {
+      padding-inline: 0 variables.$cell-padding-x--sm;
+
+      &:first-child {
+        padding-inline-end: variables.$cell-padding-x--sm;
+      }
+
+      &:last-child {
+        padding-inline-end: 0;
+      }
+    }
+  }
+}
+
+// Data table: alt row coloring styles
+.glue-table--datatable-altrows {
+  @include mixins.style-altrows(even);
+  @include mixins.style-bordered(headerrow);
+  @include mixins.overflow-gradients(even);
+
+  th,
+  td {
+    @include mixins.row-horizontal-padding(variables.$altrow-edge-padding);
+
+    @include breakpoints.bp(lg) {
+      @include mixins.row-horizontal-padding(
+        variables.$altrow-edge-padding-desktop
+      );
+    }
+  }
+}
+
+// Comparison table styles
+.glue-table--comparisontable {
+  @include mixins.style-altrows(reset);
+  @include mixins.style-bordered(cells);
+  @include mixins.overflow-gradients(base);
+
+  th {
+    border-bottom: 0;
+    padding-block: variables.$header-padding;
+  }
+
+  td {
+    padding-block: variables.$cell-padding-y;
+  }
+
+  th,
+  td {
+    padding-inline: variables.$cell-padding-x;
+    text-align: start;
+  }
+
+  @include breakpoints.bp(sm-only) {
+    td,
+    th {
+      padding-inline: variables.$cell-padding-x--sm;
+    }
+  }
+}
+
+// Comparison table: alt row coloring styles
+.glue-table--comparisontable-altrows {
+  @include mixins.style-altrows(odd);
+  @include mixins.style-bordered(reset);
+  @include mixins.overflow-gradients(odd);
+
+  th,
+  td {
+    @include mixins.row-horizontal-padding(variables.$padding-x);
+    @include mixins.glue-comparisontable-cell-padding(altrows);
+  }
+}
+
+// Stacked tables on mobile
+// Limit to supported browsers.
+@supports (display: flex) {
+  .glue-table {
+    &.glue-table--stacked {
+      background: colors.$white;
+      border: 0 solid variables.$border-color;
+      border-width: 1px 0 0;
+      display: block;
+      text-align: start;
+
+      thead {
+        display: none;
+      }
+
+      tbody,
+      tr {
+        display: block;
+      }
+
+      td,
+      th {
+        padding-inline: 0;
+
+        // Force the same padding for all table cells in HCM
+        @include mixins.hcm-padding;
+      }
+
+      td {
+        display: flex;
+        flex-wrap: nowrap;
+
+        &::before {
+          content: attr(data-colheader);
+          display: block;
+          flex: 1 0 50%;
+          font-weight: typography.$font-weight-bold;
+          max-width: calc(50% - (3 * #{variables.$cell-padding-x--sm}));
+          padding-inline-end: variables.$cell-padding-x--sm;
+          text-align: start;
+
+          @include breakpoints.bp(sm-only) {
+            padding-inline-start: 0;
+          }
+        }
+      }
+
+      &.glue-table--datatable-altrows {
+        td,
+        th {
+          padding-inline: variables.$stacked-cell-padding-x-altrows--sm;
+        }
+
+        @include breakpoints.bp(md) {
+          td,
+          th {
+            padding-inline-start: variables.$stacked-cell-padding-x-altrows;
+            padding-inline-end: 0;
+
+            &:first-child {
+              padding-inline-end: 0;
+            }
+
+            &:last-child {
+              padding-inline-end: variables.$stacked-cell-padding-x-altrows;
+            }
+
+            // Force the same padding for all table cells in HCM
+            @include mixins.hcm-padding;
+          }
+        }
+      }
+
+      &.glue-table--comparisontable {
+        // Remove cell borders and only have borders between rows
+        tr {
+          border-top: 1px solid variables.$border-color;
+
+          &:first-of-type {
+            border-top-width: 0;
+          }
+        }
+
+        td {
+          border: none;
+        }
+
+        td {
+          &:first-child {
+            // Treats the first cell as a header for the block
+            font-weight: typography.$font-weight-bold;
+
+            &::before {
+              content: '';
+              display: none;
+            }
+
+            @include breakpoints.bp(md) {
+              font-weight: typography.$font-weight-regular;
+            }
+          }
+        }
+
+        &.glue-table--comparisontable-altrows {
+          // No borders on altrow coloring
+          tr {
+            border-width: 0;
+          }
+        }
+
+        @include breakpoints.bp(md) {
+          // Reset borders and padding on larger viewports
+          @include mixins.style-bordered(cells);
+
+          tr {
+            border: none;
+          }
+
+          td {
+            @include mixins.glue-comparisontable-cell-padding(bordered);
+          }
+
+          &.glue-table--comparisontable-altrows {
+            @include mixins.style-altrows(odd);
+            @include mixins.style-bordered(reset);
+            @include mixins.overflow-gradients(odd);
+
+            th,
+            td {
+              @include mixins.row-horizontal-padding(variables.$cell-padding-x);
+            }
+          }
+        }
+      }
+
+      .glue-table__cell--numerical {
+        // Remove numerical cell alignment adjustment
+        text-align: start;
+      }
+
+      @include breakpoints.bp(md) {
+        // Restore normal table layout
+        border: 2px solid variables.$row-background-flat;
+        border-width: 0 1px;
+        display: table;
+
+        thead {
+          display: table-header-group;
+        }
+
+        tbody {
+          display: table-row-group;
+        }
+
+        tr {
+          display: table-row;
+        }
+
+        td {
+          display: table-cell;
+
+          &::before {
+            content: '';
+            display: none;
+          }
+        }
+
+        .glue-table__cell--numerical {
+          // Restore numerical cell alignment adjustment
+          text-align: right;
+        }
+      }
+    }
+  }
+}

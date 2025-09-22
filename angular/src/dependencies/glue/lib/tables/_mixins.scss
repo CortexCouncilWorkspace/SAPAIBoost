@@ -1,0 +1,247 @@
+// Glue table mixins
+
+@use '../accessibility/mixins' as accessibility-mixins;
+@use '../breakpoints/mixins' as breakpoints-mixins;
+@use '../colors/variables' as colors-variables;
+@use 'variables';
+
+// Horizontally pad the first/last cells in a row.
+// $padding: amount of padding to set (single value)
+@mixin row-horizontal-padding($padding) {
+  &:first-child {
+    padding-inline-start: $padding;
+  }
+
+  &:last-child {
+    padding-inline-end: $padding;
+  }
+}
+
+// Set up alternate row coloring
+// $altrow: Which row to alternate on. Possible values:
+//   even: set even row backgrounds to gray and odd to white (default)
+//   odd: set odd row backgrounds to gray and even to white
+//   reset: set all row backgrounds to white
+@mixin style-altrows($altrow: even) {
+  @if $altrow == reset {
+    tr {
+      &:nth-of-type(n) {
+        background-color: variables.$row-background;
+      }
+    }
+  } @else {
+    thead {
+      tr {
+        &:nth-of-type(n) {
+          background-color: variables.$row-background;
+        }
+      }
+    }
+
+    tr {
+      background-color: variables.$row-background;
+    }
+
+    tr {
+      &:nth-of-type(#{$altrow}) {
+        background-color: variables.$row-background-alt;
+      }
+    }
+  }
+}
+
+// Set up borders around table cells
+// $bordertype: The style of border to set. Possible values:
+//   cells: set full borders on all cells (default)
+//   headerrow: set a horizontal border below table header row
+//   reset: remove all borders
+//   rows: set horizontal borders between rows
+@mixin style-bordered($bordertype: rows) {
+  @if $bordertype == reset {
+    tr,
+    td {
+      border: none;
+    }
+  } @else if $bordertype == headerrow {
+    thead {
+      tr {
+        border: 1px solid variables.$border-color;
+        border-width: 0 0 1px;
+      }
+    }
+
+    tr,
+    td {
+      border: none;
+    }
+  } @else if $bordertype == rows {
+    tr {
+      border: 1px solid variables.$border-color;
+      border-width: 0 0 1px;
+    }
+  } @else {
+    td {
+      border: 1px solid variables.$border-color;
+    }
+  }
+
+  // Explicitly show all borders in HCM
+  @include accessibility-mixins.hcm-mq {
+    th,
+    td {
+      border: 1px solid variables.$border-color;
+    }
+  }
+}
+
+// Set up padding on Comparison table cells
+// $tabletype: The type of comparison table to set padding on. Possible values:
+//   altrows: Sets padding for alternating rows (default)
+//   bordered: Sets padding for bordered cells
+@mixin glue-comparisontable-cell-padding($tabletype: bordered) {
+  @if $tabletype == bordered {
+    padding: variables.$comparisontable-cell-padding-y
+      variables.$comparisontable-bordered-cell-padding;
+    @include breakpoints-mixins.bp(lg) {
+      padding: variables.$comparisontable-cell-padding-y
+        variables.$comparisontable-bordered-cell-padding-desktop;
+    }
+  } @else {
+    padding: variables.$comparisontable-cell-padding-y
+      variables.$cell-padding-x;
+    @include breakpoints-mixins.bp(lg) {
+      padding: variables.$comparisontable-cell-padding-y
+        variables.$cell-padding-x;
+    }
+  }
+}
+
+// Set up gradients to indicate overflow scrolling
+// $altrow: Which row to alternate on. Possible values:
+//   base: set up white gradients on first/last cells
+//   even: set up gray gradients on first/last cells of even rows,
+//     white gradients on odd (default)
+//   reset: remove all backgrounds
+//   odd: set up gray gradients on first/last
+//     cells of odd rows, white gradients on even
+@mixin overflow-gradients($altrow: even) {
+  @if $altrow == reset {
+    // Removes background gradients
+    tr {
+      &:nth-of-type(n) {
+        td:nth-of-type(n),
+        th:nth-of-type(n) {
+          background: none;
+        }
+      }
+    }
+  } @else if $altrow == base {
+    // Sets white gradient on first/last cells in a row for all rows
+    tr {
+      &:nth-of-type(n) {
+        td:first-child,
+        th:first-child {
+          background-image: linear-gradient(
+            to right,
+            rgba(variables.$row-background-flat, 1) 50%,
+            rgba(variables.$row-background-flat, 0) 100%
+          );
+          background-position: 0 100%;
+          background-repeat: no-repeat;
+          background-size: variables.$overflow-gradient-cover-size;
+
+          [dir='rtl'] &,
+          :host([dir='rtl']) & {
+            background-image: linear-gradient(
+              to left,
+              rgba(variables.$row-background-flat, 1) 50%,
+              rgba(variables.$row-background-flat, 0) 100%
+            );
+            background-position: 100% 0;
+          }
+        }
+
+        td:last-child,
+        th:last-child {
+          background-image: linear-gradient(
+            to left,
+            rgba(variables.$row-background-flat, 1) 50%,
+            rgba(variables.$row-background-flat, 0) 100%
+          );
+          background-position: 100% 0;
+          background-repeat: no-repeat;
+          background-size: variables.$overflow-gradient-cover-size;
+
+          [dir='rtl'] &,
+          :host([dir='rtl']) & {
+            background-image: linear-gradient(
+              to right,
+              rgba(variables.$row-background-flat, 1) 50%,
+              rgba(variables.$row-background-flat, 0) 100%
+            );
+            background-position: 0 100%;
+          }
+        }
+      }
+    }
+  } @else {
+    // Alternates rows with white/gray gradients on first/last cells
+    tr {
+      &:nth-of-type(#{$altrow}) {
+        td:first-child {
+          background-image: linear-gradient(
+            to right,
+            rgba(variables.$row-background-alt-flat, 1) 50%,
+            rgba(variables.$row-background-alt-flat, 0) 100%
+          );
+          background-position: 0 100%;
+          background-repeat: no-repeat;
+          background-size: variables.$overflow-gradient-cover-size;
+
+          [dir='rtl'] &,
+          :host([dir='rtl']) & {
+            background-image: linear-gradient(
+              to left,
+              rgba(variables.$row-background-alt-flat, 1) 50%,
+              rgba(variables.$row-background-alt-flat, 0) 100%
+            );
+            background-position: 100% 0;
+          }
+        }
+
+        td:last-child {
+          background-image: linear-gradient(
+            to left,
+            rgba(variables.$row-background-alt-flat, 1) 50%,
+            rgba(variables.$row-background-alt-flat, 0) 100%
+          );
+          background-position: 100% 0;
+          background-repeat: no-repeat;
+          background-size: variables.$overflow-gradient-cover-size;
+
+          [dir='rtl'] &,
+          :host([dir='rtl']) & {
+            background-image: linear-gradient(
+              to right,
+              rgba(variables.$row-background-alt-flat, 1) 50%,
+              rgba(variables.$row-background-alt-flat, 0) 100%
+            );
+            background-position: 0 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Force the same horizontal padding for all table cells in HCM since all
+// borders are shown
+@mixin hcm-padding {
+  @include accessibility-mixins.hcm-mq {
+    &,
+    &:first-child,
+    &:last-child {
+      padding-inline: variables.$cell-padding-x;
+    }
+  }
+}

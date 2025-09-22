@@ -1,0 +1,52 @@
+// Glue cards variables
+
+@use '../buttons/variables' as buttons;
+@use '../colors/variables' as colors;
+@use '../grids/variables' as grids;
+@use '../icons/variables' as icons;
+
+$gutter-sm: grids.$gutter-sm;
+$gutter-md: grids.$gutter-md;
+$gutter-lg: grids.$gutter-lg;
+$gutter-xl: grids.$gutter-xl;
+$gutter-compact-sm: 16px;
+$gutter-compact-md: 24px;
+$gutter-compact-lg: $gutter-compact-md;
+$gutter-compact-xl: $gutter-compact-lg;
+
+$background: colors.$white;
+$border-color: colors.$grey-300;
+$border-radius: 8px;
+$focus-border-color: colors.$blue-600;
+$focus-button-background: buttons.$leb-bg-color-hover;
+$min-height: 96px;
+$transition: 0.25s;
+
+$asset-logo-size: 48px;
+$asset-logo-spacing: 40px;
+$asset-video-size: 64px;
+$asset-video-white: colors.$white;
+$asset-video-grey: colors.$grey-900;
+$asset-video-red: icons.$youtube-color;
+
+$content-description-color: colors.$grey-700;
+$content-eyebrow-color: colors.$grey-700;
+$content-headline-color: colors.$grey-900;
+$content-spacing: 24px;
+$content-vertical-spacing: 8px;
+
+$cta-icon-size: 24px;
+$cta-padding-bottom: buttons.$padding-bottom + buttons.$border-width;
+$cta-padding-left: buttons.$leb-padding-left + buttons.$border-width;
+$cta-padding-right: buttons.$leb-padding-right + buttons.$border-width;
+$cta-padding-top: buttons.$padding-top + buttons.$border-width;
+$cta-spacing: $content-spacing - $cta-padding-left;
+$cta-vertical-spacing: 16px - buttons.$border-width;
+
+$list-asset-logo-size: 64px;
+$list-asset-logo-spacing: 24px;
+$list-asset-width: 108px;
+$list-content-spacing: 16px;
+$list-content-vertical-spacing: 4px;
+$list-cta-spacing: $list-content-spacing - buttons.$leb-padding-left - 1px; // 1px = button border
+$list-cta-vertical-spacing: 4px - 1px; // 1px = button border

@@ -1,0 +1,46 @@
+// Glue breakpoint mixins
+
+@use 'variables';
+
+// Media breakpoint helper based on breakpoints below
+// Credit: http://css-tricks.com/conditional-media-query-mixins/
+@mixin bp($point) {
+  @if $point == sm {
+    @content;
+  } @else if $point == sm-only {
+    @media #{variables.$media-query-sm-only} {
+      @content;
+    }
+  } @else if $point == md {
+    @media #{variables.$media-query-md} {
+      @content;
+    }
+  } @else if $point == md-only {
+    @media #{variables.$media-query-md-only} {
+      @content;
+    }
+  } @else if $point == lg {
+    @media #{variables.$media-query-lg} {
+      @content;
+    }
+  } @else if $point == lg-only {
+    @media #{variables.$media-query-lg-only} {
+      @content;
+    }
+  } @else if $point == xl {
+    @media #{variables.$media-query-xl} {
+      @content;
+    }
+  } @else if $point == sm+md {
+    @media #{variables.$media-query-sm-md-only} {
+      @content;
+    }
+  }
+}
+
+// Mixin for orientation.
+@mixin orientation-mode($device-orientation) {
+  @media (orientation: $device-orientation) {
+    @content;
+  }
+}

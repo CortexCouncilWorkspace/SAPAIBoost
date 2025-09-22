@@ -1,0 +1,270 @@
+// Glue values for MWC3 system design tokens.
+// Some are pulled from the MWS color palette and some are generated.
+
+@use '../../colors/variables' as colors-variables;
+@use '../../typography/variables' as typography-variables;
+
+.glue-mwc3 {
+  --md-source: #{colors-variables.$blue-600};
+
+  // Color tokens
+  --md-ref-palette-primary0: #{colors-variables.$black};
+  --md-ref-palette-primary5: #00102d;
+  --md-ref-palette-primary10: #{colors-variables.$grey-900};
+  --md-ref-palette-primary20: #002e68;
+  --md-ref-palette-primary25: #00397d;
+  --md-ref-palette-primary30: #{colors-variables.$blue-900};
+  --md-ref-palette-primary35: #{colors-variables.$blue-800};
+  --md-ref-palette-primary40: #{colors-variables.$blue-700};
+  --md-ref-palette-primary50: #{colors-variables.$blue-600};
+  --md-ref-palette-primary60: #{colors-variables.$blue-500};
+  --md-ref-palette-primary70: #{colors-variables.$blue-400};
+  --md-ref-palette-primary80: #{colors-variables.$blue-300};
+  --md-ref-palette-primary90: #{colors-variables.$blue-200};
+  --md-ref-palette-primary95: #{colors-variables.$blue-100};
+  --md-ref-palette-primary98: #{colors-variables.$blue-50};
+  --md-ref-palette-primary99: #fefbff;
+  --md-ref-palette-primary100: #{colors-variables.$white};
+
+  --md-ref-palette-secondary0:  #000;
+  --md-ref-palette-secondary10: #{colors-variables.$grey-900};
+  --md-ref-palette-secondary20: #035;
+  --md-ref-palette-secondary30: #004a77;
+  --md-ref-palette-secondary40: #00639b;
+  --md-ref-palette-secondary50: #047db7;
+  --md-ref-palette-secondary60: #3998d3;
+  --md-ref-palette-secondary70: #5ab3f0;
+  --md-ref-palette-secondary80: #7fcfff;
+  --md-ref-palette-secondary90: #c2e7ff;
+  --md-ref-palette-secondary95: #dff3ff;
+  --md-ref-palette-secondary99: #f7fcff;
+  --md-ref-palette-secondary100: #fff;
+
+  --md-ref-palette-tertiary0: #{colors-variables.$black};
+  --md-ref-palette-tertiary5: #001504;
+  --md-ref-palette-tertiary10: #{colors-variables.$grey-900};
+  --md-ref-palette-tertiary20: #003912;
+  --md-ref-palette-tertiary25: #004618;
+  --md-ref-palette-tertiary30: #{colors-variables.$green-900};
+  --md-ref-palette-tertiary35: #{colors-variables.$green-800};
+  --md-ref-palette-tertiary40: #{colors-variables.$green-700};
+  --md-ref-palette-tertiary50: #{colors-variables.$green-600};
+  --md-ref-palette-tertiary60: #{colors-variables.$green-500};
+  --md-ref-palette-tertiary70: #{colors-variables.$green-400};
+  --md-ref-palette-tertiary80: #{colors-variables.$green-300};
+  --md-ref-palette-tertiary90: #{colors-variables.$green-200};
+  --md-ref-palette-tertiary95: #{colors-variables.$green-100};
+  --md-ref-palette-tertiary98: #{colors-variables.$green-50};
+  --md-ref-palette-tertiary99: #f6fff1;
+  --md-ref-palette-tertiary100: #{colors-variables.$white};
+
+  --md-ref-palette-error0: #{colors-variables.$black};
+  --md-ref-palette-error5: #2d0000;
+  --md-ref-palette-error10: #{colors-variables.$grey-900};
+  --md-ref-palette-error20: #690002;
+  --md-ref-palette-error25: #7e0003;
+  --md-ref-palette-error30: #{colors-variables.$red-900};
+  --md-ref-palette-error35: #{colors-variables.$red-800};
+  --md-ref-palette-error40: #{colors-variables.$red-700};
+  --md-ref-palette-error50: #{colors-variables.$red-600};
+  --md-ref-palette-error60: #{colors-variables.$red-500};
+  --md-ref-palette-error70: #{colors-variables.$red-400};
+  --md-ref-palette-error80: #{colors-variables.$red-300};
+  --md-ref-palette-error90: #{colors-variables.$red-200};
+  --md-ref-palette-error95: #{colors-variables.$red-100};
+  --md-ref-palette-error98: #{colors-variables.$red-50};
+  --md-ref-palette-error99: #fffbff;
+  --md-ref-palette-error100: #{colors-variables.$white};
+
+  --md-ref-palette-neutral0: #{colors-variables.$black};
+  --md-ref-palette-neutral5: #0f1113;
+  --md-ref-palette-neutral10: #{colors-variables.$grey-900};
+  --md-ref-palette-neutral20: #2e3133;
+  --md-ref-palette-neutral25: #393c3e;
+  --md-ref-palette-neutral30: #454749;
+  --md-ref-palette-neutral35: #{colors-variables.$grey-800};
+  --md-ref-palette-neutral40: #{colors-variables.$grey-700};
+  --md-ref-palette-neutral50: #{colors-variables.$grey-600};
+  --md-ref-palette-neutral60: #{colors-variables.$grey-500};
+  --md-ref-palette-neutral70: #{colors-variables.$grey-400};
+  --md-ref-palette-neutral80: #{colors-variables.$grey-300};
+  --md-ref-palette-neutral90: #{colors-variables.$grey-200};
+  --md-ref-palette-neutral95: #{colors-variables.$grey-100};
+  --md-ref-palette-neutral98: #{colors-variables.$grey-50};
+  --md-ref-palette-neutral99: #fcfcff;
+  --md-ref-palette-neutral100: #{colors-variables.$white};
+
+  --md-ref-palette-neutral-variant0: #{colors-variables.$black};
+  --md-ref-palette-neutral-variant5: #0b1216;
+  --md-ref-palette-neutral-variant10: #{colors-variables.$grey-900};
+  --md-ref-palette-neutral-variant20: #2a3136;
+  --md-ref-palette-neutral-variant25: #{colors-variables.$grey-800};
+  --md-ref-palette-neutral-variant30: #{colors-variables.$grey-700};
+  --md-ref-palette-neutral-variant35: #{colors-variables.$grey-600};
+  --md-ref-palette-neutral-variant40: #{colors-variables.$grey-500};
+  --md-ref-palette-neutral-variant50: #{colors-variables.$grey-400};
+  --md-ref-palette-neutral-variant60: #{colors-variables.$grey-300};
+  --md-ref-palette-neutral-variant70: #{colors-variables.$grey-200};
+  --md-ref-palette-neutral-variant80: #{colors-variables.$grey-100};
+  --md-ref-palette-neutral-variant90: #{colors-variables.$grey-50};
+  --md-ref-palette-neutral-variant95: #ebf2f8;
+  --md-ref-palette-neutral-variant98: #f5faff;
+  --md-ref-palette-neutral-variant99: #fbfcff;
+  --md-ref-palette-neutral-variant100: #{colors-variables.$white};
+
+  --md-sys-color-primary-light: #{colors-variables.$blue-600};
+  --md-sys-color-on-primary-light: #{colors-variables.$white};
+  --md-sys-color-primary-container-light: #{colors-variables.$blue-200};
+  --md-sys-color-on-primary-container-light: #{colors-variables.$grey-900};
+  --md-sys-color-primary-fixed-light: #{colors-variables.$blue-200};
+  --md-sys-color-on-primary-fixed-light: #{colors-variables.$grey-900};
+  --md-sys-color-primary-fixed-dim-light: #{colors-variables.$blue-300};
+  --md-sys-color-on-primary-fixed-variant-light: #{colors-variables.$blue-900};
+  --md-sys-color-secondary-light: #00639b;
+  --md-sys-color-on-secondary-light: #{colors-variables.$white};
+  --md-sys-color-secondary-container-light: #c2e7ff;
+  --md-sys-color-on-secondary-container-light: #001d35;
+  --md-sys-color-secondary-fixed-light: #c2e7ff;
+  --md-sys-color-on-secondary-fixed-light: #001d35;
+  --md-sys-color-secondary-fixed-dim-light: #7fcfff;
+  --md-sys-color-on-secondary-fixed-variant-light: #004a77;
+  --md-sys-color-tertiary-light: #{colors-variables.$green-700};
+  --md-sys-color-on-tertiary-light: #{colors-variables.$white};
+  --md-sys-color-tertiary-container-light: #{colors-variables.$green-200};
+  --md-sys-color-on-tertiary-container-light: #{colors-variables.$grey-900};
+  --md-sys-color-tertiary-fixed-light: #{colors-variables.$green-200};
+  --md-sys-color-on-tertiary-fixed-light: #{colors-variables.$grey-900};
+  --md-sys-color-tertiary-fixed-dim-light: #{colors-variables.$green-300};
+  --md-sys-color-on-tertiary-fixed-variant-light: #{colors-variables.$green-900};
+  --md-sys-color-error-light: #{colors-variables.$red-600};
+  --md-sys-color-on-error-light: #{colors-variables.$white};
+  --md-sys-color-error-container-light: #{colors-variables.$red-200};
+  --md-sys-color-on-error-container-light: #{colors-variables.$grey-900};
+  --md-sys-color-outline-light: #{colors-variables.$grey-400};
+  --md-sys-color-background-light: #fcfcff;
+  --md-sys-color-on-background-light: #{colors-variables.$grey-900};
+  --md-sys-color-surface-light: #{colors-variables.$grey-50};
+  --md-sys-color-on-surface-light: #{colors-variables.$grey-900};
+  --md-sys-color-surface-variant-light: #{colors-variables.$grey-50};
+  --md-sys-color-on-surface-variant-light: #{colors-variables.$grey-800};
+  --md-sys-color-inverse-surface-light: #2e3133;
+  --md-sys-color-inverse-on-surface-light: #{colors-variables.$grey-100};
+  --md-sys-color-inverse-primary-light: #{colors-variables.$blue-300};
+  --md-sys-color-shadow-light: #{colors-variables.$black};
+  --md-sys-color-surface-tint-light: #{colors-variables.$blue-700};
+  --md-sys-color-outline-variant-light: #{colors-variables.$grey-100};
+  --md-sys-color-scrim-light: #{colors-variables.$black};
+  --md-sys-color-surface-container-highest-light: #e2e2e5;
+  --md-sys-color-surface-container-high-light: #e7e8eb;
+  --md-sys-color-surface-container-light: #edeef0;
+  --md-sys-color-surface-container-low-light: #f3f3f6;
+  --md-sys-color-surface-container-lowest-light: #{colors-variables.$white};
+  --md-sys-color-surface-bright-light: #{colors-variables.$grey-50};
+  --md-sys-color-surface-dim-light: #d9dadd;
+
+  // Typography tokens
+  // display - large
+  --md-sys-typescale-display-large-font: #{typography-variables.$font-face-googlesans};
+  --md-sys-typescale-display-large-weight: 400;
+  --md-sys-typescale-display-large-size: 57px;
+  --md-sys-typescale-display-large-line-height: 64px;
+  --md-sys-typescale-display-large-tracking: 0px;
+
+  // display - medium
+  --md-sys-typescale-display-medium-font: #{typography-variables.$font-face-googlesans};
+  --md-sys-typescale-display-medium-weight: 400;
+  --md-sys-typescale-display-medium-size: 45px;
+  --md-sys-typescale-display-medium-line-height: 52px;
+  --md-sys-typescale-display-medium-tracking: 0px;
+
+  // display - small
+  --md-sys-typescale-display-small-font: #{typography-variables.$font-face-googlesans};
+  --md-sys-typescale-display-small-weight: 400;
+  --md-sys-typescale-display-small-size: 36px;
+  --md-sys-typescale-display-small-line-height: 44px;
+  --md-sys-typescale-display-small-tracking: 0px;
+
+  // headline - large
+  --md-sys-typescale-headline-large-font: #{typography-variables.$font-face-googlesans};
+  --md-sys-typescale-headline-large-weight: 400;
+  --md-sys-typescale-headline-large-size: 32px;
+  --md-sys-typescale-headline-large-line-height: 40px;
+  --md-sys-typescale-headline-large-tracking: 0px;
+
+  // headline - medium
+  --md-sys-typescale-headline-medium-font: #{typography-variables.$font-face-googlesans};
+  --md-sys-typescale-headline-medium-weight: 400;
+  --md-sys-typescale-headline-medium-size: 28px;
+  --md-sys-typescale-headline-medium-line-height: 36px;
+  --md-sys-typescale-headline-medium-tracking: 0px;
+
+  // headline - small
+  --md-sys-typescale-headline-small-font: #{typography-variables.$font-face-googlesans};
+  --md-sys-typescale-headline-small-weight: 400;
+  --md-sys-typescale-headline-small-size: 24px;
+  --md-sys-typescale-headline-small-line-height: 32px;
+  --md-sys-typescale-headline-small-tracking: 0px;
+
+  // body - large
+  --md-sys-typescale-body-large-font: #{typography-variables.$font-face-googlesanstext};
+  --md-sys-typescale-body-large-weight: 400;
+  --md-sys-typescale-body-large-size: 16px;
+  --md-sys-typescale-body-large-line-height: 24px;
+  --md-sys-typescale-body-large-tracking: 0px;
+
+  // body - medium
+  --md-sys-typescale-body-medium-font: #{typography-variables.$font-face-googlesanstext};
+  --md-sys-typescale-body-medium-weight: 400;
+  --md-sys-typescale-body-medium-size: 14px;
+  --md-sys-typescale-body-medium-line-height: 20px;
+  --md-sys-typescale-body-medium-tracking: 0px;
+
+  // body - small
+  --md-sys-typescale-body-small-font: #{typography-variables.$font-face-googlesanstext};
+  --md-sys-typescale-body-small-weight: 400;
+  --md-sys-typescale-body-small-size: 12px;
+  --md-sys-typescale-body-small-line-height: 16px;
+  --md-sys-typescale-body-small-tracking: 0.1px;
+
+  // label - large
+  --md-sys-typescale-label-large-font: #{typography-variables.$font-face-googlesanstext};
+  --md-sys-typescale-label-large-weight: 500;
+  --md-sys-typescale-label-large-size: 14px;
+  --md-sys-typescale-label-large-line-height: 20px;
+  --md-sys-typescale-label-large-tracking: 0px;
+
+  // label - medium
+  --md-sys-typescale-label-medium-font: #{typography-variables.$font-face-googlesanstext};
+  --md-sys-typescale-label-medium-weight: 500;
+  --md-sys-typescale-label-medium-size: 12px;
+  --md-sys-typescale-label-medium-line-height: 16px;
+  --md-sys-typescale-label-medium-tracking: 0.1px;
+
+  // label - small
+  --md-sys-typescale-label-small-font: #{typography-variables.$font-face-googlesanstext};
+  --md-sys-typescale-label-small-weight: 500;
+  --md-sys-typescale-label-small-size: 11px;
+  --md-sys-typescale-label-small-line-height: 16px;
+  --md-sys-typescale-label-small-tracking: 0.1px;
+
+  // title - large
+  --md-sys-typescale-title-large-font: #{typography-variables.$font-face-googlesans};
+  --md-sys-typescale-title-large-weight: 400;
+  --md-sys-typescale-title-large-size: 22px;
+  --md-sys-typescale-title-large-line-height: 28px;
+  --md-sys-typescale-title-large-tracking: 0px;
+
+  // title - medium
+  --md-sys-typescale-title-medium-font: #{typography-variables.$font-face-googlesanstext};
+  --md-sys-typescale-title-medium-weight: 500;
+  --md-sys-typescale-title-medium-size: 16px;
+  --md-sys-typescale-title-medium-line-height: 24px;
+  --md-sys-typescale-title-medium-tracking: 0px;
+
+  // title - small
+  --md-sys-typescale-title-small-font: #{typography-variables.$font-face-googlesanstext};
+  --md-sys-typescale-title-small-weight: 500;
+  --md-sys-typescale-title-small-size: 14px;
+  --md-sys-typescale-title-small-line-height: 20px;
+  --md-sys-typescale-title-small-tracking: 0px;
+}

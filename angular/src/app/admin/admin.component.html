@@ -1,0 +1,106 @@
+<div class="glue-spacer-4-top"></div>
+
+<section>
+  <div class="glue-page">
+    <div class="glue-grid">
+      <div class="glue-grid__col glue-grid__col--span-7">
+        <h1 class="glue-headline glue-headline--headline-3">
+            <span class="glue-font-weight-medium gemini-gradient">Admin Dashboard.</span>
+        </h1>
+        <p>
+          <br>Select an option below to configure the AI Boost for SAP RISE application.
+        </p>
+      </div>
+      <div class="glue-grid__col glue-grid__col--span-5 button-container">
+        <button [ngClass]="!configService.hasChanged ? 'disabled glue-button glue-button--medium-emphasis abandon' : 'glue-button glue-button--medium-emphasis abandon'" (click)="abandon()"><span class="google-symbols glue-tabpanels__heading-icon">cancel</span>&nbsp;&nbsp;Cancel</button>
+        <button [ngClass]="!configService.hasChanged ? 'disabled glue-button glue-button--medium-emphasis' : 'glue-button glue-button--medium-emphasis'" (click)="preview()"><span class="google-symbols glue-tabpanels__heading-icon">visibility</span>&nbsp;&nbsp;Preview</button>
+        <button [ngClass]="!configService.hasChanged ? 'disabled glue-button glue-button--high-emphasis' : 'glue-button glue-button--high-emphasis'" (click)="save()"><span class="google-symbols glue-tabpanels__heading-icon">save</span>&nbsp;&nbsp;Save</button>
+      </div>
+      
+      <div class="glue-tabpanels glue-grid__col--span-12 admin-tabpanels glue-spacer-4-top glue-tabpanels--centeredtabs">
+        <div class="glue-tabpanels__page-list">
+          <div><span class="google-symbols glue-tabpanels__heading-icon">settings</span>General</div>
+          <div><span class="google-symbols glue-tabpanels__heading-icon">widgets</span>Action Cards</div>
+          <div><span class="google-symbols glue-tabpanels__heading-icon">custom_typography</span>Style & Tone</div>
+          <div><span class="google-symbols glue-tabpanels__heading-icon">gpp_maybe</span>Compliance</div>
+          <div><span class="google-symbols glue-tabpanels__heading-icon">chat</span>Feedback</div>
+        </div>
+        <div class="glue-tabpanels__panel-list">
+          <div id="tab-1">
+            <app-general-config></app-general-config>
+          </div>
+          <div id="tab-2">
+            <app-card-config></app-card-config>
+          </div>
+          <div id="tab-3">
+            <app-style-config></app-style-config>
+          </div>
+          <div id="tab-4">
+            <app-compliance-config></app-compliance-config>
+          </div>
+          <div id="tab-5">
+            <app-feedback-list></app-feedback-list>
+          </div>
+        </div>
+      </div>
+
+  	</div>
+  </div>
+</section>
+
+<div class="glue-spacer-8-top"></div>
+
+<!-- glue footer -->
+<footer class="glue-footer glue-spacer-3-top" >
+  <h2 class="glue-visually-hidden">Footer links</h2>
+  <section class="glue-footer__global">
+    <div class="glue-footer__logo">
+      <a href="https://www.google.com" title="Google">
+        <svg role="presentation" aria-hidden="true" class="glue-footer__logo-img">
+          <use href="/assets/glue-icons.svg#google-solid-logo"></use>
+        </svg>
+      </a>
+    </div>
+
+    <ul class="glue-footer__global-links glue-no-bullet" role="list">
+      <li class="glue-footer__global-links-list-item">
+        <a class="glue-footer__link" href="https://about.google/">
+          About Google
+        </a>
+      </li>
+
+      <li class="glue-footer__global-links-list-item">
+        <a class="glue-footer__link" href="https://about.google/products/">
+          Google products
+        </a>
+      </li>
+
+      <li class="glue-footer__global-links-list-item">
+        <a class="glue-footer__link" href="https://policies.google.com/privacy">
+          Privacy
+        </a>
+      </li>
+
+      <li class="glue-footer__global-links-list-item">
+        <a class="glue-footer__link" href="https://policies.google.com/terms">
+          Terms
+        </a>
+      </li>
+    </ul>
+
+    <ul class="glue-footer__global-links glue-footer__global-links--extra glue-no-bullet"
+        role="list">
+      <li class="glue-footer__global-links-list-item
+          glue-footer__global-links-list-item--extra">
+        <a class="glue-footer__link" href="https://support.google.com/?hl=en">
+          <svg role="presentation" aria-hidden="true" class="glue-icon
+              glue-icon--24px glue-icon--footer-help">
+            <use href="/assets/glue-icons.svg#help"></use>
+          </svg>
+          Help
+        </a>
+      </li>
+    </ul>
+  </section>
+</footer>
+<!-- end glue footer -->

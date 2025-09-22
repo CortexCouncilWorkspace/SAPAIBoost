@@ -1,0 +1,280 @@
+// Glue YTVideo component
+// Styles for video players
+
+@use "sass:math";
+
+@use '../accessibility/mixins' as glue-accessibility-mixins;
+@use '../accessibility/variables' as glue-accessibility-variables;
+@use '../breakpoints/mixins' as breakpoints;
+@use '../colors/variables' as colors;
+@use 'variables';
+
+.glue-video {
+  font-size: variables.$font-size;
+  position: relative;
+
+  &:focus {
+    @include glue-accessibility-mixins.hcm-focus;
+    border-color: colors.$grey-0;
+    box-shadow: 0 0 0 2px colors.$blue-800;
+    border-radius: 4px;
+  }
+
+  &.glue-video--marquee {
+    cursor: pointer;
+    display: block;
+  }
+
+  &.glue-video--inline {
+    cursor: pointer;
+    display: inline-block;
+    max-width: 100%;
+  }
+
+  &__play {
+    height: variables.$play-height;
+    left: 50%;
+    margin: math.div(-(variables.$play-height), 2)
+      math.div(-(variables.$play-width), 2) 0;
+    position: absolute;
+    top: 50%;
+    width: variables.$play-width;
+    z-index: 15;
+
+    &.glue-video__play--inline {
+      height: variables.$play-height-inline;
+      margin: math.div(-(variables.$play-height-inline), 2)
+        math.div(-(variables.$play-width-inline), 2) 0;
+      width: variables.$play-width-inline;
+    }
+  }
+
+  &__image {
+    height: variables.$height;
+    margin-right: variables.$margin-right;
+    width: variables.$width;
+  }
+
+  &__container {
+    display: block;
+  }
+
+  &__nojs {
+    display: none;
+  }
+
+  img {
+    width: 100%;
+    z-index: 10;
+  }
+
+  &__preview {
+    &-container {
+      cursor: pointer;
+      opacity: 1;
+      outline: none;
+      overflow: hidden;
+      position: relative;
+
+      &--modal,
+      &--inline {
+        border: 3px solid transparent;
+        border-radius: 4px;
+
+        .glue-video__info {
+          align-content: center;
+          display: flex;
+          flex-wrap: wrap;
+          height: 100%;
+          justify-content: center;
+          position: absolute;
+          top: 0;
+          width: 100%;
+        }
+
+        .glue-video__preview-image {
+          border-radius: 3px;
+        }
+      }
+
+      &--cards {
+        .glue-video__info {
+          flex: 0 0 auto;
+          position: relative;
+          width: 100%;
+
+          .glue-video__play-button {
+            left: 50%;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+          }
+
+          .glue-video__timestamp {
+            bottom: 5%;
+            position: absolute;
+            right: 3%;
+          }
+        }
+      }
+    }
+  }
+
+  &__play-button {
+    height: 48px;
+    margin-bottom: 6px;
+    width: 48px;
+
+    &--white {
+      color: colors.$grey-0;
+    }
+
+    &--grey {
+      color: colors.$grey-900;
+    }
+
+    &--red {
+      color: variables.$asset-video-red;
+    }
+  }
+
+  &__label {
+    border-radius: 2px;
+    margin: 0 auto;
+    text-align: center;
+    width: fit-content;
+
+    &-container {
+      width: 100%;
+      margin-bottom: 12px;
+    }
+
+    &--large {
+      padding: 4px 10px;
+
+      @include breakpoints.bp(md) {
+        padding: 8px 16px;
+      }
+    }
+
+    &--small {
+      &.glue-video__label {
+        font-size: 20px;
+        letter-spacing: initial;
+        line-height: 28px;
+        padding: 4px 10px;
+      }
+    }
+
+    &--light {
+      color: colors.$grey-0;
+
+      @include glue-accessibility-mixins.hcm-mq {
+
+        @include glue-accessibility-mixins.hcm-forced-color;
+        color: colors.$grey-900;
+      }
+
+      &.glue-video__label--highlight {
+        background: colors.$grey-0;
+        color: colors.$grey-900;
+      }
+    }
+
+    &--dark {
+      color: colors.$grey-900;
+
+      @include glue-accessibility-mixins.hcm-mq {
+
+        @include glue-accessibility-mixins.hcm-forced-color;
+        color: colors.$grey-0;
+      }
+
+      &.glue-video__label--highlight {
+        background: colors.$grey-900;
+        color: colors.$grey-0;
+      }
+    }
+  }
+
+  &__timestamp {
+    align-items: center;
+    border-radius: 100px;
+    display: flex;
+    height: 20px;
+    margin: 0 auto;
+    min-width: 55px;
+    padding: 2px 6px;
+    visibility: hidden;
+    width: fit-content;
+
+    &-icon {
+      height: 10px;
+      margin-inline-end: 3px;
+      min-height: 12px;
+      min-width: 12px;
+      width: 14px;
+    }
+
+    &-container {
+      width: 100%;
+    }
+
+    &-duration {
+      text-align: center;
+      width: 100%;
+    }
+
+    &--visible {
+      visibility: visible;
+    }
+
+    &--light {
+      background: rgba(colors.$grey-0, 0.6);
+      color: colors.$grey-900;
+
+      @include glue-accessibility-mixins.hcm-mq {
+
+        @include glue-accessibility-mixins.hcm-forced-color;
+        background: rgba(colors.$grey-900, 1);
+        color: colors.$grey-0;
+      }
+    }
+
+    &--dark {
+      background: rgba(colors.$grey-900, 0.6);
+      color: colors.$grey-0;
+
+      @include glue-accessibility-mixins.hcm-mq {
+
+        @include glue-accessibility-mixins.hcm-forced-color;
+        background: rgba(colors.$grey-0, 1);
+        color: colors.$grey-900;
+      }
+    }
+  }
+
+  &__container--inline {
+    display: block;
+    height: auto;
+    opacity: 1;
+    padding-bottom: 56.25%;
+    position: relative;
+    transition: opacity 200ms ease-in;
+    width: 100%;
+
+    iframe {
+      height: 100%;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+    }
+  }
+
+  .glue-video--hidden {
+    display: none;
+    opacity: 0;
+    transition: opacity 200ms ease-in;
+  }
+}

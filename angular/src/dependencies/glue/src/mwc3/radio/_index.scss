@@ -1,0 +1,13 @@
+// Design tokens for Glue theme of MWC3 radio
+
+@use '../../colors/variables' as colors-variables;
+@use '../partials';
+
+.glue-mwc3-radio {
+  @extend %glue-mwc3-container;
+  --md-radio-icon-color: #{colors-variables.$grey-700};
+
+  label {
+    @extend %glue-mwc3-label;
+  }
+}

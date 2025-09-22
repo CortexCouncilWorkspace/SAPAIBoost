@@ -1,0 +1,20 @@
+// Glue link variables
+
+@use '../colors/variables' as colors;
+
+$border-radius: 4px;
+$color: colors.$link-resting;
+$color-hover: colors.$link-active;
+$color-tonal: colors.$link-tonal;
+$color-visited: colors.$link-visited;
+$hover-background: rgba(colors.$blue-600, 0.04);
+$focus-background: rgba(colors.$blue-600, 0.12);
+$active-background: rgba(colors.$blue-600, 0.1);
+$shadow-color-focus: colors.$blue-600;
+
+$reversed-color: colors.$grey-200;
+$reversed-color-hover: colors.$white;
+$reversed-color-visited: colors.$purple-100;
+$reversed-color-bg-hover-background: rgba(colors.$white, 0.04);
+$reversed-color-bg-focus-background: rgba(colors.$white, 0.12);
+$reversed-color-bg-active-background: rgba(colors.$white, 0.1);

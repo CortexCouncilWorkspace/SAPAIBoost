@@ -1,0 +1,143 @@
+<form class="glue-form glue-mwc3" method="post" [formGroup]="editForm" (ngSubmit)="submit()">
+
+  <h2 mat-dialog-title class="dialog-heading">
+    <ng-container *ngIf="data">Edit</ng-container>
+    <ng-container *ngIf="!data">New</ng-container>
+    Action Card
+  </h2>
+
+  <mat-dialog-content>
+
+    <div class="glue-page">
+
+        <div class="glue-grid">
+
+          <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-1-top">
+            <mat-form-field appearance="outline" class="form-field glue-grid__col--span-8">
+              <mat-label>Card Category</mat-label>
+              <mat-select #category [formControl]="editForm.controls.category" [errorStateMatcher]="matcher">
+                <mat-option *ngFor="let actionCardCategory of this.configService.config.actionCardCategoryConfig" value="{{actionCardCategory.name}}"><mat-icon>{{actionCardCategory.iconSymbolName}}</mat-icon> {{actionCardCategory.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-2-top">
+            <mat-form-field appearance="outline" class="form-field glue-grid__col--span-8">
+              <mat-label>Name</mat-label>
+              <input matInput #name [formControl]="editForm.controls.name" [errorStateMatcher]="matcher" maxlength="48" placeholder="Name of the card.">
+              <mat-hint align="end">{{name.value.length}} / 48</mat-hint>
+              <ng-container *ngIf="editForm.controls.name.hasError('required') && isSubmitted">
+                <mat-error>Please enter a name.</mat-error>
+              </ng-container>
+            </mat-form-field>
+          </div>
+
+          <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-2-top">
+            <mat-form-field appearance="outline" class="form-field glue-grid__col--span-8">
+              <mat-label>Description</mat-label>
+              <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="5" 
+                #description [formControl]="editForm.controls.description" [errorStateMatcher]="matcher" maxlength="200" placeholder="Description of the card action."></textarea>
+              <mat-hint align="end">{{description.value.length}} / 200</mat-hint>
+              <ng-container *ngIf="editForm.controls.description.hasError('required') && isSubmitted">
+                <mat-error>Please enter a description.</mat-error>
+              </ng-container>
+            </mat-form-field>
+          </div>
+
+          <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-2-top">
+            <mat-form-field appearance="outline" class="form-field glue-grid__col--span-8">
+              <mat-label>Type</mat-label>
+              <mat-select #type [formControl]="editForm.controls.type" [errorStateMatcher]="matcher">
+                <mat-option value="{{CardType.GeminiForMarketing}}">AI Boost Toolbox prompt</mat-option>
+                <mat-option value="{{CardType.FirstPartyTool}}">Link to an Google-developed tool (1st-party)</mat-option>
+                <mat-option value="{{CardType.ThirdPartyTool}}">Link to an Vendor-provided tool (3rd-party)</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-2-top" *ngIf="editForm.controls.type.value === CardType.GeminiForMarketing">
+            <mat-form-field appearance="outline" class="form-field glue-grid__col--span-8">
+              <mat-label>Prompt</mat-label>
+              <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4" cdkAutosizeMaxRows="10" 
+                #systemPrompt [formControl]="editForm.controls.systemPrompt" [errorStateMatcher]="matcher" maxlength="50000" placeholder="Prompt to send to Gemini to jump-start the conversation."></textarea>
+              <mat-hint align="end">{{systemPrompt.value.length}} / 50,000</mat-hint>
+            </mat-form-field>
+          </div>
+
+          <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-2-top" *ngIf="editForm.controls.type.value === CardType.GeminiForMarketing">
+            <mat-form-field appearance="outline" class="form-field glue-grid__col--span-8">
+              <mat-label>User Message</mat-label>
+              <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4" cdkAutosizeMaxRows="10" 
+                #userMessage [formControl]="editForm.controls.userMessage" [errorStateMatcher]="matcher" maxlength="10000" placeholder="Informational message to display to the user upon card selection."></textarea>
+              <mat-hint align="end">{{userMessage.value.length}} / 10,000</mat-hint>
+            </mat-form-field>
+          </div>
+
+          <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-2-top" *ngIf="editForm.controls.type.value === CardType.GeminiForMarketing">
+            <mat-form-field appearance="outline" class="form-field glue-grid__col--span-8">
+              <mat-label>Widget Configuration</mat-label>
+              <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4" cdkAutosizeMaxRows="10" 
+                #widgetConfig [formControl]="editForm.controls.widgetConfig" [errorStateMatcher]="matcher" maxlength="50000" placeholder="JSON-formatted instructions for rendering UI widgets in the chat interface (documentation coming soon)."></textarea>
+              <mat-hint align="end">{{widgetConfig.value.length}} / 50,000</mat-hint>
+            </mat-form-field>
+          </div>
+
+          <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-2-top" *ngIf="editForm.controls.type.value === CardType.GeminiForMarketing">
+            <mat-form-field appearance="outline" class="form-field glue-grid__col--span-8">
+              <mat-label>Compliance Message</mat-label>
+              <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="5" 
+                #complianceMessage [formControl]="editForm.controls.complianceMessage" [errorStateMatcher]="matcher" maxlength="1000" placeholder="Compliance-related message to deliver to the user when the card is selected."></textarea>
+              <mat-hint align="end">{{complianceMessage.value.length}} / 1,000</mat-hint>
+            </mat-form-field>
+          </div>
+
+          <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-2-top" *ngIf="editForm.controls.type.value === CardType.FirstPartyTool || editForm.controls.type.value === CardType.ThirdPartyTool">
+            <mat-form-field appearance="outline" class="form-field glue-grid__col--span-8">
+              <mat-label>External URL</mat-label>
+              <input matInput #externalLinkUrl [formControl]="editForm.controls.externalLinkUrl" [errorStateMatcher]="matcher" maxlength="1000" placeholder="e.g. https://marketing-ai-sandbox.googleplex.com/">
+              <ng-container *ngIf="editForm.controls.externalLinkUrl.hasError('pattern') && isSubmitted">
+                <mat-error>Please enter a valid URL.</mat-error>
+              </ng-container>
+            </mat-form-field>
+          </div>
+
+          <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-2-top" *ngIf="editForm.controls.type.value === CardType.GeminiForMarketing">
+            <mat-form-field appearance="outline" class="form-field glue-grid__col--span-8">
+              <mat-label>Template File Id</mat-label>
+              <input matInput #templateFileId [formControl]="editForm.controls.templateFileId" [errorStateMatcher]="matcher" maxlength="1000" placeholder="Google Drive file id to use as a tempalte.">
+            </mat-form-field>
+          </div>
+
+          <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-2-top" *ngIf="editForm.controls.type.value === CardType.GeminiForMarketing">
+            <mat-form-field appearance="outline" class="form-field glue-grid__col--span-8">
+              <mat-label>Template File Name</mat-label>
+              <input matInput #templateFileName [formControl]="editForm.controls.templateFileName" [errorStateMatcher]="matcher" maxlength="1000" placeholder="Name to use when copying a template into the user's Google Drive. Use {name} to incorporate a user-provided name.">
+            </mat-form-field>
+          </div>
+
+          <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-1-top">
+            <mat-checkbox #isComingSoon [formControl]="editForm.controls.isComingSoon">Coming Soon</mat-checkbox>
+          </div>
+
+          <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-1-top" *ngIf="editForm.controls.type.value === CardType.GeminiForMarketing">
+            <mat-checkbox #showUploadHint [formControl]="editForm.controls.showUploadHint">Show hint for document upload</mat-checkbox>
+          </div>
+
+          <div class="glue-grid__col glue-grid__col--span-12 glue-spacer-1-top">
+            <mat-checkbox #isBeta [formControl]="editForm.controls.isBeta">Beta Feature (only available to beta testers)</mat-checkbox>
+          </div>
+
+      </div>
+    </div>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <div class="button-container">
+      <button class="glue-button glue-button--medium-emphasis delete" mat-dialog-close (click)="delete()" *ngIf="data">Delete</button>
+      <button class="glue-button glue-button--medium-emphasis" mat-dialog-close>Close</button>
+      <button class="glue-button glue-button--high-emphasis" type="submit">Save</button>
+    </div>
+  </mat-dialog-actions>
+
+</form>

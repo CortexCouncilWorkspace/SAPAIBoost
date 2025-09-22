@@ -1,0 +1,59 @@
+.glue-form {
+  margin-top: 10px;
+}
+
+.glue-form h2 {
+  font-weight: 600;
+}
+
+.glue-form td, .glue-form th {
+  text-align: left;
+}
+
+.glue-table tr {
+  border-bottom: 1px #EEEEEE solid;
+}
+
+.glue-table td:first-child {
+  width: 100px;
+}
+
+.glue-table td:nth-child(2) {
+  max-width: 400px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.glue-table tr:last-child {
+  border-bottom: 3px #EEEEEE solid;
+}
+
+hr {
+  border-top: 1px #CCCCCC solid;
+  width: 100%;
+}
+
+.button-container:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.button-container-left {
+  float:left;
+  text-align: left;
+}
+
+.button-container-left button {
+  margin: 0px 20px 0px 0px;
+}
+
+.button-container-right {
+  float: right;
+  text-align: right;
+}
+
+.button-container-right button {
+  margin: 0px 0px 0px 20px;
+}

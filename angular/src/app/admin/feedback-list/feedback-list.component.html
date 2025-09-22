@@ -1,0 +1,24 @@
+<div class="glue-page">
+  <div class="glue-grid">
+    <div class="glue-table__overflowcontainer glue-grid__col glue-grid__col--span-12 glue-spacer-4-top">
+      <table id="feedback-list" class="glue-table glue-table--datatable glue-table--datatable-altrows" role="table">
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Type</th>
+            <th>Rating</th>
+            <th>Details</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tr #feedbackList *ngFor="let feedbackItem of feedbackList">
+          <td>{{ feedbackItem.email }}</td>
+          <td>{{ feedbackItem.feedbackType }}</td>
+          <td>{{ feedbackItem.rating }}</td>
+          <td>{{ feedbackItem.feedbackDetails }}</td>
+          <td>{{ feedbackItem.timestamp }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

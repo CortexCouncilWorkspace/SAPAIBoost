@@ -1,0 +1,253 @@
+/* You can add global styles to this file, and also import other style files */
+
+@use '@angular/material' as mat;
+@use '@google/glue/lib/mwc3/theme' as glue-mwc3-theme;
+@include mat.core();
+
+$myapp-theme-primary: mat.define-palette(mat.$indigo-palette, A400, A100, A700);
+$myapp-theme-accent: mat.define-palette(mat.$indigo-palette);
+$myapp-theme-warn: mat.define-palette(mat.$red-palette);
+
+$myapp-theme: mat.define-light-theme((
+  color: (
+    primary: $myapp-theme-primary,
+    accent: $myapp-theme-accent,
+    warn: $myapp-theme-warn,
+  )
+));
+
+@include mat.all-component-themes($myapp-theme);
+
+body { margin: 0px; }
+
+:root {
+	--bard-color-brand-text-gradient-stop-1: #217bfe;
+	--bard-color-brand-text-gradient-stop-2: #078efb;
+	--bard-color-brand-text-gradient-stop-3: #ac87eb;
+	--bard-color-brand-text-gradient-stop-4: #d96570;
+	--bard-color-surface: #131314;
+}
+
+#chat-navigation {
+  z-index: 2;
+	margin-top: 30px;
+	position: absolute;
+	width: 100%;
+}
+
+#chat-navigation .mat-mdc-tab-body-content {
+	overflow: clip;
+}
+
+#chat-navigation .mat-mdc-tab-body-wrapper {
+	max-height: 0px;
+	transition: max-height 0.2s ease-in;
+}
+
+#chat-navigation.expanded .mat-mdc-tab-body-wrapper {
+	max-height: 700px;
+	transition: max-height 0.2s ease-out;
+}
+
+#chat-navigation .mat-mdc-tab-header {
+	background-color: white;
+	border-radius: 5px;
+	@include mat.elevation(3);
+}
+
+#chat-navigation .mat-mdc-tab-body-wrapper {
+	overflow: visible;
+	@include mat.elevation(3);
+	background-color: white;
+	border-radius: 0px 0px 15px 15px;
+	margin-top: -1px;
+}
+
+#chat-navigation .mat-mdc-tab-body {
+	margin: 20px 20px 14px 20px;
+}
+
+.gemini-gradient {
+	color: transparent;
+	background: linear-gradient(74deg,
+		var(--bard-color-brand-text-gradient-stop-1) 0,
+		var(--bard-color-brand-text-gradient-stop-3) 50%,
+		var(--bard-color-brand-text-gradient-stop-4) 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.header-marketing {
+	color: transparent;
+	background: linear-gradient(74deg,
+		var(--bard-color-brand-text-gradient-stop-1) 0,
+		var(--bard-color-brand-text-gradient-stop-3) 50%,
+		var(--bard-color-brand-text-gradient-stop-4) 100%);
+	-webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.glue-header__logo-container {
+	width: 32px !important;
+}
+
+.glue-header__tier {
+	border-bottom: solid 1px #EFEFEF;
+}
+
+@keyframes animate-loader {
+  0% {
+    background-position: 0;
+  }
+  100% {
+    background-position: 400px;
+  }
+}
+
+.skeleton-loader-1 {
+  width: 100%;
+  height: 20px;
+  background-image: linear-gradient(90deg, transparent 0px, white 200px, transparent 400px);
+  animation: animate-loader .5s infinite linear;
+  background-size: 400px;
+  margin-bottom: 20px;
+}
+
+.skeleton-loader-2 {
+  width: 100%;
+  height: 20px;
+  background-image: linear-gradient(90deg, transparent 0px, white 200px, transparent 400px);
+  animation: animate-loader .75s infinite linear;
+  background-size: 400px;
+}
+
+.glue-cards {
+	padding-bottom: 6px;
+}
+
+.glue-card {
+	@include mat.elevation(0);
+	border: 1px #EFEFEF solid;
+}
+
+.glue-card:focus {
+	@include mat.elevation(0);
+	border: 1px #4285F4 solid;
+}
+
+.glue-card:hover {
+	@include mat.elevation(3);
+	border: 1px #4285F4 solid;
+}
+
+#chat-navigation .mat-mdc-tab-group, #chat-navigation .mat-mdc-tab-nav-bar {
+	--mdc-tab-indicator-active-indicator-color: #4285F4;
+	--mat-tab-header-disabled-ripple-color: rgba(0, 0, 0, 0.38);
+	--mat-tab-header-pagination-icon-color: #000;
+	--mat-tab-header-inactive-label-text-color: rgba(0, 0, 0, .7);
+	--mat-tab-header-active-label-text-color: #4285F4;
+	--mat-tab-header-active-ripple-color: #4285F4;
+	--mat-tab-header-inactive-ripple-color: #4285F4;
+	--mat-tab-header-inactive-focus-label-text-color: rgba(0, 0, 0, 0.7);
+	--mat-tab-header-inactive-hover-label-text-color: rgba(0, 0, 0, 1.0);
+	--mat-tab-header-active-focus-label-text-color: #4285F4;
+	--mat-tab-header-active-hover-label-text-color: #4285F4;
+	--mat-tab-header-active-focus-indicator-color: #4285F4;
+	--mat-tab-header-active-hover-indicator-color: #4285F4;
+}
+
+#chat-box {
+	@include mat.elevation(4);
+	z-index: 200;
+}
+
+.mdc-tab.mdc-tab--active {
+	font-weight: 700;
+	background-color: #E8F0FE;
+}
+
+/*
+.mat-mdc-tab-label-container {
+
+}
+
+.mat-mdc-tab-list {
+
+}
+
+.mat-mdc-tab-labels {
+	
+}
+.mat-mdc-tab-group, .mat-mdc-tab-nav-bar {
+	--mdc-tab-indicator-active-indicator-color: #3d5afe;
+	--mat-tab-header-disabled-ripple-color: rgba(0, 0, 0, 0.38);
+	--mat-tab-header-pagination-icon-color: #000;
+	--mat-tab-header-inactive-label-text-color: rgba(0, 0, 0, .8);
+	--mat-tab-header-active-label-text-color: #3d5afe;
+	--mat-tab-header-active-ripple-color: #3d5afe;
+	--mat-tab-header-inactive-ripple-color: #3d5afe;
+	--mat-tab-header-inactive-focus-label-text-color: rgba(0, 0, 0, 0.8);
+	--mat-tab-header-inactive-hover-label-text-color: rgba(0, 0, 0, 1.0);
+	--mat-tab-header-active-focus-label-text-color: #3d5afe;
+	--mat-tab-header-active-hover-label-text-color: #3d5afe;
+	--mat-tab-header-active-focus-indicator-color: #3d5afe;
+	--mat-tab-header-active-hover-indicator-color: #3d5afe;
+}
+*/
+
+
+.message.info a, .message.info a:link, .message.info a:visited, .message.info a:hover, .message.info a:active {
+  color: #174EA6;
+}
+
+.small-icon-button {
+	width: 32px !important;
+	height: 32px !important;
+	padding: 0px !important;
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+
+	& > *[role=img] {
+		 width: 20px;
+		 height: 20px;
+		 font-size: 20px;
+
+		 svg {
+				width: 20px;
+				height: 20px;
+		 }
+	}
+
+	.mat-mdc-button-touch-target {
+		 width: 32px !important;
+		 height: 32px !important;
+	}
+}
+
+.message.bot p ul, .message.bot p ol {
+  margin-top: 10px !important;
+}
+
+.message.bot p ul li, .message.bot p ol li {
+  margin-bottom: 10px !important;
+}
+
+.message h2 {
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+	font-weight: bold;
+}
+
+/* fix for dropdown option text sitting too low */
+.mdc-list-item span {
+	margin-top: -20px;
+}
+
+.glue-tabs__panelgroup {
+  margin-top: 0px !important;
+}
+
+.mdc-text-field--disabled label, .mdc-text-field--disabled input {
+  color: rgb(90, 90, 90) !important;
+}
