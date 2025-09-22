@@ -323,7 +323,7 @@ def generate_audio_response(message, locale, gender, name):
 
 def init_imagen():
     global imagen
-    imagen = ImageGenerationModel.from_pretrained("imagen-3.0-generate-001")
+    imagen = ImageGenerationModel.from_pretrained("imagen-4.0-generate-001")
 
 
 @firestore.transactional
