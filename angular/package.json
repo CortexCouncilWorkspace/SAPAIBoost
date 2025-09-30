@@ -21,7 +21,7 @@
     "@angular/platform-browser": "^16.2.0",
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
-    "@google/glue": "file:./src/dependencies/glue",
+    "@google/glue": "git+https://github.com/CortexCouncilWorkspace/glue.git",
     "@material/web": "^1.5.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@types/scriptjs": "^0.0.5",
